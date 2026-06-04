@@ -1898,6 +1898,7 @@ MultipleForms.register(:RAICHU,{
 "weight"=>proc{|pokemon|
     next 380 if pokemon.form==1
     next 260 if pokemon.form==2
+    next
  },
 "height"=>proc{|pokemon|
     next 12 if pokemon.form==1
