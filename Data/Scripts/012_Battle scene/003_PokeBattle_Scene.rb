@@ -61,7 +61,6 @@ class PokeBattle_Scene
   end
 
   def pbUpdate
-    partyAnimationUpdate
     @sprites["battlebg"].update if @sprites["battlebg"].respond_to?("update")
   end
 
@@ -272,8 +271,10 @@ class PokeBattle_Scene
       if @sprites["pokemon#{i}"]
         @sprites["pokemon#{i}"].update
       end
-      if (@battle.battlers[i].isTera? rescue false)
-        @sprites["pokemon#{i}"].tone=TERATONES[@battle.battlers[i].pokemon.teratype]
+      if @sprites["pokemon#{i}"] && @battle.battlers[i] &&
+         @battle.battlers[i].respond_to?(:isTera?) &&
+         @battle.battlers[i].isTera?
+        @sprites["pokemon#{i}"].color=TERATONES[@battle.battlers[i].pokemon.teratype]
       end
     end
   end
@@ -418,14 +419,22 @@ class PokeBattle_Scene
     enemybase="Graphics/Battlebacks/enemybase"+backdrop+base+time
     playerbase="Graphics/Battlebacks/playerbase"+backdrop+base+time
     pbAddPlane("battlebg",battlebg,@viewport)
-    pbAddSprite("playerbase",
+    
+    
+    if PokeBattle_SceneConstants::USE_BATTLE_BASES
+      pbAddSprite("playerbase",
        PokeBattle_SceneConstants::PLAYERBASEX,
        PokeBattle_SceneConstants::PLAYERBASEY,playerbase,@viewport)
-    @sprites["playerbase"].x-=@sprites["playerbase"].bitmap.width/2 if @sprites["playerbase"].bitmap!=nil
-    @sprites["playerbase"].y-=@sprites["playerbase"].bitmap.height if @sprites["playerbase"].bitmap!=nil
-    pbAddSprite("enemybase",
+      pbAddSprite("enemybase",
        PokeBattle_SceneConstants::FOEBASEX,
        PokeBattle_SceneConstants::FOEBASEY,enemybase,@viewport)
+     else #Los creamos para que no de error.
+       @sprites["playerbase"]=IconSprite.new(0,0,@viewport) 
+       @sprites["enemybase"]=IconSprite.new(0,0,@viewport) 
+    end
+       
+    @sprites["playerbase"].x-=@sprites["playerbase"].bitmap.width/2 if @sprites["playerbase"].bitmap!=nil
+    @sprites["playerbase"].y-=@sprites["playerbase"].bitmap.height if @sprites["playerbase"].bitmap!=nil
     @sprites["enemybase"].x-=@sprites["enemybase"].bitmap.width/2 if @sprites["enemybase"].bitmap!=nil
     @sprites["enemybase"].y-=@sprites["enemybase"].bitmap.height/2 if @sprites["enemybase"].bitmap!=nil
     @sprites["battlebg"].z=0
@@ -655,7 +664,13 @@ class PokeBattle_Scene
     end
     @sprites["shadow0"]=IconSprite.new(0,0,@viewport)
     @sprites["shadow0"].z=3
-    pbAddSprite("shadow1",0,0,"Graphics/#{BATTLE_ROUTE}/battleShadow",@viewport)
+    #pbAddSprite("shadow1",0,0,"Graphics/#{BATTLE_ROUTE}/battleShadow",@viewport)
+
+    @sprites["shadow1"]=IconSprite.new(0,0,@viewport)
+    shadow_bitmap =pbCheckPokemonShadowBitmapFiles(battle.battlers[1].species,battle.battlers[1].form)
+    if shadow_bitmap && @sprites["shadow1"]
+      @sprites["shadow1"].setBitmap(shadow_bitmap)
+    end
     @sprites["shadow1"].z=3
     @sprites["shadow1"].visible=false
     @sprites["pokemon0"]=PokemonBattlerSprite.new(battle.doublebattle,0,@viewport)
@@ -665,7 +680,14 @@ class PokeBattle_Scene
     if battle.doublebattle
       @sprites["shadow2"]=IconSprite.new(0,0,@viewport)
       @sprites["shadow2"].z=3
-      pbAddSprite("shadow3",0,0,"Graphics/#{BATTLE_ROUTE}/battleShadow",@viewport)
+      #pbAddSprite("shadow3",0,0,"Graphics/#{BATTLE_ROUTE}/battleShadow",@viewport)
+      
+      @sprites["shadow3"]=IconSprite.new(0,0,@viewport)
+      shadow_bitmap =pbCheckPokemonShadowBitmapFiles(battle.battlers[3].species,battle.battlers[3].form)
+      if shadow_bitmap && @sprites["shadow3"]
+        @sprites["shadow3"].setBitmap(shadow_bitmap)
+      end
+
       @sprites["shadow3"].z=3
       @sprites["shadow3"].visible=false
       @sprites["pokemon2"]=PokemonBattlerSprite.new(battle.doublebattle,2,@viewport)
@@ -877,7 +899,6 @@ class PokeBattle_Scene
         origin=PokeBattle_SceneConstants::FOEBATTLERD1_Y if battlerindex==1
         origin=PokeBattle_SceneConstants::FOEBATTLERD2_Y if battlerindex==3
       end
-      @sprites["shadow#{battlerindex}"].visible=false
     else
       origin=PokeBattle_SceneConstants::PLAYERBATTLER_Y
       if @battle.doublebattle
@@ -885,6 +906,7 @@ class PokeBattle_Scene
         origin=PokeBattle_SceneConstants::PLAYERBATTLERD2_Y if battlerindex==2
       end
     end
+    @sprites["shadow#{battlerindex}"].visible=false
     spritePoke=@sprites["pokemon#{battlerindex}"]
     picturePoke=PictureEx.new(spritePoke.z)
     dims=[spritePoke.x,spritePoke.y]
@@ -921,10 +943,8 @@ class PokeBattle_Scene
       fadeanim=TrainerFadeAnimation.new(@sprites)
     end
     frame=0
+    pkmn = illusionpoke ? illusionpoke : pkmn
     @sprites["pokemon#{battlerindex}"].setPokemonBitmap(pkmn,false)
-    if illusionpoke
-      @sprites["pokemon#{battlerindex}"].setPokemonBitmap(illusionpoke,false)
-    end
     sendout=PokeballSendOutAnimation.new(@sprites["pokemon#{battlerindex}"],
        @sprites,@battle.battlers[battlerindex],illusionpoke,@battle.doublebattle)
     loop do
@@ -941,6 +961,12 @@ class PokeBattle_Scene
       pbFrameUpdate
       break if (!fadeanim || fadeanim.animdone?) && sendout.animdone? &&
          !@sprites["battlebox#{battlerindex}"].appearing
+    end
+    if @sprites["shadow#{battlerindex}"]
+      shadow_bitmap =pbCheckPokemonShadowBitmapFiles(@battle.battlers[battlerindex].species,@battle.battlers[battlerindex].form)
+      if shadow_bitmap && @sprites["shadow#{battlerindex}"]
+        @sprites["shadow#{battlerindex}"].setBitmap(shadow_bitmap)
+      end
     end
     if @battle.battlers[battlerindex].isShiny? && @battle.battlescene
       pbCommonAnimation("Shiny",@battle.battlers[battlerindex],nil)
@@ -996,10 +1022,8 @@ class PokeBattle_Scene
       fadeanim=PlayerFadeAnimation.new(@sprites)
     end
     frame=0
+    pkmn = illusionpoke ? illusionpoke : pkmn
     @sprites["pokemon#{battlerindex}"].setPokemonBitmap(pkmn,true)
-    if illusionpoke
-      @sprites["pokemon#{battlerindex}"].setPokemonBitmap(illusionpoke,true)
-    end
     sendout=PokeballPlayerSendOutAnimation.new(@sprites["pokemon#{battlerindex}"],
        @sprites,@battle.battlers[battlerindex],illusionpoke,@battle.doublebattle)
     loop do
@@ -1020,6 +1044,25 @@ class PokeBattle_Scene
       pbFrameUpdate
       break if (!fadeanim || fadeanim.animdone?) && sendout.animdone? &&
          !@sprites["battlebox#{battlerindex}"].appearing
+    end
+    if @sprites["shadow#{battlerindex}"]
+      
+      origin_Y=PokeBattle_SceneConstants::PLAYERBATTLER_Y
+      origin_X=PokeBattle_SceneConstants::PLAYERBATTLER_X
+      if @battle.doublebattle
+        @sprites["shadow#{battlerindex}"].visible=false
+      else
+        @sprites["shadow#{battlerindex}"].visible=showShadow?(pkmn.species)
+      end
+      shadow_bitmap =pbCheckPokemonShadowBitmapFiles(pkmn.species,pkmn.form,true)
+      if shadow_bitmap && @sprites["shadow#{battlerindex}"]
+        @sprites["shadow#{battlerindex}"].setBitmap(shadow_bitmap)
+      end
+      @sprites["shadow#{battlerindex}"].x=origin_X
+      @sprites["shadow#{battlerindex}"].y=origin_Y - 40
+      @sprites["shadow#{battlerindex}"].x-=@sprites["shadow#{battlerindex}"].bitmap.width/2 if @sprites["shadow#{battlerindex}"].bitmap!=nil
+      @sprites["shadow#{battlerindex}"].y-=@sprites["shadow#{battlerindex}"].bitmap.height/2 if @sprites["shadow#{battlerindex}"].bitmap!=nil
+      #@sprites["shadow#{battlerindex}"].visible=showShadow?(pkmn.species)
     end
     spriteBall.dispose
     sendout.dispose
@@ -1481,7 +1524,10 @@ class PokeBattle_Scene
   
 # This method is called whenever a Pokémon faints.
   def pbFainted(pkmn)
-    frames=pbCryFrameLength(pkmn.pokemon)
+    if @battle.battlers[pkmn.index].isDynamax?
+      @battle.battlers[pkmn.index].pbUndynamax
+    end
+    frames = pbCryFrameLength(pkmn.pokemon)
     pbPlayCry(pkmn.pokemon)
     frames.times do
       pbGraphicsUpdate
@@ -1669,6 +1715,12 @@ class PokeBattle_Scene
       pbWait(1)
     end
     pkmn.setPokemonBitmap(pokemon,back)
+    if shadow
+      shadow_bitmap =pbCheckPokemonShadowBitmapFiles(pokemon.species,pokemon.form,back)
+      if shadow_bitmap && shadow
+        shadow.setBitmap(shadow_bitmap)
+      end
+    end
     10.times do
       t-=51 if t > 0
       pkmn.tone=Tone.new(t,t,t)
@@ -1799,7 +1851,7 @@ class PokeBattle_Scene
   end
 
   def pbCommonAnimation(animname,user,target,hitnum=0)
-    $pkmn_animations=load_data("Data/PkmnAnimations.rxdata") if $pkmn_animations
+    $pkmn_animations=load_data("Data/PkmnAnimations.rxdata") if $pkmn_animations && $pkmn_animations.nil?
     animations=$pkmn_animations
     for i in 0...animations.length
       if animations[i] && animations[i].name=="Common:"+animname
@@ -1843,7 +1895,7 @@ class PokeBattle_Scene
     animid=pbFindAnimation(moveid,user.index,hitnum)
     return if !animid
     anim=animid[0]
-    $pkmn_animations=load_data("Data/PkmnAnimations.rxdata") if $pkmn_animations
+    $pkmn_animations=load_data("Data/PkmnAnimations.rxdata") if $pkmn_animations && $pkmn_animations.nil?
     animations=$pkmn_animations
     pbToggleDataboxes if PokeBattle_SceneConstants::HIDE_DATABOXES_DURING_MOVES
     pbSaveShadows {
@@ -1869,6 +1921,26 @@ class PokeBattle_Scene
     oldusery=usersprite ? usersprite.y : 0
     oldtargetx=targetsprite ? targetsprite.x : 0
     oldtargety=targetsprite ? targetsprite.y : 0
+    # -------------------------------------------------
+    # Guardar valores de Dynamax ANTES de la animación
+    # -------------------------------------------------
+    # Para zoom (si usas Dynamax)
+    olduserzoomx = usersprite ? usersprite.zoom_x : 1
+    olduserzoomy = usersprite ? usersprite.zoom_y : 1
+    oldtargetzoomx = targetsprite ? targetsprite.zoom_x : 1
+    oldtargetzoomy = targetsprite ? targetsprite.zoom_y : 1
+    # Determinar colores actuales
+    if (usersprite && user.isDynamax? rescue false)
+      oldusercolor = user.isSpecies?(:CALYREX) ? DYNATONE[1] : DYNATONE[0]
+    elsif (usersprite && user.isTera? rescue false)
+      oldusercolor = TERATONES[user.pokemon.teratype]
+    end
+    if (targetsprite && target.isTera? rescue false)
+      oldtargetcolor = target.isSpecies?(:CALYREX) ? DYNATONE[1] : DYNATONE[0]
+    elsif (targetsprite && target.isTera? rescue false)
+      oldtargetcolor = TERATONES[target.pokemon.teratype]
+    end
+    # -------------------------------------------------
     if !targetsprite
       target=user if !target
       animplayer=PBAnimationPlayerX.new(animation,user,target,self,oppmove)
@@ -1894,21 +1966,47 @@ class PokeBattle_Scene
     animplayer.start
     while animplayer.playing?
       animplayer.update
+      # -------------------------------------------------
+      # RE-APLICAR VALORES DE DYNAMAX EN CADA FRAME
+      # --------------------------------------------
+      if usersprite && user.isDynamax?
+        usersprite.zoom_x = olduserzoomx
+        usersprite.zoom_y = olduserzoomy
+        usersprite.color = oldusercolor if oldusercolor
+        usersprite.ox=0
+        usersprite.oy=0
+        usersprite.x=olduserx
+        usersprite.y=oldusery
+      end
+      if targetsprite && target.isDynamax?
+        targetsprite.zoom_x = oldtargetzoomx
+        targetsprite.zoom_y = oldtargetzoomy
+        targetsprite.color = oldtargetcolor if oldtargetcolor
+        targetsprite.ox=0
+        targetsprite.oy=0
+        targetsprite.x=oldtargetx
+        targetsprite.y=oldtargety
+      end
+      # --------------------------------------------
       pbGraphicsUpdate
       pbInputUpdate
       pbFrameUpdate
     end
-    usersprite.ox=0 if usersprite
-    usersprite.oy=0 if usersprite
-    usersprite.x=olduserx if usersprite
-    usersprite.y=oldusery if usersprite
-    targetsprite.ox=0 if targetsprite
-    targetsprite.oy=0 if targetsprite
-    targetsprite.x=oldtargetx if targetsprite
-    targetsprite.y=oldtargety if targetsprite
+    if usersprite
+      usersprite.ox=0
+      usersprite.oy=0 
+      usersprite.x=olduserx 
+      usersprite.y=oldusery
+    end
+    if targetsprite
+      targetsprite.ox=0
+      targetsprite.oy=0
+      targetsprite.x=oldtargetx
+      targetsprite.y=oldtargety
+    end
     animplayer.dispose
   end
-
+  
   def pbLevelUp(pokemon,battler,oldtotalhp,oldattack,olddefense,oldspeed,
                 oldspatk,oldspdef)
     pbTopRightWindow(_INTL("#{PBStats.getName(0,true)} Máx.<r>+{1}<br>#{PBStats.getName(1,true)}<r>+{2}<br>#{PBStats.getName(2,true)}<r>+{3}<br>#{PBStats.getName(4,true)}<r>+{4}<br>#{PBStats.getName(5,true)}<r>+{5}<br>#{PBStats.getName(3,true)}<r>+{6}",
@@ -1954,7 +2052,7 @@ class PokeBattle_Scene
   def pbThrow(ball,shakes,critical,targetBattler,showplayer=false)
     @briefmessage=false
     burst=-1
-    $pkmn_animations=load_data("Data/PkmnAnimations.rxdata") if $pkmn_animations
+    $pkmn_animations=load_data("Data/PkmnAnimations.rxdata") if $pkmn_animations && $pkmn_animations.nil?
     animations=$pkmn_animations
     for i in 0...2
       t=(i==0) ? ball : 0
@@ -2235,6 +2333,322 @@ class PokeBattle_Scene
     pbUpdate    
   end  
 
+  
+  alias initialize_substitute initialize
+  def initialize
+    initialize_substitute
+    @original_pokemon_x = {}
+    @original_pokemon_opacity = {}
+  end
+  
+  def pbShowSubstitute(battlerindex, show=true)
+    # Mostrar u ocultar el sprite de sustituto
+    pokemon_sprite = @sprites["pokemon#{battlerindex}"]
+    shadow_sprite = @sprites["shadow#{battlerindex}"]
+    
+    if show
+      # Guardar posición original del Pokémon si no está guardada
+      @original_pokemon_x ||= {}
+      @original_pokemon_opacity ||= {}
+      
+      if !@original_pokemon_x[battlerindex]
+        @original_pokemon_x[battlerindex] = pokemon_sprite.x
+        @original_pokemon_opacity[battlerindex] = 255
+      end
+      
+      back = false
+      back = true if battlerindex == 0 || battlerindex == 2 
+      
+      # Desplazar el Pokémon según su posición
+      offset_x = back ? -64 : 64
+      target_x = @original_pokemon_x[battlerindex] + offset_x
+      target_opacity = 100
+      
+      # Crear/mostrar sprite de sustituto si no existe
+      if !@sprites["substitute#{battlerindex}"]
+        @sprites["substitute#{battlerindex}"] = IconSprite.new(0, 0, @viewport)
+        
+        sus = back ? "substitute_back" : "substitute"
+        @sprites["substitute#{battlerindex}"].setBitmap("Graphics/Battlers/#{sus}")
+        @sprites["substitute#{battlerindex}"].zoom_x = back ? BACKSPRITESCALE : POKEMONSPRITESCALE
+        @sprites["substitute#{battlerindex}"].zoom_y = back ? BACKSPRITESCALE : POKEMONSPRITESCALE
+        
+        # Ajustes de posición específicos según el zoom
+        if back
+          offset_sub_x = 64 + 64
+          offset_sub_y = 64 + 64
+          @sprites["substitute#{battlerindex}"].z = @sprites["pokemon#{battlerindex}"].z - 1
+        else
+          offset_sub_x = 64
+          offset_sub_y = 64
+          @sprites["substitute#{battlerindex}"].z = @sprites["pokemon#{battlerindex}"].z + 1
+        end
+        
+        # Posicionar el sustituto (inicialmente invisible)
+        @sprites["substitute#{battlerindex}"].x = @original_pokemon_x[battlerindex] + offset_sub_x
+        @sprites["substitute#{battlerindex}"].y = pokemon_sprite.y + offset_sub_y
+        @sprites["substitute#{battlerindex}"].opacity = 0
+      end
+      @sprites["substitute#{battlerindex}"].visible = true # Movemos esto aqui para evitar errores.
+      # Animación suave (20 frames)
+      20.times do
+        # Interpolar posición del Pokémon
+        pokemon_sprite.x += (target_x - pokemon_sprite.x) / 4.0
+        
+        # Interpolar opacidad del Pokémon y sombra
+        pokemon_sprite.opacity += (target_opacity - pokemon_sprite.opacity) / 4.0
+        shadow_sprite.opacity = pokemon_sprite.opacity if shadow_sprite
+        
+        # Fade in del sustituto
+        @sprites["substitute#{battlerindex}"].opacity += (255 - @sprites["substitute#{battlerindex}"].opacity) / 4.0
+        
+        pbGraphicsUpdate
+        pbInputUpdate
+        pbFrameUpdate
+      end
+      
+      # Asegurar valores finales exactos
+      pokemon_sprite.x = target_x
+      pokemon_sprite.opacity = target_opacity
+      shadow_sprite.opacity = target_opacity if shadow_sprite
+      @sprites["substitute#{battlerindex}"].opacity = 255
+      
+    else
+      # Restaurar el Pokémon real a su posición y opacidad original
+      @original_pokemon_x ||= {}
+      @original_pokemon_opacity ||= {}
+      
+      if @original_pokemon_x[battlerindex]
+        target_x = @original_pokemon_x[battlerindex]
+        target_opacity = 255
+        
+        # Animación suave de restauración (15 frames)
+        15.times do
+          # Interpolar posición del Pokémon
+          pokemon_sprite.x += (target_x - pokemon_sprite.x) / 3.0
+          
+          # Interpolar opacidad del Pokémon y sombra
+          pokemon_sprite.opacity += (target_opacity - pokemon_sprite.opacity) / 3.0
+          shadow_sprite.opacity = pokemon_sprite.opacity if shadow_sprite
+          
+          # Fade out del sustituto
+          if @sprites["substitute#{battlerindex}"]
+            @sprites["substitute#{battlerindex}"].opacity -= 255 / 15.0
+          end
+          
+          pbGraphicsUpdate
+          pbInputUpdate
+          pbFrameUpdate
+        end
+        
+        # Asegurar valores finales exactos
+        pokemon_sprite.x = target_x
+        pokemon_sprite.opacity = target_opacity
+        pokemon_sprite.visible = true
+        
+        if shadow_sprite
+          shadow_sprite.opacity = target_opacity
+          species = @battle.battlers[battlerindex].species
+          shadow_sprite.visible = showShadow?(species)
+        end
+        
+        # Ocultar sustituto
+        if @sprites["substitute#{battlerindex}"]
+          @sprites["substitute#{battlerindex}"].visible = false
+          @sprites["substitute#{battlerindex}"].opacity = 0
+        end
+        
+        @original_pokemon_x[battlerindex] = nil
+        @original_pokemon_opacity[battlerindex] = nil
+      end
+    end
+  end
+  
+  alias pbAnimationCore_substitute pbAnimationCore
+  def pbAnimationCore(animation,user,target,oppmove=false)
+    # Guardar opacidades antes de la animación
+    saved_opacities = {}
+    for i in 0...4
+      if @sprites["pokemon#{i}"] && @sprites["substitute#{i}"] && @sprites["substitute#{i}"].visible
+        saved_opacities[i] = @sprites["pokemon#{i}"].opacity
+      end
+    end
+    
+    # Ejecutar animación original
+    pbAnimationCore_substitute(animation,user,target,oppmove)
+    
+    # Restaurar opacidades después de la animación
+    for i in saved_opacities.keys
+      @sprites["pokemon#{i}"].opacity = saved_opacities[i] if @sprites["pokemon#{i}"]
+    end
+  end
+  
+  alias pbDisposeSprites_substitute pbDisposeSprites
+  def pbDisposeSprites
+    for i in 0...4
+      if @sprites["substitute#{i}"] && @sprites["substitute#{i}"].is_a?(Sprite)
+        @sprites["substitute#{i}"].dispose if !@sprites["substitute#{i}"].disposed?
+        @sprites["substitute#{i}"] = nil
+      end
+      # Limpiar variables guardadas
+      @sprites["pokemon#{i}_original_x"] = nil
+      @sprites["pokemon#{i}_original_opacity"] = nil
+    end
+    pbDisposeSprites_substitute
+  end
+  
+  alias pbEndBattle_substitute pbEndBattle
+  def pbEndBattle(result)
+    # Limpiar sustitutos antes de terminar la batalla
+    for i in 0...4
+      if @sprites["substitute#{i}"]
+        @sprites["substitute#{i}"].dispose
+        @sprites["substitute#{i}"] = nil
+      end
+      # Restaurar sprites de Pokémon
+      if @sprites["pokemon#{i}"]
+        @sprites["pokemon#{i}"].opacity = 255
+        @sprites["pokemon#{i}"].visible = true
+      end
+      if @sprites["shadow#{i}"]
+        @sprites["shadow#{i}"].opacity = 255
+      end
+    end
+    pbEndBattle_substitute(result)
+  end
+  
+  alias pbUpdate_substitute pbUpdate
+  def pbUpdate
+    pbUpdate_substitute
+    for i in 0...4
+      @sprites["substitute#{i}"].update if @sprites["substitute#{i}"]
+    end
+  end
+  
+  alias pbFainted_substitute pbFainted
+  def pbFainted(pkmn)    
+    if @sprites["substitute#{pkmn.index}"] && @sprites["substitute#{pkmn.index}"].respond_to?(:visible)
+      pbShowSubstitute(pkmn.index, false)
+    end
+    pbFainted_substitute(pkmn)
+  end
+  
+  alias pbRecall_substitute pbRecall
+  def pbRecall(battlerindex)
+    if @sprites["substitute#{battlerindex}"] && @sprites["substitute#{battlerindex}"].respond_to?(:visible)
+      pbShowSubstitute(battlerindex, false)
+    end
+    pbRecall_substitute(battlerindex)
+  end
 
+end
+#===============================================================================
+# DYNAMAX ZOOM SYSTEM
+#===============================================================================
+module PokeBattle_SceneConstants
+  DYNAMAX_ZOOM = 1.5  # Multiplicador de zoom para Pokémon Dynamax
+end
+
+class PokeBattle_Scene
+  
+  alias initialize_dynamax initialize
+  def initialize
+    initialize_dynamax
+    @dynamax_zoom_applied ||= {}
+  end
+  
+
+  
+  # Aplicar zoom al cambiar de Pokémon (Transform, etc.)
+  alias pbChangePokemon_dynamax pbChangePokemon
+  def pbChangePokemon(attacker, pokemon)
+    pbRemoveDynamaxZoom(attacker.index)  # Primero eliminar zoom si existía
+    pbChangePokemon_dynamax(attacker, pokemon) # Ejecutar el cambio original
+    pbApplyDynamaxZoom(attacker.index) # Aplicar zoom si el nuevo Pokémon está Dynamax
+  end
+  
+  # Quitar zoom cuando un Pokémon es retirado
+  alias pbRecall_dynamax pbRecall
+  def pbRecall(battlerindex)
+    pbRemoveDynamaxZoom(battlerindex)
+    pbRecall_dynamax(battlerindex)
+  end
+
+  # Método para aplicar zoom y tono Dynamax
+  def pbApplyDynamaxZoom(battlerindex)
+    return if !@battle.battlers[battlerindex]
+    return if !@battle.battlers[battlerindex].isDynamax?
+    return if @dynamax_zoom_applied[battlerindex]
+    
+    pkmnsprite = @sprites["pokemon#{battlerindex}"]
+    return if !pkmnsprite || !pkmnsprite.bitmap
+    
+    # Guardar posición central antes del zoom
+    center_x = pkmnsprite.x + (pkmnsprite.bitmap.width * pkmnsprite.zoom_x / 2)
+    center_y = pkmnsprite.y + (pkmnsprite.bitmap.height * pkmnsprite.zoom_y / 2)
+    
+    # Aplicar zoom
+    pkmnsprite.zoom_x = PokeBattle_SceneConstants::DYNAMAX_ZOOM
+    pkmnsprite.zoom_y = PokeBattle_SceneConstants::DYNAMAX_ZOOM
+    
+    # Recentrar el sprite
+    pkmnsprite.x = center_x - (pkmnsprite.bitmap.width * pkmnsprite.zoom_x / 2)
+    pkmnsprite.y = center_y - (pkmnsprite.bitmap.height * pkmnsprite.zoom_y / 2)
+    
+    # Aplicar tono Dynamax
+    pkmnsprite.color = @battle.battlers[battlerindex].isSpecies?(:CALYREX) ? DYNATONE[1] : DYNATONE[0] if defined?(DYNATONE)
+    
+    
+    @dynamax_zoom_applied[battlerindex] = true
+  end
+  
+  # Método para quitar zoom y tono Dynamax
+  def pbRemoveDynamaxZoom(battlerindex)
+    return if !@battle.battlers[battlerindex]
+    return if !@dynamax_zoom_applied[battlerindex] && @dynamax_zoom_applied
+    
+    pkmnsprite = @sprites["pokemon#{battlerindex}"]
+    return if !pkmnsprite || !pkmnsprite.bitmap
+    
+    # Guardar posición central antes de quitar zoom
+    center_x = pkmnsprite.x + (pkmnsprite.bitmap.width * pkmnsprite.zoom_x / 2)
+    center_y = pkmnsprite.y + (pkmnsprite.bitmap.height * pkmnsprite.zoom_y / 2)
+    
+    # Restaurar zoom normal
+    pkmnsprite.zoom_x = 1.0
+    pkmnsprite.zoom_y = 1.0
+    
+    # Recentrar el sprite
+    pkmnsprite.x = center_x - (pkmnsprite.bitmap.width / 2)
+    pkmnsprite.y = center_y - (pkmnsprite.bitmap.height / 2)
+    
+    # Restaurar tono normal
+    pkmnsprite.color = Color.new(0, 0, 0, 0)
+    
+    @dynamax_zoom_applied[battlerindex] = false
+  end
+  
+  # Actualizar zoom durante la batalla (para cambios dinámicos)
+  alias pbFrameUpdate_dynamax pbFrameUpdate
+  def pbFrameUpdate(cw=nil)
+    pbFrameUpdate_dynamax(cw)
+    
+    # Verificar y actualizar zoom según estado Dynamax
+    for i in 0...4
+      next if !@battle.battlers[i]
+      next if !@battle.battlers[i].respond_to?(:isDynamax?)
+      if @battle.battlers[i].isDynamax?
+        # Aplicar zoom si no está aplicado
+        pbApplyDynamaxZoom(i) if !@dynamax_zoom_applied[i] && @dynamax_zoom_applied
+      else
+        # Quitar zoom si está aplicado pero ya no está Dynamax
+        pbRemoveDynamaxZoom(i) if @dynamax_zoom_applied[i] && @dynamax_zoom_applied
+      end
+      if (@battle.battlers[i].isDynamax? rescue false)
+        @sprites["pokemon#{i}"].color = @battle.battlers[i].isSpecies?(:CALYREX) ? DYNATONE[1] : DYNATONE[0] if defined?(DYNATONE)
+      end
+    end
+  end
+  
 
 end

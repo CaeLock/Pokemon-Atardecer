@@ -766,7 +766,8 @@ class PokeBattle_Battler
 #===============================================================================
 # Flinching / Retroceso
 #===============================================================================
-  def pbFlinch(attacker)
+  def pbFlinch(attacker=nil)
+    return false if @effects[PBEffects::Dynamax]>0 # Dynamax can't be flinched
     return false if (!attacker || !attacker.hasMoldBreaker) && hasWorkingAbility(:INNERFOCUS)      # Foco Interno
     @effects[PBEffects::Flinch]=true
     return true
@@ -859,6 +860,9 @@ class PokeBattle_Battler
         if ignoreContrary
           @battle.pbDisplay(_INTL("¡{2} de {1} activado!",pbThis,PBAbilities.getName(self.ability))) if showanim
         end
+        if cause == PBAbilities.getName(self.ability) # BES-T Animación habilidades
+          showAbilityMessage(self) rescue nil
+        end 
         @battle.pbCommonAnimation("StatUp",self,nil) if showanim
         if attacker.index==self.index
           arrStatTexts=[_INTL("¡{2} de {1} subió su {3}!",pbThis,cause,PBStats.getName(stat)),
@@ -944,7 +948,7 @@ class PokeBattle_Battler
           @battle.pbDisplay(_INTL("¡{2} de {1} evita que baje su Defensa!",pbThis,abilityname)) if showMessages
           return false
         end
-        if stat==PBStats::ACCURACY && hasWorkingAbility(:KEENEYE)
+        if stat==PBStats::ACCURACY && (hasWorkingAbility(:KEENEYE) || hasWorkingAbility(:ILLUMINATE))
           abilityname=PBAbilities.getName(self.ability)
           @battle.pbDisplay(_INTL("¡{2} de {1} evita que baje su precisión!",pbThis,abilityname)) if showMessages
           return false
@@ -1062,6 +1066,9 @@ class PokeBattle_Battler
         if ignoremirror
           @battle.pbDisplay(_INTL("¡{2} de {1} activada!",attacker.pbThis,PBAbilities.getName(attacker.ability))) if showanim
         end
+        if cause == PBAbilities.getName(self.ability) # BES-T Animación habilidades
+          showAbilityMessage(self) rescue nil
+        end 
         @battle.pbCommonAnimation("StatDown",self,nil) if showanim
         if attacker.index==self.index
           arrStatTexts=[_INTL("¡{2} de {1} bajó su {3}!",pbThis,cause,PBStats.getName(stat)),

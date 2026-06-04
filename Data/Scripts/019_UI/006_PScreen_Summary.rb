@@ -2,6 +2,9 @@ class PokemonSummaryScene
   
   TOTALPAGES = 5
   
+  POKEMON_SPRITE_X = Graphics.width/4 - 32
+  POKEMON_SPRITE_Y = Graphics.width/2 - 48
+  
   def pbStartScene(party,partyindex,inbattle=false)
     @party      = party
     @partyindex = partyindex
@@ -13,9 +16,18 @@ class PokemonSummaryScene
 
     @sprites["pokemon"] = PokemonSprite.new(@viewport)
     @sprites["pokemon"].setPokemonBitmap(@pokemon)
-    @sprites["pokemon"].ox, @sprites["pokemon"].oy = 0, 0
-    @sprites["pokemon"].x = 8
-    @sprites["pokemon"].y = 144 - 32
+    @sprites["pokemon"].ox = @sprites["pokemon"].bitmap.width / 2
+    @sprites["pokemon"].oy = @sprites["pokemon"].bitmap.height / 2
+    
+    @sprites["pokemon"].x = POKEMON_SPRITE_X
+    @sprites["pokemon"].y = POKEMON_SPRITE_Y
+    
+    if (@pokemon.isTera? rescue nil)
+      @sprites["pokemon"].color=TERATONES[@pokemon.teratype]
+    elsif (@pokemon.isDynamax? rescue nil)
+      @sprites["pokemon"].color= @pokemon.isSpecies?(:CALYREX) ? DYNATONE[1] : DYNATONE[0]
+    end
+    
     @sprites["pokeicon"].visible = false
     @sprites["itemicon"] = ItemIconSprite.new(30,320,@pokemon.item,@viewport)
     @sprites["itemicon"].blankzero = true
@@ -53,7 +65,6 @@ class PokemonSummaryScene
     when 2; drawPageData
     when 3; drawPageStats
     when 4; drawPageMoves
-      
     #Añade paginas aquí. vvv
     #when 5; drawPageSix
     #Por conveniencia las cintas son siempre la ultima página.
@@ -164,7 +175,7 @@ class PokemonSummaryScene
                 _INTL("MOVIMIENTOS"), 
                 _INTL("CINTAS")][page-1]
     
-    textpos.push([pagename,26,16,0,@base,@shadow])
+    textpos.push([pagename,26,16,0,@base,@shadow]) if pagename.is_a?(String)
     textpos.push([@pokemon.name,46,62,0,@base,@shadow])
     
     unless isEgg
@@ -197,13 +208,13 @@ class PokemonSummaryScene
       end
       imagepos.push(["Graphics/Pictures/statuses",124,100,0,16*status,44,16])if pbPokerus(@pokemon)==2
       imagepos.push([sprintf("Graphics/Pictures/shiny"),2,134,0,0,-1,-1])    if @pokemon.isShiny?
+      
+      imagepos.push(["Graphics/Pictures/Summary/gfactor",88,95,0,0,-1,-1])   if defined?(@pokemon.gmaxFactor?) && @pokemon.gmaxFactor?
     end
-    
     pbDrawImagePositions(overlay,imagepos) unless imagepos.empty?
     pbDrawTextPositions(overlay,textpos)
     drawMarkings(overlay,84,286,68,20,@pokemon.markings) unless isEgg
   end
-
 
   def drawPageOneEgg
     @sprites["itemicon"].item = @pokemon.item
@@ -361,6 +372,22 @@ class PokemonSummaryScene
       overlay.blt(356,334+8,@amistadbitmap.bitmap,nivelamistad)
     end
     pbDrawTextPositions(overlay,textpos)
+    
+    if defined?(@pokemon.dynamax) && pbHasDBand
+      imagepos=[]
+
+      dmx_x = 366
+      dmx_y = 308 - 18
+      
+      imagepos.push(["Graphics/Pictures/Summary/dynamax_meter",dmx_x,dmx_y,0,0,-1,-1])
+      pbDrawImagePositions(overlay,imagepos)
+      dlevel=@pokemon.dynamax_lvl
+      levels=AnimatedBitmap.new(_INTL("Graphics/Pictures/Summary/dynamax_levels"))
+      overlay.blt(dmx_x+12,dmx_y+16,levels.bitmap,Rect.new(0,0,dlevel*12,24))
+      pbSetSmallFont(overlay)
+      pbDrawTextPositions(overlay,[[_INTL("Nivel Dynamax:"),256-16,308,0,@base2,@shadow2]])
+      pbSetSystemFont(overlay)
+    end
     
     showNature = !(@pokemon.isShadow? rescue false) || @pokemon.heartStage>3
     if showNature
@@ -543,6 +570,11 @@ class PokemonSummaryScene
     pbSetSmallFont(overlay)
     drawFormattedTextEx(overlay,232,112,272,desc,@base2,@shadow2)
     pbSetSystemFont(overlay)
+    
+    hp=pbHiddenPower(@pokemon.iv)
+    type1rect=Rect.new(0,hp[0]*28,64,28)
+    overlay.blt(416-8,334+2,@typebitmap.bitmap,type1rect)
+    pbDrawTextPositions(overlay,[[_INTL("Poder Oculto"),256+8,334,0,@base,@shadow]])
     
     loop do
       Input.update
@@ -866,6 +898,9 @@ class PokemonSummaryScene
   def pbChangePokemon
     @pokemon = @party[@partyindex]
     @sprites["pokemon"].setPokemonBitmap(@pokemon)
+    @sprites["pokemon"].ox = @sprites["pokemon"].bitmap.width / 2
+    @sprites["pokemon"].oy = @sprites["pokemon"].bitmap.height / 2
+    
     @sprites["itemicon"].item = @pokemon.item
     pbSEStop
     pbPlayCry(@pokemon)
@@ -873,6 +908,12 @@ class PokemonSummaryScene
     @pageNumber = TOTALPAGES #Edita el numero para añadir/quitar páginas.
     @pageNumber = TOTALPAGES-1 if @pokemon.ribbonCount <= 0 #Quita la página de las cintas.
     @page = @pageNumber if @page > @pageNumber
+    
+    if (@pokemon.isTera? rescue nil)
+      @sprites["pokemon"].color=TERATONES[@pokemon.teratype]
+    elsif (@pokemon.isDynamax? rescue nil)
+      @sprites["pokemon"].color= @pokemon.isSpecies?(:CALYREX) ? DYNATONE[1] : DYNATONE[0]
+    end
     
   end
 
@@ -1090,7 +1131,7 @@ class PokemonSummaryScene
           pbPlayDecisionSE
           pbMoveSelection
           dorefresh = true
-        elsif @page==@pageNumber
+        elsif @page==TOTALPAGES
           pbPlayDecisionSE
           pbRibbonSelection
           dorefresh = true

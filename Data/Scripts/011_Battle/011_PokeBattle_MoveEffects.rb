@@ -316,6 +316,9 @@ class PokeBattle_Move_008 < PokeBattle_Move
   end
 
   def pbModifyBaseAccuracy(baseaccuracy,attacker,opponent)
+    if attacker.hasWorkingAbility(:MEGASOL)
+      return 50
+    end
     case @battle.pbWeather
     when PBWeather::RAINDANCE, PBWeather::HEAVYRAIN
       if !attacker.hasWorkingItem(:UTILITYUMBRELLA)
@@ -627,6 +630,9 @@ class PokeBattle_Move_015 < PokeBattle_Move
   end
 
   def pbModifyBaseAccuracy(baseaccuracy,attacker,opponent)
+    if attacker.hasWorkingAbility(:MEGASOL)
+      return 50
+    end
     case @battle.pbWeather
     when PBWeather::RAINDANCE, PBWeather::HEAVYRAIN
       if !attacker.hasWorkingItem(:UTILITYUMBRELLA)
@@ -1142,8 +1148,9 @@ class PokeBattle_Move_028 < PokeBattle_Move
     pbShowAnimation(@id,attacker,opponent,hitnum,alltargets,showanimation)
     showanim=true
     increment=1
-    if (@battle.pbWeather==PBWeather::SUNNYDAY ||
-       @battle.pbWeather==PBWeather::HARSHSUN) && !attacker.hasWorkingItem(:UTILITYUMBRELLA)
+    if ((@battle.pbWeather==PBWeather::SUNNYDAY ||
+       @battle.pbWeather==PBWeather::HARSHSUN) && !attacker.hasWorkingItem(:UTILITYUMBRELLA)) || 
+       attacker.hasWorkingAbility(:MEGASOL)
       increment=2
     end
     if attacker.pbCanIncreaseStatStage?(PBStats::ATTACK,attacker,false,self)
@@ -3792,7 +3799,7 @@ end
 ################################################################################
 class PokeBattle_Move_087 < PokeBattle_Move
   def pbBaseDamage(basedmg,attacker,opponent)
-    if @battle.pbWeather!=0
+    if @battle.pbWeather!=0 || attacker.hasWorkingAbility(:MEGASOL)
       return basedmg*2
     end
     return basedmg
@@ -3813,6 +3820,9 @@ class PokeBattle_Move_087 < PokeBattle_Move
       type=(getConst(PBTypes,:ROCK) || type)
     when PBWeather::HAIL
       type=(getConst(PBTypes,:ICE) || type)
+    end
+    if attacker.hasWorkingAbility(:MEGASOL)
+      type=(getConst(PBTypes,:FIRE) || type)
     end
     return type
   end
@@ -3981,6 +3991,7 @@ def pbHiddenPower(iv)
   base=(base*(powermax-powermin)/63).floor+powermin
   return [hptype,base]
 end
+
 
 ################################################################################
 # La potencia se duplica con cada uso consecutivo.
@@ -5751,8 +5762,9 @@ class PokeBattle_Move_0C4 < PokeBattle_Move
   def pbTwoTurnAttack(attacker)
     @immediate=false; @sunny=false
     if attacker.effects[PBEffects::TwoTurnAttack]==0
-      if (@battle.pbWeather==PBWeather::SUNNYDAY ||
-         @battle.pbWeather==PBWeather::HARSHSUN) && !attacker.hasWorkingItem(:UTILITYUMBRELLA)
+      if ((@battle.pbWeather==PBWeather::SUNNYDAY ||
+         @battle.pbWeather==PBWeather::HARSHSUN) && !attacker.hasWorkingItem(:UTILITYUMBRELLA)) ||
+        attacker.hasWorkingAbility(:MEGASOL)
         @immediate=true; @sunny=true
       end
     end
@@ -5764,9 +5776,16 @@ class PokeBattle_Move_0C4 < PokeBattle_Move
   end
 
   def pbBaseDamageMultiplier(damagemult,attacker,opponent)
-    if @battle.pbWeather!=0 &&
-       @battle.pbWeather!=PBWeather::SUNNYDAY &&
-       @battle.pbWeather!=PBWeather::HARSHSUN
+    # Lista de climas que reducen la potencia
+    weather_list = [
+      PBWeather::RAINDANCE,
+      PBWeather::PRIMORDIALSEA,
+      PBWeather::SANDSTORM,
+      PBWeather::HAIL
+    ]
+    # Si el clima está en la lista y el usuario NO lleva Utility Umbrella, se reduce a la mitad
+    if weather_list.include?(@battle.pbWeather) &&
+       (!attacker.hasWorkingItem(:UTILITYUMBRELLA) || !attacker.hasWorkingAbility(:MEGASOL))
       return (damagemult*0.5).round
     end
     return damagemult
@@ -6549,8 +6568,9 @@ class PokeBattle_Move_0D8 < PokeBattle_Move
       return -1
     end
     hpgain=0
-    if (@battle.pbWeather==PBWeather::SUNNYDAY ||
-       @battle.pbWeather==PBWeather::HARSHSUN)  && !attacker.hasWorkingItem(:UTILITYUMBRELLA)
+    if ((@battle.pbWeather==PBWeather::SUNNYDAY ||
+       @battle.pbWeather==PBWeather::HARSHSUN)  && !attacker.hasWorkingItem(:UTILITYUMBRELLA)) || 
+       attacker.hasWorkingAbility(:MEGASOL)
       hpgain=(attacker.totalhp*2/3).floor
     elsif @battle.pbWeather!=0
       hpgain=(attacker.totalhp/4).floor
@@ -7219,7 +7239,7 @@ end
 ################################################################################
 class PokeBattle_Move_0F0 < PokeBattle_Move
   def pbEffectAfterHit(attacker,opponent,turneffects)
-    if !attacker.isFainted? && !opponent.isFainted? && opponent.item!=0 &&
+    if !opponent.isFainted? && opponent.item!=0 &&
        opponent.damagestate.calcdamage>0 && !opponent.damagestate.substitute
       if !attacker.hasMoldBreaker && opponent.hasWorkingAbility(:STICKYHOLD)
         abilityname=PBAbilities.getName(opponent.ability)
@@ -7243,9 +7263,6 @@ class PokeBattle_Move_0F0 < PokeBattle_Move
     return damagemult
   end
 end
-
-
-
 ################################################################################
 # El usuario roba el objeto al objetivo en caso que el usuario no tenga ninguno.
 # El usuario se queda con los objetos robados en batallas con salvajes después
@@ -8449,7 +8466,8 @@ class PokeBattle_Move_10C < PokeBattle_Move
       return -1
     end
     attacker.pbReduceHP(sublife,false,false)
-    pbShowAnimation(@id,attacker,nil,hitnum,alltargets,showanimation)
+    #Utiliza la animación del sustituto
+    @battle.scene.pbShowSubstitute(attacker.index, true) rescue pbShowAnimation(@id,attacker,nil,hitnum,alltargets,showanimation)
     attacker.effects[PBEffects::MultiTurn]=0
     attacker.effects[PBEffects::MultiTurnAttack]=0
     attacker.effects[PBEffects::Substitute]=sublife
@@ -10327,6 +10345,8 @@ class PokeBattle_Move_CF5 < PokeBattle_Move
     hpgain=0
     if @battle.pbWeather==PBWeather::SANDSTORM
       hpgain=(attacker.totalhp*2/3).floor
+    elsif attacker.hasWorkingAbility(:MEGASOL)
+      hpgain=(attacker.totalhp/2).floor
     else
       hpgain=(attacker.totalhp/2).floor
     end
@@ -10772,7 +10792,7 @@ end
 
 ################################################################################
 # Poisons the target (Toxic Thread)
-# Decreases the target's Speed by 1 stage.
+# Decreases the target's Speed by 2* stage.
 ################################################################################
 class PokeBattle_Move_1B9 < PokeBattle_Move
   def pbEffect(attacker,opponent,hitnum=0,alltargets=nil,showanimation=true)
@@ -10781,7 +10801,7 @@ class PokeBattle_Move_1B9 < PokeBattle_Move
     poison=opponent.pbCanPoison?(attacker,false,self)
     pbShowAnimation(@id,attacker,opponent,hitnum,alltargets,showanimation) if speed || poison
     ret=false
-    ret=opponent.pbReduceStat(PBStats::SPEED,1,attacker,true,self) if speed
+    ret=opponent.pbReduceStat(PBStats::SPEED,USENEWBATTLEMECHANICS ? 2 : 1,attacker,true,self) if speed
     ret|=poison
     opponent.pbPoison(attacker) if poison || attacker.hasWorkingAbility(:CORROSION) && opponent.status==0
     @battle.pbDisplay(_INTL("¡Pero falló!")) if !ret
@@ -12246,7 +12266,7 @@ class PokeBattle_Move_248 < PokeBattle_Move
       return -1
     end
     attacker.pbReduceHP(sublife,false,false)
-    pbShowAnimation(@id,attacker,nil,hitnum,alltargets,showanimation)
+    @battle.scene.pbShowSubstitute(attacker.index, true) rescue pbShowAnimation(@id,attacker,nil,hitnum,alltargets,showanimation)
     #@battle.scene.setSubstitute(attacker.index) #sustituto
     attacker.effects[PBEffects::MultiTurn]=0
     attacker.effects[PBEffects::MultiTurnAttack]=0
@@ -12803,8 +12823,9 @@ end
 ################################################################################
 class PokeBattle_Move_265 < PokeBattle_Move
   def pbBaseDamage(basedmg,attacker,opponent)
-    if (@battle.pbWeather==PBWeather::SUNNYDAY ||
-        @battle.pbWeather==PBWeather::HARSHSUN) && !attacker.hasWorkingItem(:UTILITYUMBRELLA)
+    if ((@battle.pbWeather==PBWeather::SUNNYDAY ||
+        @battle.pbWeather==PBWeather::HARSHSUN) && !attacker.hasWorkingItem(:UTILITYUMBRELLA)) || 
+        attacker.hasWorkingAbility(:MEGASOL)
       return basedmg*1.5
     end
     return basedmg
@@ -12887,20 +12908,20 @@ end
 # Oído Cocina / Order Up
 ################################################################################
 class PokeBattle_Move_269 < PokeBattle_Move
-  def pbAdditionalEffect(attacker,opponent)
-    if attacker.pbPartner.form==0
+  def pbAdditionalEffect(attacker,opponent) 
+    if attacker.pbPartner.form==0 && @battle.doublebattle
       showanim=true
       if attacker.pbCanIncreaseStatStage?(PBStats::ATTACK,attacker,false,self)
         attacker.pbIncreaseStat(PBStats::ATTACK,1,attacker,false,self,showanim)
         showanim=false
       end
-    elsif attacker.pbPartner.form==1
+    elsif attacker.pbPartner.form==1 && @battle.doublebattle
       showanim=true
       if attacker.pbCanIncreaseStatStage?(PBStats::DEFENSE,attacker,false,self)
         attacker.pbIncreaseStat(PBStats::DEFENSE,1,attacker,false,self,showanim)
         showanim=false
       end
-    elsif attacker.pbPartner.form==2
+    elsif attacker.pbPartner.form==2 && @battle.doublebattle
       showanim=true
       if attacker.pbCanIncreaseStatStage?(PBStats::SPEED,attacker,false,self)
         attacker.pbIncreaseStat(PBStats::SPEED,1,attacker,false,self,showanim)
@@ -13201,6 +13222,80 @@ class PokeBattle_Move_282 < PokeBattle_Move
 
 end
 
+################################################################################
+# Quema al rival. Precisión perfecta en la lluvia.
+# (Simún de Arena)
+################################################################################
+class PokeBattle_Move_283 < PokeBattle_Move
+  def pbAdditionalEffect(attacker,opponent)
+    return if opponent.damagestate.substitute
+    if opponent.pbCanBurn?(attacker,false,self)
+      opponent.pbBurn(attacker)
+    end
+  end
+
+  def pbModifyBaseAccuracy(baseaccuracy,attacker,opponent)
+    case @battle.pbWeather
+    when PBWeather::RAINDANCE, PBWeather::HEAVYRAIN
+      return 0
+    end
+    return baseaccuracy
+  end
+end
+
+################################################################################
+# Paraliza al objetivo. Precisión perfecta en la lluvia.
+# (Electormenta)
+################################################################################
+class PokeBattle_Move_284 < PokeBattle_Move
+  def pbAdditionalEffect(attacker,opponent)
+    return if opponent.damagestate.substitute
+    if opponent.pbCanParalyze?(attacker,false,self)
+      opponent.pbParalyze(attacker)
+    end
+  end
+
+  def pbModifyBaseAccuracy(baseaccuracy,attacker,opponent)
+    case @battle.pbWeather
+    when PBWeather::RAINDANCE, PBWeather::HEAVYRAIN
+      return 0
+    end
+    return baseaccuracy
+  end
+end
+
+################################################################################
+# Puede bajar la velocidad. Precisión perfecta en la lluvia.
+# (Vendaval Gélido)
+################################################################################
+class PokeBattle_Move_285 < PokeBattle_Move
+  def pbEffect(attacker,opponent,hitnum=0,alltargets=nil,showanimation=true)
+    return super(attacker,opponent,hitnum,alltargets,showanimation) if pbIsDamaging?
+    return -1 if !opponent.pbCanReduceStatStage?(PBStats::SPEED,attacker,true,self)
+    pbShowAnimation(@id,attacker,opponent,hitnum,alltargets,showanimation)
+    ret=opponent.pbReduceStat(PBStats::SPEED,1,attacker,false,self)
+    return ret ? 0 : -1
+  end
+
+  def pbAdditionalEffect(attacker,opponent)
+    return if opponent.damagestate.substitute
+    if opponent.pbCanReduceStatStage?(PBStats::SPEED,attacker,false,self)
+      opponent.pbReduceStat(PBStats::SPEED,1,attacker,false,self)
+    end
+  end
+
+  def pbModifyBaseAccuracy(baseaccuracy,attacker,opponent)
+    case @battle.pbWeather
+    when PBWeather::RAINDANCE, PBWeather::HEAVYRAIN
+      return 0
+    end
+    return baseaccuracy
+  end
+end
+
+################################################################################################################
+# Movimiento Zydarde ZA
+##############################################################################################################
 class PokeBattle_Move_456 < PokeBattle_Move
   def pbMoveFailed(attacker,opponent)
     return true if !isConst?(attacker.species,PBSpecies,:ZYGARDE)
@@ -13208,3 +13303,4 @@ class PokeBattle_Move_456 < PokeBattle_Move
     return false
   end
 end
+

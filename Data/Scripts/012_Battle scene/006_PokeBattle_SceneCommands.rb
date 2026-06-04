@@ -169,10 +169,12 @@ class CommandMenuDisplay
       super
     end
   
-    def update(index=0,mode=0)
-      refresh(index,mode)
+    def update(index=0, mode=0)
+      return if index == @last_index && mode == @last_mode
+      @last_index = index; @last_mode = mode
+      refresh(index, mode)
     end
-  
+
     def refresh(index,mode=0)
       self.bitmap.clear
       @mode=mode
@@ -414,11 +416,16 @@ class CommandMenuDisplay
       @terastalbitmap.dispose
       super
     end
-  
-    def update(index=0,moves=nil,megaButton=0,ultraButton=0,zButton=0,dynaButton=0,teraButton=0)
-      refresh(index,moves,megaButton,ultraButton,zButton,dynaButton,teraButton)
+    
+    def update(index=0, moves=nil, mega=0, ultra=0, z=0, dyna=0, tera=0)
+      return if index == @last_index && mega == @last_mega &&
+                dyna == @last_dyna && tera == @last_tera &&
+                z == @last_z && ultra == @last_ultra
+      @last_index = index; @last_mega = mega; @last_dyna = dyna
+      @last_tera  = tera;  @last_z    = z;    @last_ultra = ultra
+      refresh(index, moves, mega, ultra, z, dyna, tera)
     end
-  
+
     def getMoveName(move)
       movename = move.name
       if PokeBattle_SceneConstants::SHORTEN_MOVES && movename.length > 16
@@ -501,59 +508,9 @@ class CommandMenuDisplay
     end
   
     def getMoveType(move)
-      case move.id
-      when PBMoves::WEATHERBALL
-        case @battle.pbWeather
-        when PBWeather::SUNNYDAY, PBWeather::HARSHSUN;   return PBTypes::FIRE
-        when PBWeather::RAINDANCE, PBWeather::HEAVYRAIN; return PBTypes::WATER
-        when PBWeather::SANDSTORM;                       return PBTypes::ROCK
-        when PBWeather::HAIL;                            return PBTypes::ICE
-        end
-      when PBMoves::HIDDENPOWER
-        return pbHiddenPower(@pokemon.iv)[0]
-      when PBMoves::JUDGMENT, PBMoves::MULTIATTACK
-        return @pokemon.type1
-      when PBMoves::TECHNOBLAST
-        case @pokemon.item
-        when PBItems::CHILLDRIVE; return PBTypes::ICE
-        when PBItems::BURNDRIVE;  return PBTypes::FIRE
-        when PBItems::DOUSEDRIVE; return PBTypes::WATER
-        when PBItems::SHOCKDRIVE; return PBTypes::ELECTRIC
-        end
-      when PBMoves::AURAWHEEL
-        return @pokemon.form==0 ? PBTypes::ELECTRIC : PBTypes::DARK
-      when PBMoves::TERRAINPULSE
-        if @battle.field.effects[PBEffects::ElectricTerrain]>0
-          return (getConst(PBTypes,:ELECTRIC))
-        elsif @battle.field.effects[PBEffects::MistyTerrain]>0
-          return (getConst(PBTypes,:FAIRY))
-        elsif @battle.field.effects[PBEffects::PsychicTerrain]>0
-          return (getConst(PBTypes,:PSYCHIC))
-        elsif @battle.field.effects[PBEffects::GrassyTerrain]>0
-          return (getConst(PBTypes,:GRASS))
-        end
-      when PBMoves::TERABLAST
-        return @pokemon.teratype if (@pokemon.isTera? rescue false)
-      end
-      if @pokemon.ability==PBAbilities::NORMALIZE
-        return PBTypes::NORMAL
-      end
-      if move.type==PBTypes::NORMAL
-        if @pokemon.ability==PBAbilities::AERILATE
-          return PBTypes::FLYING
-        elsif @pokemon.ability==PBAbilities::REFRIGERATE
-          return PBTypes::ICE
-        elsif @pokemon.ability==PBAbilities::PIXILATE
-          return PBTypes::FAIRY
-        elsif @pokemon.ability==PBAbilities::GALVANIZE
-          return PBTypes::ELECTRIC
-        end
-      end
-      if (@battle.field.effects[PBEffects::IonDeluge] || @battle.field.effects[PBEffects::PlasmaFists]) && isConst?(move.type,PBTypes,:NORMAL)
-        return getConst(PBTypes,:ELECTRIC)
-      end
-      return move.type
+      return MoveTypeHelper.get_move_type(@pokemon, move, @battle) rescue move.type
     end
+    
   end
 
 class PokeBattle_Scene
@@ -604,7 +561,7 @@ class PokeBattle_Scene
         ret=cw.index
         @lastcmd[index]=ret
         return ret
-      elsif Input.trigger?(Input::B) && index==2 && @lastcmd[0]!=2 # Cancel
+      elsif Input.trigger?(Input::B) && index==2 # Cancel
         pbPlayDecisionSE()
         return -1
       elsif Input.trigger?(Input::L) && !pbInSafari? #Q
@@ -633,10 +590,8 @@ class PokeBattle_Scene
     cw.teraButton=1 if @battle.pbCanTeraCristal?(index)
     cw.zButton=0
     cw.zButton=1 if @battle.pbCanZMove?(index)
-    # NO FUNCIONAN, DEJADOS PARA MEJOR COMPATIBILIDAD
-    # SOLO PARA EL CASO DE QUE UNO QUIERA PONERLOS
     cw.dynaButton=0
-    cw.dynaButton=1 if false
+    cw.dynaButton=1 if (@battle.pbCanDynamax?(index) && !@battle.pbCanMegaEvolve?(index) && !@battle.pbCanUltraBurst?(index) && !@battle.pbCanZMove?(index))
     pbSelectBattler(index)
     pbRefresh
     loop do
@@ -654,6 +609,12 @@ class PokeBattle_Scene
         pbPlayCursorSE() if cw.setIndex(cw.index+2)
       end
       if Input.trigger?(Input::C)   # Confirm choice
+        if battler.effects[PBEffects::DButton]
+          battler.effects[PBEffects::MaxMove1]+=1 if cw.index == 0
+          battler.effects[PBEffects::MaxMove2]+=1 if cw.index == 1
+          battler.effects[PBEffects::MaxMove3]+=1 if cw.index == 2
+          battler.effects[PBEffects::MaxMove4]+=1 if cw.index == 3
+        end
         ret=cw.index
         if cw.zButton==2
           if battler.pbCompatibleZMoveFromIndex?(ret)
@@ -671,29 +632,41 @@ class PokeBattle_Scene
         return ret
         end
       elsif Input.trigger?(Input::A)   # Use Mega Evolution
-        if @battle.pbCanMegaEvolve?(index) && !pbIsZCrystal?(battler.item)
+        if @battle.pbCanMegaEvolve?(index)
           @battle.pbRegisterMegaEvolution(index)
           cw.megaButton=2
           pbPlayDecisionSE()
-        elsif @battle.pbCanUltraBurst?(index)  # Use Ultra Burst
-          @battle.pbRegisterUltraBurst(index)
-          cw.ultraButton=2
-          pbPlayDecisionSE()
-        elsif @battle.pbCanTeraCristal?(index)
+          next
+        elsif @battle.pbCanDynamax?(index) # Use Dynamax
+          battler.effects[PBEffects::DButton] = true
+          battler.pbMaxMove
+          @battle.pbRegisterDynamax (index)
+          pbPlayDecisionSE
+          cw.dynaButton = 2
+          pbUpdate
+          next
+        elsif @battle.pbCanTeraCristal?(index) && !@battle.pbCanDynamax?(index)
           @battle.pbRegisterTeraCristal(index)
           cw.teraButton=2
           pbPlayDecisionSE()
+          next
+        elsif @battle.pbCanUltraBurst?(index) # Use Ultra Burst
+          @battle.pbRegisterUltraBurst(index)
+          cw.ultraButton=2
+          pbPlayDecisionSE()
+          next
         elsif @battle.pbCanZMove?(index)  # Use Z Move
           @battle.pbRegisterZMove(index)
           cw.zButton=2
           pbPlayDecisionSE()
+          next
         end
       elsif Input.trigger?(Input::B)   # Cancel fight menu
+        battler.effects[PBEffects::DButton] = false
+        battler.pbUnMaxMove if !battler.isDynamax?
         @lastmove[index]=cw.index
         pbPlayCancelSE()
         return -1
-      elsif Input.trigger?(Input::L) && !pbInSafari? #Q
-        pbShowBattleInfo(@battle)
       end
     end
   end

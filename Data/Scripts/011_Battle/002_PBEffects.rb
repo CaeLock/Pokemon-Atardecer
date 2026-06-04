@@ -141,14 +141,25 @@ begin
     Commander          = 146
     GlaiveRush         = 147
     ShedTail           = 148
-    # Issue #13: Protosintesis y Carga Cuark no funcionan exactamente igual que en los juegos oficiales. - albertomcastro4
-    # El efecto de Protosíntesis también controla Carga Cuark. 
     Protosynthesis     = 150
     BoosterEnergy      = 151 
+    PiercingDrill      = 162
     
 
     ZHeal              = 149
-    
+    Dynamax            = 152
+    DBoost             = 153
+    DButton            = 154
+    # Max Move Effects
+    MaxGuard           = 155  # The effect for the move Max Guard.
+    ChiStrike          = 156  # The crit-boosting effect of G-Max Chi Strike.
+    # Gigantamax
+    Gigantamax         = 157
+    MaxMove1           = 158
+    MaxMove2           = 159
+    MaxMove3           = 160
+    MaxMove4           = 161
+
     ############################################################################
     # These effects apply to a side
     CraftyShield       = 0
@@ -175,7 +186,11 @@ begin
     AuroraVeil         = 21
     FaintedAlly        = 22
 
-    
+    VineLash           = 101  # The lingering effect of G-Max Vine Lash.
+    WildFire           = 102  # The lingering effect of G-Max Wildfire.
+    Cannonade          = 103  # The lingering effect of G-Max Cannonade.
+    Volcalith          = 104  # The lingering effect of G-Max Volcalith.
+    Steelsurge         = 105  # The hazard effect of G-Max Steelsurge.
     ############################################################################
     # These effects apply to the battle (i.e. both sides)
     ElectricTerrain = 0

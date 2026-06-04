@@ -42,7 +42,7 @@ class PokeBattle_Move
     @category   = movedata.category
     @thismove   = move
     @pp         = move.pp   # Puede ser cambiado con Mimic/Transform
-    @powerboost = false   # For Aerilate, Pixilate, Refrigerate
+    @powerboost = false   # For Aerilate, Pixilate, Refrigerate, Draconize
     @zmove      = false
   end
 
@@ -91,6 +91,9 @@ class PokeBattle_Move
         elsif attacker.hasWorkingAbility(:PIXILATE) && hasConst?(PBTypes,:FAIRY)
           type=getConst(PBTypes,:FAIRY)
           @powerboost=true
+        elsif attacker.hasWorkingAbility(:DRAGONIZE) && hasConst?(PBTypes,:FAIRY)
+          type=getConst(PBTypes,:DRAGON)
+          @powerboost=true
         elsif attacker.hasWorkingAbility(:GALVANIZE) && hasConst?(PBTypes,:ELECTRIC)
           type=getConst(PBTypes,:ELECTRIC)
           @powerboost=true
@@ -123,6 +126,10 @@ class PokeBattle_Move
         elsif @battle.field.effects[PBEffects::PlasmaFists] && attacker.hasWorkingAbility(:PIXILATE) &&
          hasConst?(PBTypes,:FAIRY)
           type=getConst(PBTypes,:FAIRY)
+          @powerboots=true
+        elsif @battle.field.effects[PBEffects::PlasmaFists] && attacker.hasWorkingAbility(:DRAGONIZE) &&
+         hasConst?(PBTypes,:DRAGON)
+          type=getConst(PBTypes,:DRAGON)
           @powerboots=true
         elsif @battle.field.effects[PBEffects::PlasmaFists] && attacker.hasWorkingAbility(:GALVANIZE) &&
          hasConst?(PBTypes,:ELECTRIC)
@@ -191,6 +198,7 @@ class PokeBattle_Move
          !pbIsMultiHit && !pbTwoTurnAttack(attacker)
         exceptions=[0x6E,   # Esfuerzo
                     0xE0,   # Autodestru./Explosión
+                    0x202,  # Bruma Explosiva
                     0xE1,   # Sacrificio
                     0xF7]   # Lanzamiento
         if !exceptions.include?(@function)
@@ -312,7 +320,9 @@ class PokeBattle_Move
            isConst?(@id,PBMoves,:KOWTOWCLEAVE) ||
            isConst?(@id,PBMoves,:MIGHTYCLEAVE) ||
            isConst?(@id,PBMoves,:PSYBLADE) ||
-           isConst?(@id,PBMoves,:TACHYONCUTTER) 
+           isConst?(@id,PBMoves,:TACHYONCUTTER) ||
+           isConst?(@id,PBMoves,:SHADOWCLAW) ||
+           isConst?(@id,PBMoves,:DRAGONCLAW) ||
            
   end
 
@@ -691,7 +701,7 @@ class PokeBattle_Move
     evastage-=2 if @battle.field.effects[PBEffects::Gravity]>0
     evastage=-6 if evastage<-6
     evastage=0 if evastage>0 && USENEWBATTLEMECHANICS &&
-                  attacker.hasWorkingAbility(:KEENEYE)
+                  (attacker.hasWorkingAbility(:KEENEYE)  || attacker.hasWorkingAbility(:ILLUMINATE))
     evastage=0 if opponent.effects[PBEffects::Foresight] ||
                   opponent.effects[PBEffects::MiracleEye] ||
                   @function==0xA9 || # Chip Away
@@ -777,6 +787,7 @@ class PokeBattle_Move
     c=0
     ratios=(USENEWBATTLEMECHANICS) ? [16,8,2,1,1] : [16,8,4,3,2]
     c+=attacker.effects[PBEffects::FocusEnergy]
+    c+=attacker.effects[PBEffects::ChiStrike] if attacker.effects[PBEffects::ChiStrike] #Dynamax
     c+=1 if hasHighCriticalRate?
     if (attacker.inHyperMode? rescue false) && isConst?(self.type,PBTypes,:SHADOW)
       c+=1
@@ -854,6 +865,16 @@ class PokeBattle_Move
     if attacker.hasWorkingAbility(:ROCKYPAYLOAD) && isConst?(type,PBTypes,:ROCK)
       damagemult=(damagemult*1.5).round
     end
+    # Mega Sol / Megasolar
+    if attacker.hasWorkingAbility(:MEGASOL) && isConst?(type,PBTypes,:FIRE)
+      damagemult=(damagemult*1.5).round
+    end
+    if attacker.hasWorkingAbility(:MEGASOL) && isConst?(type,PBTypes,:WATER)
+      damagemult=(damagemult*0.5).round
+    end
+    if attacker.hasWorkingAbility(:MEGASOL) && isConst?(type,PBTypes,:WATER) && @function==0x265
+      damagemult=(damagemult*1.0).round
+    end
     if attacker.hasWorkingAbility(:TECHNICIAN) && basedmg<=60 && @id>0
       damagemult=(damagemult*1.5).round
     end
@@ -918,6 +939,7 @@ class PokeBattle_Move
     if (attacker.hasWorkingAbility(:AERILATE) ||
        attacker.hasWorkingAbility(:REFRIGERATE) ||
        attacker.hasWorkingAbility(:PIXILATE) ||
+       attacker.hasWorkingAbility(:DRAGONIZE) ||
        attacker.hasWorkingAbility(:GALVANIZE)) && @powerboost
       damagemult=(damagemult*1.2).round
     end
@@ -1253,14 +1275,15 @@ class PokeBattle_Move
        !@battle.rules["souldewclause"]
       atkmult=(atkmult*1.5).round
     end
-    if attacker.hasWorkingItem(:CHOICEBAND) && pbIsPhysical?(type)
-      atkmult=(atkmult*1.5).round
+    if !attacker.isDynamax? # Dynamax
+      if attacker.hasWorkingItem(:CHOICEBAND) && pbIsPhysical?(type)
+        atkmult=(atkmult*1.5).round
+      end
+      if attacker.hasWorkingItem(:CHOICESPECS) && pbIsSpecial?(type)
+        atkmult=(atkmult*1.5).round
+      end
     end
-    if attacker.hasWorkingItem(:CHOICESPECS) && pbIsSpecial?(type)
-      atkmult=(atkmult*1.5).round
-    end
-    
-    # Issue #13: Protosintesis y Carga Cuark no funcionan exactamente igual que en los juegos oficiales. - albertomcastro4
+    # Protosintesis y Carga Cuark
     # Aumentos del ataque
     if ((attacker.hasWorkingAbility(:PROTOSYNTHESIS) && (([PBWeather::SUNNYDAY, PBWeather::HARSHSUN].include?(@battle.pbWeather)) || attacker.effects[PBEffects::BoosterEnergy]))  ||   # Paleosítensis
         (attacker.hasWorkingAbility(:QUARKDRIVE) && (@battle.field.effects[PBEffects::ElectricTerrain]>0 || attacker.effects[PBEffects::BoosterEnergy])))                                           &&   # Quark Drive   
@@ -1296,12 +1319,12 @@ class PokeBattle_Move
       #defense2=(defense2*1.0*stagemul[defstage2]/stagediv[defstage2]).floor
     end
     if @battle.pbWeather==PBWeather::SANDSTORM &&
-       opponent.pbHasType?(:ROCK) && applysandstorm
+       opponent.pbHasType?(:ROCK) && applysandstorm && !attacker.hasWorkingAbility(:MEGASOL)
       defense=(defense*1.5).round
     end
     if SNOW_REPLACES_HAIL
       if @battle.pbWeather==PBWeather::HAIL &&
-         opponent.pbHasType?(:ICE) && applysnow
+         opponent.pbHasType?(:ICE) && applysnow && !attacker.hasWorkingAbility(:MEGASOL)
         defense2=(defense2*1.5).round
       end
     end
@@ -1622,6 +1645,7 @@ class PokeBattle_Move
       @battle.pbDisplayPaused(_INTL("¡El sustituto recibe el daño en lugar de {1}!",opponent.name))
       if opponent.effects[PBEffects::Substitute]<=0
         opponent.effects[PBEffects::Substitute]=0
+        @battle.scene.pbShowSubstitute(opponent.index, false)
         @battle.pbDisplayPaused(_INTL("¡El sustituto de {1} se acabó!",opponent.name))
         PBDebug.log("[Efecto terminado] Sustituto de #{opponent.pbThis} terminado")
       end
@@ -1653,6 +1677,10 @@ class PokeBattle_Move
         damage*=2
         @battle.pbDisplay(_INTL("¡La potencia del ataque se ha duplicado!"))
         opponent.effects[PBEffects::GlaiveRush]=false
+      end
+      # Piercing Drill
+      if attacker.effects[PBEffects::PiercingDrill]
+        damage = [(damage / 4).floor, 1].max
       end
       if damage>=opponent.hp
         damage=opponent.hp

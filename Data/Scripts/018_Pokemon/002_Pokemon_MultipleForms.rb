@@ -208,6 +208,22 @@ module MultipleForms
     return nil if !sp || !sp[func]
     return sp[func].call(pokemon,*args)
   end
+
+  # NUEVO: Método para añadir funciones sin sobrescribir las existentes 
+  # BES-T - Se usa en el dynamax.
+  def self.add(sym,hash)
+    existing = @@formSpecies[sym]
+    if existing
+      # Si ya existe, combinar los hashes
+      hash.each do |key, value|
+        existing[key] = value
+      end
+    else
+      # Si no existe, crear nuevo registro
+      @@formSpecies.add(sym,hash)
+    end
+  end
+
 end
 
 
@@ -1021,6 +1037,10 @@ MultipleForms.register(:FLOETTE,{
    next [74,85,87,102,155,148] if pokemon.form==7 # Mega Floette Flor Eterna
    next 
 },
+"getAbilityList"=>proc{|pokemon|
+    next [[getID(PBAbilities,:FAIRYAURA),0]] if pokemon.form==7
+    next
+}, #No se sabe cual es la hab oficial.
  "getMegaForm"=>proc{|pokemon|
     next 7 if isConst?(pokemon.item,PBItems,:FLOETTITE) && pokemon.form==6
     next
@@ -1581,6 +1601,10 @@ MultipleForms.register(:INDEEDEE,{
      pokemon.form=0
    end
 },
+  "getBaseStats"=>proc{|pokemon|
+  next [70,55,65,85,95,105] if pokemon.form==1
+  next
+},
 "getAbilityList"=>proc{|pokemon|
    case pokemon.form
    when 1; next [[getID(PBAbilities,:OWNTEMPO),0],[getID(PBAbilities,:SYNCHRONIZE),1],[getID(PBAbilities,:PSYCHICSURGE),2]]
@@ -1823,6 +1847,21 @@ MultipleForms.register(:CALYREX,{
 }
 })
 
+# BASCULEGION
+MultipleForms.register(:BASCULEGION,{
+"getFormOnCreation"=>proc{|pokemon|
+   if pokemon.isFemale?
+     pokemon.form=1
+   else
+     pokemon.form=0
+   end
+},
+    "getBaseStats"=>proc{|pokemon|
+  next [120,92,65,78,100,75] if pokemon.form==1
+  next
+}
+})
+
 # OINKOLOGNE
 MultipleForms.register(:OINKOLOGNE,{
 "getFormOnCreation"=>proc{|pokemon|
@@ -1831,6 +1870,10 @@ MultipleForms.register(:OINKOLOGNE,{
    else
      pokemon.form=0
    end
+},
+    "getBaseStats"=>proc{|pokemon|
+  next [115,90,70,65,59,90] if pokemon.form==1
+  next
 },
 "getAbilityList"=>proc{|pokemon|
    case pokemon.form

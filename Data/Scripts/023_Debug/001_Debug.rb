@@ -281,8 +281,8 @@ def pbDebugMenu
   commands.add("extracttext",_INTL("Extraer Texto"))
   commands.add("compiletext",_INTL("Compilar Texto"))
   commands.add("compiledata",_INTL("Compilar Datos"))
-  commands.add("mapconnections",_INTL("Conexiones de Mapas"))
-  commands.add("animeditor",_INTL("Editor de Animaciones"))
+  #commands.add("mapconnections",_INTL("Conexiones de Mapas"))
+  #commands.add("animeditor",_INTL("Editor de Animaciones"))
   commands.add("debugconsole",_INTL("Consola de Depuración"))
   commands.add("togglelogging",_INTL("Activar Registro de Batalla"))
   sprites["cmdwindow"]=Window_CommandPokemonEx.new(commands.list)
@@ -815,9 +815,11 @@ def pbDebugMenu
     elsif cmd=="purifychamber"
       pbPurifyChamber()
     elsif cmd=="extracttext"
-      pbExtractText
+      pbExtractTextByType
+      #pbExtractText
     elsif cmd=="compiletext"
-      pbCompileTextUI
+      pbCompileTextFromFoldersUI
+      #pbCompileTextUI
     elsif cmd=="compiledata"
       msgwindow=Kernel.pbCreateMessageWindow
       pbCompileAllData(true) {|msg| Kernel.pbMessageDisplay(msgwindow,msg,false) }
