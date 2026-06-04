@@ -1890,13 +1890,9 @@ MultipleForms.register(:RAICHU,{
     next [60,100,55,130,160,80] if pokemon.form==2
     next
  },
- #"getAbilityList"=>proc{|pokemon|
- #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
- #   next
- #}, #No se sabe cual es la hab oficial.
- "weight"=>proc{|pokemon|
-    next 380 if pokemon.form==1
-    next 260 if pokemon.form==2
+ "getAbilityList"=>proc{|pokemon|
+    next [[getID(PBAbilities,:ELECTRICSURGE),0]] if pokemon.form==1
+    next [[getID(PBAbilities,:NOGUARD),0]] if pokemon.form==2
     next
  },
 "height"=>proc{|pokemon|
