@@ -830,7 +830,7 @@ def pbDebugMenu
     elsif cmd=="animeditor"
       pbFadeOutIn(99999) { pbAnimationEditor }
     elsif cmd=="debugconsole"
-      Console::setup_console
+      Console.setup_console
     elsif cmd=="togglelogging"
       $INTERNAL=!$INTERNAL
       Kernel.pbMessage(_INTL("El registro de depuración de batallas se creará en la carpeta Data.")) if $INTERNAL

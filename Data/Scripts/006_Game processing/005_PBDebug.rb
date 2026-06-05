@@ -1,43 +1,77 @@
+$INTERNAL = true if $DEBUG==true
 module PBDebug
-  def PBDebug.logonerr
+  @@log = []
+
+  def self.logonerr
     begin
       yield
     rescue
       PBDebug.log("")
       PBDebug.log("**Exception: #{$!.message}")
-      PBDebug.log("#{$!.backtrace.inspect}")
+      backtrace = ""
+      $!.backtrace.each { |line| backtrace += line + "\r\n" }
+      PBDebug.log(backtrace)
       PBDebug.log("")
-#      if $INTERNAL
-        pbPrintException($!)
-#      end
+      pbPrintException($!)
       PBDebug.flush
     end
   end
 
-  @@log=[]
-
-  def PBDebug.flush
-    if $DEBUG && $INTERNAL && @@log.length>0
-      File.open("Data/debuglog.txt", "a+b") {|f|
-         f.write("#{@@log}")
-      }
+  def self.flush
+    if $DEBUG && $INTERNAL && @@log.length > 0
+      File.open("Data/debuglog.txt", "a+b") { |f| f.write(@@log.join) }
     end
-    @@log.clear 
+    @@log.clear
   end
 
-  def PBDebug.log(msg)
+  def self.log(msg)
+    return unless $DEBUG && $INTERNAL
+    @@log.push(msg + "\r\n")
+    PBDebug.flush
+    echoln msg.gsub("%", "%%") if Console.open?
+  end
+
+  def self.log_header(msg)
     if $DEBUG && $INTERNAL
-      @@log.push("#{msg}\r\n")
-#      if @@log.length>1024
-        PBDebug.flush
-#      end
+      echoln Console.markup_style(msg.gsub("%", "%%"), :text => :light_purple)  # <--
+      @@log.push(msg + "\r\n")
+      PBDebug.flush
     end
   end
 
-  def PBDebug.dump(msg)
+  def self.log_message(msg)
     if $DEBUG && $INTERNAL
-      File.open("Data/dumplog.txt", "a+b") { |f| 
-         f.write("#{msg}\r\n") }
+      msg = "\"" + msg + "\""
+      echoln Console.markup_style(msg.gsub("%", "%%"), :text => :dark_gray)     # <--
+      @@log.push(msg + "\r\n")
+      PBDebug.flush
+    end
+  end
+
+  def self.log_ai(msg)
+    if $DEBUG && $INTERNAL
+      msg = "[AI] " + msg
+      echoln msg.gsub("%", "%%")
+      @@log.push(msg + "\r\n")
+      PBDebug.flush
+    end
+  end
+
+  def self.log_score_change(amt, msg)
+    return if amt == 0
+    if $DEBUG && $INTERNAL
+      sign = (amt > 0) ? "+" : "-"
+      amt_text = sprintf("%3d", amt.abs)
+      msg = "     #{sign}#{amt_text}: #{msg}"
+      echoln msg.gsub("%", "%%")
+      @@log.push(msg + "\r\n")
+      PBDebug.flush
+    end
+  end
+
+  def self.dump(msg)
+    if $DEBUG && $INTERNAL
+      File.open("Data/dumplog.txt", "a+b") { |f| f.write("#{msg}\r\n") }
     end
   end
 end
