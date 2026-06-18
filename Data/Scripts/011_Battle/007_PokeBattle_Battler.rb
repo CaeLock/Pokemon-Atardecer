@@ -766,6 +766,7 @@ class PokeBattle_Battler
     return true if self.hasWorkingItem(:AIRBALLOON)
     return true if @effects[PBEffects::MagnetRise]>0
     return true if @effects[PBEffects::Telekinesis]>0
+    return true if self.hasWorkingAbility(:EELEVATE) && !ignoreability
     return false
   end
 
@@ -2564,8 +2565,8 @@ class PokeBattle_Battler
         @battle.pbDisplay(_INTL("¡Coránima de {1} subió su Ataque Especial!",user.pbThis))
       end
     end
-    # Ultraimpulso
-    if self.hasWorkingAbility(:BEASTBOOST) && target.isFainted?
+    # Ultraimpulso / Impulso Anguila
+    if (self.hasWorkingAbility(:BEASTBOOST) || self.hasWorkingAbility(:EELEVATE)) && target.isFainted?
       if user.attack >= user.defense &&
          user.attack >= user.spatk &&
          user.attack >= user.spdef &&
@@ -3811,6 +3812,13 @@ class PokeBattle_Battler
           showAbilityMessage(target) rescue nil
           @battle.pbDisplay(_INTL("¡{1} es inmune a movimientos de tipo Tierra gracias a Levitación!",target.pbThis))
           PBDebug.log("[Habilidad disparada] Levitación de #{target.pbThis} anula movimientos de tipo Tierra")
+          return false
+        end
+        if !user.hasMoldBreaker && target.hasWorkingAbility(:EELEVATE) &&
+          !thismove.doesBypassIgnorableAbilities?                              # Impulso Anguila
+          showAbilityMessage(target) rescue nil
+          @battle.pbDisplay(_INTL("¡{1} es inmune a movimientos de tipo Tierra gracias a Impulso Anguila!",target.pbThis))
+          PBDebug.log("[Habilidad disparada] Impulso Anguila de #{target.pbThis} anula movimientos de tipo Tierra")
           return false
         end
         if target.hasWorkingItem(:AIRBALLOON)                                  # Globo Helio

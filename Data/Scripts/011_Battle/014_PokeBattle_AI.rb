@@ -3942,7 +3942,8 @@ class PokeBattle_Battle
       elsif isConst?(move.type,PBTypes,:GROUND) &&
             (opponent.hasWorkingAbility(:LEVITATE) ||
             opponent.effects[PBEffects::MagnetRise]>0 ||
-            opponent.hasWorkingAbility(:EARTHEATER))
+            opponent.hasWorkingAbility(:EARTHEATER) ||
+            opponent.hasWorkingAbility(:EELEVATE)) 
         score=0
       elsif move.isSoundBased? && opponent.hasWorkingAbility(:SOUNDPROOF)
         score=0

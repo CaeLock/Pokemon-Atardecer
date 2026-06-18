@@ -862,6 +862,9 @@ class PokeBattle_Move
     if attacker.hasWorkingAbility(:DRAGONSMAW) && isConst?(type,PBTypes,:DRAGON)
       damagemult=(damagemult*1.5).round
     end
+    if attacker.hasWorkingAbility(:FIREMANE) && isConst?(type,PBTypes,:FIRE)
+      damagemult=(damagemult*1.5).round
+    end
     if attacker.hasWorkingAbility(:ROCKYPAYLOAD) && isConst?(type,PBTypes,:ROCK)
       damagemult=(damagemult*1.5).round
     end

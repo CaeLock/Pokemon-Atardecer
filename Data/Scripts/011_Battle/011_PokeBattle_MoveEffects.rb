@@ -6256,7 +6256,8 @@ class PokeBattle_Move_0CE < PokeBattle_Move
   def pbTypeModifier(type, attacker, opponent)
     return 0 if opponent.pbHasType?(:FLYING)
     return 0 if !attacker.hasMoldBreaker &&
-                opponent.hasWorkingAbility(:LEVITATE) && !opponent.effects[PBEffects::SmackDown]
+                (opponent.hasWorkingAbility(:LEVITATE) ||
+                 opponent.hasWorkingAbility(:EELEVATE)) && !opponent.effects[PBEffects::SmackDown]
     return super
   end
 end
@@ -8974,6 +8975,7 @@ class PokeBattle_Move_11C < PokeBattle_Move
        !opponent.effects[PBEffects::Roost]
       opponent.effects[PBEffects::SmackDown]=true
       showmsg=(opponent.pbHasType?(:FLYING) ||
+               opponent.hasWorkingAbility(:EELEVATE) ||
                opponent.hasWorkingAbility(:LEVITATE))
       if PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xC9 || # Fly
          PBMoveData.new(opponent.effects[PBEffects::TwoTurnAttack]).function==0xCC    # Bounce
