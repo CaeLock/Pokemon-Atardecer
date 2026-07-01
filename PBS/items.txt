@@ -824,3 +824,6 @@
 819,HEATRANITE,Heatranita,Heatranitas,1,0,"Una de las misteriosas Megapiedras. Permite megaevolucionar a Heatran en combate.",0,0,0  
 820,DARKRANITE,Darkranita,Darkranitas,1,0,"Una de las misteriosas Megapiedras. Permite megaevolucionar a Darkrai en combate.",0,0,0  
 821,ZERAORITE,Zeraorita,Zeraoritas,1,0,"Una de las misteriosas Megapiedras. Permite megaevolucionar a Zeraora en combate.",0,0,0
+822,PEWTERCRUNCHIES,Rokikos,Rokikos,2,1000,"Snack crujiente típico de Ciudad Plateada. Cura todos los problemas de estado de un Pokémon.",1,1,0,
+823,RAGECANDYBAR,Caramelo Furia,Caramelos Furia,2,1000,"Caramelo típico de Pueblo Caoba. Cura todos los problemas de estado de un Pokémon.",1,1,0,
+824,BIGMALASADA,Malasada Maxi,Malasadas Maxi,2,1000,"Fritura típica de Alola que cura todos los problemas de estado de un Pokémon.",1,1,0,
