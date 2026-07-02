@@ -469,7 +469,8 @@ ItemHandlers::UseOnPokemon.add(:FULLHEAL,proc{|item,pokemon,scene|
 })
 
 ItemHandlers::UseOnPokemon.copy(:FULLHEAL,
-   :LAVACOOKIE,:OLDGATEAU,:CASTELIACONE,:LUMIOSEGALETTE,:SHALOURSABLE,:LUMBERRY)
+   :LAVACOOKIE,:OLDGATEAU,:CASTELIACONE,:LUMIOSEGALETTE,:SHALOURSABLE,:LUMBERRY,
+   :PEWTERCRUNCHIES,:RAGECANDYBAR,:BIGMALASADA)
 
 ItemHandlers::UseOnPokemon.add(:FULLRESTORE,proc{|item,pokemon,scene|
    if pokemon.hp<=0 || (pokemon.hp==pokemon.totalhp && pokemon.status==0)
@@ -1377,7 +1378,8 @@ ItemHandlers::BattleUseOnPokemon.add(:FULLHEAL,proc{|item,pokemon,battler,scene|
 })
 
 ItemHandlers::BattleUseOnPokemon.copy(:FULLHEAL,
-   :LAVACOOKIE,:OLDGATEAU,:CASTELIACONE,:LUMIOSEGALETTE,:SHALOURSABLE,:LUMBERRY)
+   :LAVACOOKIE,:OLDGATEAU,:CASTELIACONE,:LUMIOSEGALETTE,:SHALOURSABLE,:LUMBERRY,
+   :PEWTERCRUNCHIES,:RAGECANDYBAR,:BIGMALASADA)
 
 ItemHandlers::BattleUseOnPokemon.add(:FULLRESTORE,proc{|item,pokemon,battler,scene|
    if pokemon.hp<=0 || (pokemon.hp==pokemon.totalhp && pokemon.status==0 &&
