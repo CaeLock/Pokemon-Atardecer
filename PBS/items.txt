@@ -826,3 +826,9 @@
 821,ZERAORITE,Zeraorita,Zeraoritas,1,0,"Una de las misteriosas Megapiedras. Permite megaevolucionar a Zeraora en combate.",0,0,0
 822,PEWTERCRUNCHIES,Rokikos,Rokikos,2,1000,"Snack crujiente típico de Ciudad Plateada. Cura todos los problemas de estado de un Pokémon.",1,1,0,
 823,BIGMALASADA,Malasada Maxi,Malasadas Maxi,2,1000,"Fritura típica de Alola que cura todos los problemas de estado de un Pokémon.",1,1,0,
+824,HEALTHMOCHI,Mochi Vigor,Mochis Vigor,2,3000,"Mochi preparado con bayas que aumenta en 10 EVs los PS de un Pokémon.",1,0,0,
+825,MUSCLEMOCHI,Mochi Músculo,Mochis Músculo,2,3000,"Mochi preparado con bayas que aumenta en 10 EVs el Ataque de un Pokémon.",1,0,0,
+826,RESISTMOCHI,Mochi Aguante,Mochis Aguante,2,3000,"Mochi preparado con bayas que aumenta en 10 EVs la Defensa de un Pokémon.",1,0,0,
+827,GENIUSMOCHI,Mochi Intelecto,Mochis Intelecto,2,3000,"Mochi preparado con bayas que aumenta en 10 EVs el At. Esp. de un Pokémon.",1,0,0,
+828,CLEVERMOCHI,Mochi Mente,Mochis Mente,2,3000,"Mochi preparado con bayas que aumenta en 10 EVs la Def. Esp. de un Pokémon.",1,0,0,
+829,SWIFTMOCHI,Mochi Ímpetu,Mochis Ímpetu,2,3000,"Mochi preparado con bayas que aumenta en 10 EVs la Velocidad de un Pokémon.",1,0,0,
