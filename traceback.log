@@ -1,0 +1,43 @@
+Script error within event 3, map 1 (Intro):
+Exception: NameError
+Message: undefined local variable or method `species' for #<Generate_Input_Pokemon:0x16cf00b0 @species=485>
+***Full script:
+ pbInputStarterPokemon()
+
+001_Interpreter.rb:248:in `pbExecuteScript'
+input_pokemon.rb:52:in `input_generate'
+input_pokemon.rb:49:in `loop'
+input_pokemon.rb:49:in `input_generate'
+input_pokemon.rb:72:in `pbInputStarterPokemon'
+(eval):1:in `pbExecuteScript'
+001_Interpreter.rb:1612:in `eval'
+001_Interpreter.rb:248:in `pbExecuteScript'
+001_Interpreter.rb:1612:in `command_355'
+001_Interpreter.rb:499:in `execute_command'
+
+
+001_Interpreter.rb:281:in `pbExecuteScript'
+001_Interpreter.rb:1612:in `command_355'
+001_Interpreter.rb:499:in `execute_command'
+001_Interpreter.rb:198:in `update'
+001_Interpreter.rb:111:in `loop'
+001_Interpreter.rb:111:in `update'
+001_Scene_Map.rb:103:in `update'
+001_Scene_Map.rb:101:in `loop'
+001_Scene_Map.rb:101:in `update'
+001_Scene_Map.rb:68:in `main'
+001_Scene_Map.rb:65:in `loop'
+001_Scene_Map.rb:65:in `main'
+999_Main.rb:55:in `mainFunctionDebug'
+999_Main.rb:35:in `mainFunction'
+999_Main.rb:65:in `load_scripts_from_folder'
+999_Main.rb:64:in `loop'
+999_Main.rb:64:in `load_scripts_from_folder'
+000:Main:32:in `eval'
+000:Main:35:in `load_scripts_from_folder'
+000:Main:32:in `each'
+000:Main:32:in `load_scripts_from_folder'
+000:Main:45:in `load_scripts_from_folder'
+000:Main:44:in `each'
+000:Main:44:in `load_scripts_from_folder'
+000:Main:49
