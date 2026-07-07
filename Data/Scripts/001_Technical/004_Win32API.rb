@@ -98,5 +98,5 @@ end
 
 # Well done for finding this place.
 # DO NOT EDIT THESE
-ESSENTIALS_VERSION = "BES3"
+ESSENTIALS_VERSION = "BES5"
 ERROR_TEXT = ""

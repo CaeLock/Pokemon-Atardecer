@@ -6,10 +6,6 @@ def pbBattlerFolders(back=false, female=false, shiny=false)
   folders_v21 = []
   folders_v16 = []
   # v21: Graphics/Pokemon/
-  folders_v21 << "Graphics/Pokemon/Front/Female/" if female && !back && !shiny
-  folders_v21 << "Graphics/Pokemon/Back/Female/" if female && back && !shiny
-  folders_v21 << "Graphics/Pokemon/FrontShiny/Female/" if female && shiny && !back
-  folders_v21 << "Graphics/Pokemon/BackShiny/Female/" if female && shiny && back
   if shiny && back
     folders_v21 << "Graphics/Pokemon/BackShiny/"
   elsif shiny
@@ -19,12 +15,11 @@ def pbBattlerFolders(back=false, female=false, shiny=false)
   else
     folders_v21 << "Graphics/Pokemon/Front/"
   end
-  
+  folders_v21 << "Graphics/Pokemon/Front/Female/" if female && !back && !shiny
+  folders_v21 << "Graphics/Pokemon/Back/Female/" if female && back && !shiny
+  folders_v21 << "Graphics/Pokemon/FrontShiny/Female/" if female && shiny && !back
+  folders_v21 << "Graphics/Pokemon/BackShiny/Female/" if female && shiny && back
   # v16: Graphics/Battlers/
-  folders_v16 << "Graphics/Battlers/Front/Female/" if female && !back && !shiny
-  folders_v16 << "Graphics/Battlers/Back/Female/" if female && back && !shiny
-  folders_v16 << "Graphics/Battlers/FrontShiny/Female/" if female && shiny && !back
-  folders_v16 << "Graphics/Battlers/BackShiny/Female/" if female && shiny && back
   if shiny && back
     folders_v16 << "Graphics/Battlers/BackShiny/"
   elsif shiny
@@ -34,7 +29,10 @@ def pbBattlerFolders(back=false, female=false, shiny=false)
   else
     folders_v16 << "Graphics/Battlers/Front/"
   end
-  
+  folders_v16 << "Graphics/Battlers/Front/Female/" if female && !back && !shiny
+  folders_v16 << "Graphics/Battlers/Back/Female/" if female && back && !shiny
+  folders_v16 << "Graphics/Battlers/FrontShiny/Female/" if female && shiny && !back
+  folders_v16 << "Graphics/Battlers/BackShiny/Female/" if female && shiny && back
   return folders_v21 + folders_v16
 end
 

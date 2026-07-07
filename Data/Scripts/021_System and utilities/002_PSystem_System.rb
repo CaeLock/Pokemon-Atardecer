@@ -129,7 +129,7 @@ end
 
 def pbDebugF7
   if $DEBUG
-    Console.setup_console
+    Console::setup_console
     begin
       debugBitmaps
     rescue

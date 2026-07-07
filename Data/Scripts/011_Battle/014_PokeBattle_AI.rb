@@ -66,7 +66,6 @@ class PokeBattle_Battle
     score=100
     opponent=attacker.pbOppositeOpposing unless opponent
     opponent=opponent.pbPartner if opponent && opponent.isFainted?
-    return 100 if opponent.nil? || opponent.isFainted? # Sin el da un Bug al morir tu poke por daño indirecto
     score=-100 if move.pp <= 0
     # Bromista / Prankster
     prankpri = (move.basedamage == 0 && attacker.hasWorkingAbility(:PRANKSTER))
@@ -3942,8 +3941,7 @@ class PokeBattle_Battle
       elsif isConst?(move.type,PBTypes,:GROUND) &&
             (opponent.hasWorkingAbility(:LEVITATE) ||
             opponent.effects[PBEffects::MagnetRise]>0 ||
-            opponent.hasWorkingAbility(:EARTHEATER) ||
-            opponent.hasWorkingAbility(:EELEVATE)) 
+            opponent.hasWorkingAbility(:EARTHEATER))
         score=0
       elsif move.isSoundBased? && opponent.hasWorkingAbility(:SOUNDPROOF)
         score=0

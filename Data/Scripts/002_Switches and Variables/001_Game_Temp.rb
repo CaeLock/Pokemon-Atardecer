@@ -4,7 +4,6 @@
 #  This class handles temporary data that is not included with save data.
 #  Refer to "$game_temp" for the instance of this class.
 #===============================================================================
-
 class Game_Temp
   attr_accessor :map_bgm                  # map music (for battle memory)
   attr_accessor :message_text             # message text

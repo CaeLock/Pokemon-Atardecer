@@ -232,7 +232,7 @@
 232,REVIVE,Revivir,Revivir,2,1500,"Medicina que reanima a un Pokémon debilitado y restaura la mitad de sus PS.",1,1,0,
 233,MAXREVIVE,Revivir Máximo,Revivir Máximos,2,4000,"Medicina que reanima a un Pokémon debilitado y restaura todos sus PS.",1,1,0,
 234,BERRYJUICE,Zumo de Baya,Zumos de Baya,2,100,"Zumo de bayas 100% natural que restaura 20 PS de un Pokémon.",1,1,0,
-235,RAGECANDYBAR,Caramelo Furia,Caramelos Furia,2,1000,"Caramelo típico de Pueblo Caoba. Cura todos los problemas de estado de un Pokémon.",1,1,0,
+235,RAGECANDYBAR,Caramelo Furia,Caramelos Furia,2,1000,"Caramelo típico de Pueblo Caoba, muy popular como souvenir.",1,1,0,
 236,SWEETHEART,Corazón Dulce,Corazones Dulces,2,100,"Chocolatina de sabor dulce. Restaura 20 PS de un Pokémon.",1,1,0,
 237,FRESHWATER,Agua Fresca,Aguas Frescas,2,200,"Agua de alto contenido mineral que restaura 30 PS de un Pokémon.",1,1,0,
 238,SODAPOP,Refresco,Refrescos,2,300,"Chispeante bebida gaseosa que restaura 50 PS de un Pokémon.",1,1,0,
@@ -824,5 +824,3 @@
 819,HEATRANITE,Heatranita,Heatranitas,1,0,"Una de las misteriosas Megapiedras. Permite megaevolucionar a Heatran en combate.",0,0,0  
 820,DARKRANITE,Darkranita,Darkranitas,1,0,"Una de las misteriosas Megapiedras. Permite megaevolucionar a Darkrai en combate.",0,0,0  
 821,ZERAORITE,Zeraorita,Zeraoritas,1,0,"Una de las misteriosas Megapiedras. Permite megaevolucionar a Zeraora en combate.",0,0,0
-822,PEWTERCRUNCHIES,Rokikos,Rokikos,2,1000,"Snack crujiente típico de Ciudad Plateada. Cura todos los problemas de estado de un Pokémon.",1,1,0,
-823,BIGMALASADA,Malasada Maxi,Malasadas Maxi,2,1000,"Fritura típica de Alola que cura todos los problemas de estado de un Pokémon.",1,1,0,

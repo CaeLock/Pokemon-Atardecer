@@ -29,11 +29,11 @@ def pbCallTitle #:nodoc:
 end
 
 def mainFunction #:nodoc:
-  if $DEBUG
-    pbCriticalCode { mainFunctionDebug }
-  else
+  #if $DEBUG
+  #  pbCriticalCode { mainFunctionDebug }
+  #else
     mainFunctionDebug
-  end
+  #end
   return 1
 end
 

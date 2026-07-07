@@ -143,7 +143,6 @@ begin
     ShedTail           = 148
     Protosynthesis     = 150
     BoosterEnergy      = 151 
-    PiercingDrill      = 162
     
 
     ZHeal              = 149
@@ -152,13 +151,13 @@ begin
     DButton            = 154
     # Max Move Effects
     MaxGuard           = 155  # The effect for the move Max Guard.
-    ChiStrike          = 156  # The crit-boosting effect of G-Max Chi Strike.
+    ChiStrike          = 166  # The crit-boosting effect of G-Max Chi Strike.
     # Gigantamax
-    Gigantamax         = 157
-    MaxMove1           = 158
-    MaxMove2           = 159
-    MaxMove3           = 160
-    MaxMove4           = 161
+    Gigantamax         = 167
+    MaxMove1           = 168
+    MaxMove2           = 169
+    MaxMove3           = 170
+    MaxMove4           = 171
 
     ############################################################################
     # These effects apply to a side

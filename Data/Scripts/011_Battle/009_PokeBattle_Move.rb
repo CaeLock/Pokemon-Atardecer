@@ -42,7 +42,7 @@ class PokeBattle_Move
     @category   = movedata.category
     @thismove   = move
     @pp         = move.pp   # Puede ser cambiado con Mimic/Transform
-    @powerboost = false   # For Aerilate, Pixilate, Refrigerate, Draconize
+    @powerboost = false   # For Aerilate, Pixilate, Refrigerate
     @zmove      = false
   end
 
@@ -91,9 +91,6 @@ class PokeBattle_Move
         elsif attacker.hasWorkingAbility(:PIXILATE) && hasConst?(PBTypes,:FAIRY)
           type=getConst(PBTypes,:FAIRY)
           @powerboost=true
-        elsif attacker.hasWorkingAbility(:DRAGONIZE) && hasConst?(PBTypes,:FAIRY)
-          type=getConst(PBTypes,:DRAGON)
-          @powerboost=true
         elsif attacker.hasWorkingAbility(:GALVANIZE) && hasConst?(PBTypes,:ELECTRIC)
           type=getConst(PBTypes,:ELECTRIC)
           @powerboost=true
@@ -126,10 +123,6 @@ class PokeBattle_Move
         elsif @battle.field.effects[PBEffects::PlasmaFists] && attacker.hasWorkingAbility(:PIXILATE) &&
          hasConst?(PBTypes,:FAIRY)
           type=getConst(PBTypes,:FAIRY)
-          @powerboots=true
-        elsif @battle.field.effects[PBEffects::PlasmaFists] && attacker.hasWorkingAbility(:DRAGONIZE) &&
-         hasConst?(PBTypes,:DRAGON)
-          type=getConst(PBTypes,:DRAGON)
           @powerboots=true
         elsif @battle.field.effects[PBEffects::PlasmaFists] && attacker.hasWorkingAbility(:GALVANIZE) &&
          hasConst?(PBTypes,:ELECTRIC)
@@ -320,9 +313,7 @@ class PokeBattle_Move
            isConst?(@id,PBMoves,:KOWTOWCLEAVE) ||
            isConst?(@id,PBMoves,:MIGHTYCLEAVE) ||
            isConst?(@id,PBMoves,:PSYBLADE) ||
-           isConst?(@id,PBMoves,:TACHYONCUTTER) ||
-           isConst?(@id,PBMoves,:SHADOWCLAW) ||
-           isConst?(@id,PBMoves,:DRAGONCLAW)
+           isConst?(@id,PBMoves,:TACHYONCUTTER) 
            
   end
 
@@ -701,7 +692,7 @@ class PokeBattle_Move
     evastage-=2 if @battle.field.effects[PBEffects::Gravity]>0
     evastage=-6 if evastage<-6
     evastage=0 if evastage>0 && USENEWBATTLEMECHANICS &&
-                  (attacker.hasWorkingAbility(:KEENEYE)  || attacker.hasWorkingAbility(:ILLUMINATE))
+                  attacker.hasWorkingAbility(:KEENEYE) || attacker.hasWorkingAbility(:ILLUMINATE)
     evastage=0 if opponent.effects[PBEffects::Foresight] ||
                   opponent.effects[PBEffects::MiracleEye] ||
                   @function==0xA9 || # Chip Away
@@ -862,21 +853,8 @@ class PokeBattle_Move
     if attacker.hasWorkingAbility(:DRAGONSMAW) && isConst?(type,PBTypes,:DRAGON)
       damagemult=(damagemult*1.5).round
     end
-    if attacker.hasWorkingAbility(:FIREMANE) && isConst?(type,PBTypes,:FIRE)
-      damagemult=(damagemult*1.5).round
-    end
     if attacker.hasWorkingAbility(:ROCKYPAYLOAD) && isConst?(type,PBTypes,:ROCK)
       damagemult=(damagemult*1.5).round
-    end
-    # Mega Sol / Megasolar
-    if attacker.hasWorkingAbility(:MEGASOL) && isConst?(type,PBTypes,:FIRE)
-      damagemult=(damagemult*1.5).round
-    end
-    if attacker.hasWorkingAbility(:MEGASOL) && isConst?(type,PBTypes,:WATER)
-      damagemult=(damagemult*0.5).round
-    end
-    if attacker.hasWorkingAbility(:MEGASOL) && isConst?(type,PBTypes,:WATER) && @function==0x265
-      damagemult=(damagemult*1.0).round
     end
     if attacker.hasWorkingAbility(:TECHNICIAN) && basedmg<=60 && @id>0
       damagemult=(damagemult*1.5).round
@@ -942,7 +920,6 @@ class PokeBattle_Move
     if (attacker.hasWorkingAbility(:AERILATE) ||
        attacker.hasWorkingAbility(:REFRIGERATE) ||
        attacker.hasWorkingAbility(:PIXILATE) ||
-       attacker.hasWorkingAbility(:DRAGONIZE) ||
        attacker.hasWorkingAbility(:GALVANIZE)) && @powerboost
       damagemult=(damagemult*1.2).round
     end
@@ -1322,12 +1299,12 @@ class PokeBattle_Move
       #defense2=(defense2*1.0*stagemul[defstage2]/stagediv[defstage2]).floor
     end
     if @battle.pbWeather==PBWeather::SANDSTORM &&
-       opponent.pbHasType?(:ROCK) && applysandstorm && !attacker.hasWorkingAbility(:MEGASOL)
+       opponent.pbHasType?(:ROCK) && applysandstorm
       defense=(defense*1.5).round
     end
     if SNOW_REPLACES_HAIL
       if @battle.pbWeather==PBWeather::HAIL &&
-         opponent.pbHasType?(:ICE) && applysnow && !attacker.hasWorkingAbility(:MEGASOL)
+         opponent.pbHasType?(:ICE) && applysnow
         defense2=(defense2*1.5).round
       end
     end
@@ -1680,10 +1657,6 @@ class PokeBattle_Move
         damage*=2
         @battle.pbDisplay(_INTL("¡La potencia del ataque se ha duplicado!"))
         opponent.effects[PBEffects::GlaiveRush]=false
-      end
-      # Piercing Drill
-      if attacker.effects[PBEffects::PiercingDrill]
-        damage = [(damage / 4).floor, 1].max
       end
       if damage>=opponent.hp
         damage=opponent.hp

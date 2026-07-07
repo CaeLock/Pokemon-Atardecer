@@ -49,4 +49,3 @@ ANGERPOINT=Ira
 EMERGENCYEXIT=Socorro
 FLUFFY=Mullido
 BEADSOFRUIN=Cuenta Debacle
-DRAGONIZE=Piel Dracónica

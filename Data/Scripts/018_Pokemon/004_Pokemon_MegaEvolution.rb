@@ -1268,10 +1268,10 @@ class PokeBattle_Pokemon
     next [95,80,93,70,135,110] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 17 if pokemon.form==1
     next
@@ -1294,10 +1294,10 @@ class PokeBattle_Pokemon
     next [80,125,85,70,135,95] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:INNARDSOUT),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 45 if pokemon.form==1
     next
@@ -1317,13 +1317,13 @@ class PokeBattle_Pokemon
     next
  },
  "getBaseStats"=>proc{|pokemon|
-    next [60,100,105,120,130,105] if pokemon.form==1
+    next [60,140,105,120,130,105] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:HUGEPOWER),0]] if pokemon.form==1
-    next
- }, #No se sabe cual es la hab oficial.
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 23 if pokemon.form==1
     next
@@ -1343,13 +1343,13 @@ class PokeBattle_Pokemon
     next
  },
  "getBaseStats"=>proc{|pokemon|
-    next [91,124,115,80,145,125] if pokemon.form==1
+    next [60,140,105,120,130,105] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:MULTISCALE),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 22 if pokemon.form==1
     next
@@ -1377,10 +1377,10 @@ class PokeBattle_Pokemon
     next [80,92,115,80,143,115] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:MEGASOL),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 24 if pokemon.form==1
     next
@@ -1407,10 +1407,10 @@ class PokeBattle_Pokemon
     next [85,160,125,78,89,78] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:DRAGONIZE),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 23 if pokemon.form==1
     next
@@ -1433,10 +1433,10 @@ class PokeBattle_Pokemon
     next [65,140,110,110,40,100] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:STALWART),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 17 if pokemon.form==1
     next
@@ -1459,10 +1459,10 @@ class PokeBattle_Pokemon
     next [70,80,70,120,140,100] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:SNOWWARNING),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 26 if pokemon.form==1
     next
@@ -1485,10 +1485,10 @@ class PokeBattle_Pokemon
     next [110,148,75,75,110,110] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:MOLDBREAKER),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 18 if pokemon.form==1
     next
@@ -1511,10 +1511,10 @@ class PokeBattle_Pokemon
     next [110,165,100,103,65,65] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:PIERCINGDRILL),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 9 if pokemon.form==1
     next
@@ -1537,10 +1537,10 @@ class PokeBattle_Pokemon
     next [60,140,149,62,75,99] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:SHELLARMOR),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 32 if pokemon.form==1
     next
@@ -1563,10 +1563,10 @@ class PokeBattle_Pokemon
     next [65,130,135,68,55,135] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:INTIMIDATE),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 11 if pokemon.form==1
     next
@@ -1589,10 +1589,10 @@ class PokeBattle_Pokemon
     next [85,145,80,80,135,90] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:EELEVATE),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 30 if pokemon.form==1
     next
@@ -1615,10 +1615,10 @@ class PokeBattle_Pokemon
     next [60,75,110,90,175,110] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:INFILTRATOR),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "height"=>proc{|pokemon|
     next 25 if pokemon.form==1
     next
@@ -1696,10 +1696,10 @@ class PokeBattle_Pokemon
     next [86,88,92,126,129,86] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:FIREMANE),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
   "height"=>proc{|pokemon|
     next 15 if pokemon.form==1
     next
@@ -1722,10 +1722,10 @@ class PokeBattle_Pokemon
     next [86,102,88,88,98,120] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:CONTRARY),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
   "height"=>proc{|pokemon|
     next 29 if pokemon.form==1
     next
@@ -1752,10 +1752,10 @@ class PokeBattle_Pokemon
     next [72,140,130,88,64,106] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:TOUGHCLAWS),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
   "height"=>proc{|pokemon|
     next 22 if pokemon.form==1
     next
@@ -1778,10 +1778,10 @@ class PokeBattle_Pokemon
     next [65,85,105,44,132,163] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:REGENERATOR),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
   "height"=>proc{|pokemon|
     next 21 if pokemon.form==1
     next
@@ -1804,10 +1804,10 @@ MultipleForms.register(:HAWLUCHA,{
     next [78,137,100,118,74,93] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:NOGUARD),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
   "height"=>proc{|pokemon|
     next 10 if pokemon.form==1
     next
@@ -1831,10 +1831,10 @@ MultipleForms.register(:DRAMPA,{
     next [78,85,110,36,160,116] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:BERSERK),0]] if pokemon.form==1
-    next
- }, #No se sabe cual es la hab oficial.
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
   "height"=>proc{|pokemon|
     next 3 if pokemon.form==1
     next
@@ -1857,52 +1857,16 @@ MultipleForms.register(:FALINKS,{
     next [65,135,135,100,70,65] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:DEFIANT),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
   "height"=>proc{|pokemon|
     next 16 if pokemon.form==1
     next
  },
  "weight"=>proc{|pokemon|
     next 990 if pokemon.form==1
-    next
- },
- "getUnmegaForm"=>proc{|pokemon|
-   next 0
- }
- })
-
-MultipleForms.register(:RAICHU,{
- "getMegaForm"=>proc{|pokemon|
-    next 1 if isConst?(pokemon.item,PBItems,:RAICHUITEX)
-    next 2 if isConst?(pokemon.item,PBItems,:RAICHUITEY)
-    next
- },
- "getMegaName"=>proc{|pokemon|
-    next _INTL("Mega Raichu X") if pokemon.form==1
-    next _INTL("Mega Raichu Y") if pokemon.form==2
-    next
- },
- "getBaseStats"=>proc{|pokemon|
-    next [60,135,95,110,90,95] if pokemon.form==1
-    next [60,100,55,130,160,80] if pokemon.form==2
-    next
- },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:ELECTRICSURGE),0]] if pokemon.form==1
-    next [[getID(PBAbilities,:NOGUARD),0]] if pokemon.form==2
-    next
- },
-"weight"=>proc{|pokemon|
-    next 380 if pokemon.form==1
-    next 260 if pokemon.form==2
-    next
- },
-"height"=>proc{|pokemon|
-    next 12 if pokemon.form==1
-    next 10 if pokemon.form==2
     next
  },
  "getUnmegaForm"=>proc{|pokemon|
@@ -1923,10 +1887,10 @@ MultipleForms.register(:CHIMECHO,{
     next getID(PBTypes,:STEEL) if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:LEVITATE),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "weight"=>proc{|pokemon|
     next 80 if pokemon.form==1
     next
@@ -1953,10 +1917,10 @@ MultipleForms.register(:STARAPTOR,{
     next getID(PBTypes,:FIGHTING) if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:CONTRARY),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "weight"=>proc{|pokemon|
     next 500 if pokemon.form==1
     next
@@ -2031,10 +1995,10 @@ MultipleForms.register(:GOLURK,{
     next [89,159,105,55,70,105] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:UNSEENFIST),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "weight"=>proc{|pokemon|
     next 330 if pokemon.form==1
     next
@@ -2057,10 +2021,10 @@ MultipleForms.register(:MEOWSTIC,{
     next [74,48,76,124,143,101] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:TRACE),0]] if pokemon.form==1
-    next
- }, 
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "weight"=>proc{|pokemon|
     next 101 if pokemon.form==1
     next
@@ -2083,10 +2047,10 @@ MultipleForms.register(:MEOWSTIC,{
     next [97,157,122,33,62,107] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:IRONFIST),0]] if pokemon.form==1
-    next
- }, #No se sabe cual es la hab oficial.
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "weight"=>proc{|pokemon|
     next 2528 if pokemon.form==1
     next
@@ -2186,10 +2150,10 @@ MultipleForms.register(:SCOVILLAIN,{
     next [65,138,85,75,138,85] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:SPICYSPRAY),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "weight"=>proc{|pokemon|
     next 220 if pokemon.form==1
     next
@@ -2212,10 +2176,10 @@ MultipleForms.register(:GLIMMORA,{
     next [83,90,105,101,150,96] if pokemon.form==1
     next
  },
- "getAbilityList"=>proc{|pokemon|
-    next [[getID(PBAbilities,:ADAPTABILITY),0]] if pokemon.form==1
-    next
- },
+ #"getAbilityList"=>proc{|pokemon|
+ #   next [[getID(PBAbilities,:MAGICBOUNCE),0]] if pokemon.form==1
+ #   next
+ #}, #No se sabe cual es la hab oficial.
  "weight"=>proc{|pokemon|
     next 770 if pokemon.form==1
     next

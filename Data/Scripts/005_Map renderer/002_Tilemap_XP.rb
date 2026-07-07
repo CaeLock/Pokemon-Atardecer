@@ -18,6 +18,7 @@ end
 
 
 
+#Console::setup_console
 class CustomTilemapSprite < Sprite
 end
 

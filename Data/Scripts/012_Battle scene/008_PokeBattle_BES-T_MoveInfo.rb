@@ -442,8 +442,6 @@ module MoveTypeHelper
         return PBTypes::ICE
       elsif pokemon.ability == PBAbilities::PIXILATE
         return PBTypes::FAIRY
-      elsif pokemon.ability == PBAbilities::DRAGONIZE
-        return PBTypes::DRAGON
       elsif pokemon.ability == PBAbilities::GALVANIZE
         return PBTypes::ELECTRIC
       end
