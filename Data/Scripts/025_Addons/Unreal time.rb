@@ -69,7 +69,7 @@ module UnrealTime
   # So if it is 100, one second in real time will be 100 seconds in game.
   # If it is 60, one second in real time will be one minute in game.
   # Scarlet/Violet uses 50 (72 real life minutes per game day).
-  PROPORTION = 500
+  PROPORTION = 50
 
   # Starting on Essentials v17, the map tone only try to refresh tone each 30 
   # real time seconds. 

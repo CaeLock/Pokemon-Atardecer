@@ -1,30 +1,30 @@
-Script error within event 3, map 1 (Intro):
-Exception: NameError
-Message: undefined local variable or method `species' for #<Generate_Input_Pokemon:0x16cf00b0 @species=485>
+Script error within event 3, map 2 (Test):
+Exception: ArgumentError
+Message: (eval):1:in `pbFlash': wrong number of arguments (0 for 2)
 ***Full script:
- pbInputStarterPokemon()
-
+Kernel.pbFlash
 001_Interpreter.rb:248:in `pbExecuteScript'
-input_pokemon.rb:52:in `input_generate'
-input_pokemon.rb:49:in `loop'
-input_pokemon.rb:49:in `input_generate'
-input_pokemon.rb:72:in `pbInputStarterPokemon'
 (eval):1:in `pbExecuteScript'
-001_Interpreter.rb:1612:in `eval'
+001_Interpreter.rb:799:in `eval'
 001_Interpreter.rb:248:in `pbExecuteScript'
-001_Interpreter.rb:1612:in `command_355'
-001_Interpreter.rb:499:in `execute_command'
+001_Interpreter.rb:799:in `command_111'
+001_Interpreter.rb:325:in `execute_command'
+001_Interpreter.rb:198:in `update'
+001_Interpreter.rb:111:in `loop'
+001_Interpreter.rb:111:in `update'
+001_Scene_Map.rb:103:in `updateold'
 
 
 001_Interpreter.rb:281:in `pbExecuteScript'
-001_Interpreter.rb:1612:in `command_355'
-001_Interpreter.rb:499:in `execute_command'
+001_Interpreter.rb:799:in `command_111'
+001_Interpreter.rb:325:in `execute_command'
 001_Interpreter.rb:198:in `update'
 001_Interpreter.rb:111:in `loop'
 001_Interpreter.rb:111:in `update'
-001_Scene_Map.rb:103:in `update'
+001_Scene_Map.rb:103:in `updateold'
 001_Scene_Map.rb:101:in `loop'
-001_Scene_Map.rb:101:in `update'
+001_Scene_Map.rb:101:in `updateold'
+Unreal time.rb:299:in `update'
 001_Scene_Map.rb:68:in `main'
 001_Scene_Map.rb:65:in `loop'
 001_Scene_Map.rb:65:in `main'
