@@ -8,32 +8,34 @@ end
 
 
 module PBDayNight
-    HourlyTones = [
-       Tone.new(-70,-70,11,68),   # Night     # Midnight
-       Tone.new(-70,-70,11,68),   # Night
-       Tone.new(-70,-70,11,68),   # Night
-       Tone.new(-70,-70,11,68),   # Night
-       Tone.new(-70,-70,11,68),   # Night
-       Tone.new(-17,   -51, -85,17),   # Day/morning
-       Tone.new(-17,   -51, -85,17),   # Day/morning      # 6AM
-       Tone.new(-17,   -51, -85,17),   # Day/morning
-       Tone.new(-17,   -51, -85,17),   # Day/morning
-       Tone.new(0,     0,     0,    0),   # Day/morning
-       Tone.new(0,     0,     0,    0),   # Day
-       Tone.new(0,     0,     0,    0),   # Day
-       Tone.new(0,     0,     0,    0),   # Day      # Noon
-       Tone.new(0,     0,     0,    0),   # Day
-       Tone.new(0,     0,     0,    0),   # Day/afternoon
-       Tone.new(0,     0,     0,    0),   # Day/afternoon
-       Tone.new(0,     0,     0,    0),   # Day/afternoon
-       Tone.new(0,     0,     0,    0),   # Day/afternoon
-       Tone.new(-30,   -30,   5,  68),   # Day/evening      # 6PM
-       Tone.new(-30,   -30,   5,  68),   # Day/evening
-       Tone.new(-35,   -35,   7,  68),   # Day/evening
-       Tone.new(-70,-70,11,68),   # Night
-       Tone.new(-70,-70,11,68),   # Night
-       Tone.new(-70,-70,11,68)   # Night
-    ]
+   # Custom Gen 4 Day & Night Tones by VanillaSunshine
+# Please credit VanillaSunshine when using these tones
+  HourlyTones = [
+    Tone.new(-70, -70, -25, 80),   # Night           # Midnight *
+    Tone.new(-70, -70, -25, 80),   # Night           # 1AM
+    Tone.new(-70, -70, -25, 80),   # Night           # 2AM
+    Tone.new(-70, -70, -25, 80),   # Night           # 3AM
+    Tone.new(-70, -70, -25, 80),   # Night           # 4AM
+    Tone.new(-15, -15,  5,  30),   # Day/morning     # 5AM
+    Tone.new(-15, -15,  5,  30),   # Day/morning     # 6AM *
+    Tone.new(-15, -15,  5,  30),   # Day/morning     # 7AM
+    Tone.new(-15, -15,  5,  30),   # Day/morning     # 8AM
+    Tone.new(  0,   0,   0,  0),   # Day/morning     # 9AM
+    Tone.new(  0,   0,   0,  0),   # Day             # 10AM
+    Tone.new(  0,   0,   0,  0),   # Day             # 11AM
+    Tone.new(  0,   0,   0,  0),   # Day             # Noon *
+    Tone.new(  0,   0,   0,  0),   # Day             # 1PM
+    Tone.new(  0,   0,   0,  0),   # Day/afternoon   # 2PM
+    Tone.new(  0,   0,   0,  0),   # Day/afternoon   # 3PM
+    Tone.new(  0,   0,   0,  0),   # Day/afternoon   # 4PM
+    Tone.new(  0,   0,   0,  0),   # Day/afternoon   # 5PM
+    Tone.new(-30, -30,  0,  60),   # Day/evening     # 6PM *
+    Tone.new(-30, -30,  0,  60),   # Day/evening     # 7PM
+    Tone.new(-30, -30,  0,  60),   # Day/evening     # 8PM
+    Tone.new(-70, -70, -25, 80),   # Night           # 9PM
+    Tone.new(-70, -70, -25, 80),   # Night           # 10PM
+    Tone.new(-70, -70, -25, 80)    # Night           # 11PM
+  ]
   @cachedTone=nil
   @dayNightToneLastUpdate=nil
   @oneOverSixty=1/60.0
