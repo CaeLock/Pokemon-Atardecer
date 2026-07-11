@@ -11,6 +11,7 @@ module PlayerClasses
   CAMPEONA    = :CAMPEONA
   ARISTOCRATA = :ARISTOCRATA
   INDECISA    = :INDECISA
+  ARQUEOLOGA  = :ARQUEOLOGA
 
   # --- Tunable balance constants ---------------------------------------------
 
@@ -50,6 +51,10 @@ module PlayerClasses
     INDECISA => {
       :name        => _INTL("Indecisa"),
       :description => _INTL("Bad Ending"    )
+    },
+     ARQUEOLOGA => {
+      :name        => _INTL("Arqueologa"),
+      :description => _INTL("Yearn for the mines"    )
     },
   }
 
@@ -535,3 +540,9 @@ class PokeBattle_Pokemon
     @speed  =(@speed*mult).round
   end
 end
+
+################################################################################
+################################################################################
+# ARQUEOLOGA
+################################################################################
+################################################################################
