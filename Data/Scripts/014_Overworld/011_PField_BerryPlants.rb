@@ -560,6 +560,7 @@ def pbPickBerry(berry,qty=1)
       return
     end
     $PokemonBag.pbStoreItem(berry,qty)
+    $game_player.addFoundItem(berry) #itemfind description. Atardecer
     pocket=pbGetPocket(berry)
     if !SHORTER_SYSTEM_TEXTS
       if qty>1

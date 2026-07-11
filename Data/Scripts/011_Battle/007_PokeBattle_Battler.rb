@@ -906,6 +906,15 @@ class PokeBattle_Battler
     pbOwnSide.effects[PBEffects::LastRoundFainted]=@battle.turncount
     pbOwnSide.effects[PBEffects::FaintedAlly]+=1
     @battle.pbDisplayPaused(_INTL("¡{1} se ha debilitado!",pbThis)) if showMessage
+################################################################################
+# Addon by Clara. Item Drop when wild Pokémon faints. Atardecer
+################################################################################
+    if @opponent==false && @pokemon.item >0 && showMessage && @battle.pbIsOpposing?(@index)
+      $PokemonBag.pbStoreItem(@pokemon.item,1)
+      itemname=PBItems.getName(@pokemon.item)
+      pocket=pbGetPocket(@pokemon.item)
+      @battle.pbDisplayPaused(_INTL("El {1} dejo caer\n{2} <icon=bagPocket#{pocket}> x 1!",@pokemon.name,itemname,@pokemon.item))
+    end
     PBDebug.log("[Pokémon debilitado] #{pbThis}")
     return true
   end

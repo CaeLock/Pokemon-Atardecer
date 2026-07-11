@@ -1956,6 +1956,7 @@ def Kernel.pbItemBall(item,quantity=1)
     end
     Kernel.pbMessage(_INTL("{1} puso \\c[1]{2}\\c[0]<br>en el bolsillo <icon=bagPocket#{pocket}>\\c[1]{3}\\c[0].",
        $Trainer.name,itemname,PokemonBag.pocketNames()[pocket]))
+       $game_player.addFoundItem(item) #itemfind description. Atardecer
     return true
   else   # No se puede agregar el objeto
     if $ItemData[item][ITEMUSE]==3 || $ItemData[item][ITEMUSE]==4
@@ -1992,6 +1993,7 @@ def Kernel.pbReceiveItem(item,quantity=1)
   if $PokemonBag.pbStoreItem(item,quantity)   # Si el objeto puede ser agregado
     Kernel.pbMessage(_INTL("{1} puso \\c[1]{2}\\c[0]<br>en el bolsillo <icon=bagPocket#{pocket}>\\c[1]{3}\\c[0].",
        $Trainer.name,itemname,PokemonBag.pocketNames()[pocket]))
+       $game_player.addFoundItem(item) #itemfind description. Atardecer
     return true
   end
   return false   # No se puede agregar el objeto

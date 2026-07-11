@@ -2519,7 +2519,21 @@ class PokeBattle_Battle
     exp=(exp*3/2).floor if @opponent
     if USESCALEDEXPFORMULA
       exp=(exp/5).floor
-      leveladjust=(2*level+10.0)/(level+thispoke.level+10.0)
+      ######### Clara's level adjust. Atardecer #####################
+      if    (level+5 <= thispoke.level) #Si el rival tiene menos nivel
+        leveladjust=(1*level+10.0)/(level+thispoke.level+10.0)
+      elsif (level < thispoke.level) #Si el rival tiene menos nivel
+        leveladjust=(1.5*level+10.0)/(level+thispoke.level+10.0)
+      elsif (thispoke.level <= level-2) #Si tu no tienes mucho nivel
+        leveladjust=(2.2*level+10.0)/(level+thispoke.level+10.0)
+      elsif (thispoke.level <= level-5) #Si tu no tienes mucho nivel
+        leveladjust=(2.5*level+10.0)/(level+thispoke.level+10.0)
+      elsif (thispoke.level <= level-10) #Si tu no tienes mucho nivel
+        leveladjust=(3*level+10.0)/(level+thispoke.level+10.0)
+      else
+        leveladjust=(2*level+10.0)/(level+thispoke.level+10.0)
+      end
+      ############################################################
       leveladjust=leveladjust**5
       leveladjust=Math.sqrt(leveladjust)
       exp=(exp*leveladjust).floor

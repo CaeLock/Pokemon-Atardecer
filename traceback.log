@@ -1,30 +1,31 @@
-Script error within event 3, map 2 (Test):
-Exception: ArgumentError
-Message: (eval):1:in `pbFlash': wrong number of arguments (0 for 2)
+Script error within event 3, map 1 ():
+Exception: NameError
+Message: undefined local variable or method `keys' for #<Window_TextEntry_Keyboard:0x1739eec0>
 ***Full script:
-Kernel.pbFlash
+pbTrainerName
+
 001_Interpreter.rb:248:in `pbExecuteScript'
-(eval):1:in `pbExecuteScript'
-001_Interpreter.rb:799:in `eval'
-001_Interpreter.rb:248:in `pbExecuteScript'
-001_Interpreter.rb:799:in `command_111'
-001_Interpreter.rb:325:in `execute_command'
-001_Interpreter.rb:198:in `update'
-001_Interpreter.rb:111:in `loop'
-001_Interpreter.rb:111:in `update'
-001_Scene_Map.rb:103:in `updateold'
+006_TextEntry.rb:1097:in `pbEntry1'
+006_TextEntry.rb:1085:in `loop'
+006_TextEntry.rb:1085:in `pbEntry1'
+006_TextEntry.rb:1150:in `pbEntry'
+006_TextEntry.rb:1669:in `pbStartScreen'
+006_TextEntry.rb:1683:in `pbEnterText'
+003_SpriteWindow.rb:1246:in `pbFadeOutIn'
+006_TextEntry.rb:1680:in `pbEnterText'
+006_TextEntry.rb:1696:in `pbEnterPlayerName'
 
 
 001_Interpreter.rb:281:in `pbExecuteScript'
-001_Interpreter.rb:799:in `command_111'
-001_Interpreter.rb:325:in `execute_command'
+001_Interpreter.rb:1612:in `command_355'
+001_Interpreter.rb:499:in `execute_command'
 001_Interpreter.rb:198:in `update'
 001_Interpreter.rb:111:in `loop'
 001_Interpreter.rb:111:in `update'
 001_Scene_Map.rb:103:in `updateold'
 001_Scene_Map.rb:101:in `loop'
 001_Scene_Map.rb:101:in `updateold'
-Unreal time.rb:299:in `update'
+002_Unreal_time.rb:299:in `update'
 001_Scene_Map.rb:68:in `main'
 001_Scene_Map.rb:65:in `loop'
 001_Scene_Map.rb:65:in `main'

@@ -31,13 +31,13 @@ NO_CAPTURE_SWITCH         = 36
 
 EXPALLWITHOUTITEM         = true
 SNOW_REPLACES_HAIL        = true
-FROSTBITE_REPLACES_FREEZE = false # RECUERDA EDITAR EL GRAFICO
+FROSTBITE_REPLACES_FREEZE = true # RECUERDA EDITAR EL GRAFICO
 SHORTER_SYSTEM_TEXTS      = true  # A MEJORAR
 MENU_NICKNAME             = true
 MENU_MOVERELEANER         = true
 FASTER_BATTLE             = false
 TURBO_DEBUG               = false
-SKIPTEXT_DEBUG            = false
+SKIPTEXT_DEBUG            = true
 LEVEL_DAYCARE             = false
 
 GRASS_SOUND               = true
