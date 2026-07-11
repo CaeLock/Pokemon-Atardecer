@@ -2422,6 +2422,7 @@ class PokeBattle_Battle
             for j in 0...@party1.length
               next if !@party1[j] || !pbIsOwner?(0,j)
               next if @party1[j].hp<=0 || @party1[j].isEgg?
+              next if  PlayerClasses.current?(PlayerClasses::ARISTOCRATA) #Atardecer. No EXP while having this class
               next if isConst?(@party1[j].item,PBItems,:EXPSHARE) ||
                       isConst?(@party1[j].itemInitial,PBItems,:EXPSHARE)
               next if @battlers[i].participants.include?(j)

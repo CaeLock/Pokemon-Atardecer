@@ -9,6 +9,8 @@
 module PlayerClasses
   # Job identifiers
   CAMPEONA    = :CAMPEONA
+  ARISTOCRATA = :ARISTOCRATA
+  INDECISA    = :INDECISA
 
   # --- Tunable balance constants ---------------------------------------------
 
@@ -40,6 +42,14 @@ module PlayerClasses
     CAMPEONA => {
       :name        => _INTL("Campeona"),
       :description => _INTL("Tus Pokémon ganan amistad al ganar combates y salir al campo, y desbloquean beneficios según su amistad, pero pierden más al debilitarse o subir de nivel en el PC."),
+    },
+    ARISTOCRATA => {
+      :name        => _INTL("Aristócrata"),
+      :description => _INTL("Money money money"    )
+    },
+    INDECISA => {
+      :name        => _INTL("Indecisa"),
+      :description => _INTL("Bad Ending"    )
     },
   }
 
@@ -113,32 +123,6 @@ def pbChoosePlayerClass
       PlayerClasses.set(job)
       return job
     end
-  end
-end
-
-#Campeona's survive-a-fatal-hit
-# affection effect (kept here since this is where "would this hit faint the
-# target" is known before the hit actually lands).
-#===============================================================================
-class PokeBattle_Move
-  alias original_pbReduceHPDamage pbReduceHPDamage
-  def pbReduceHPDamage(damage,attacker,opponent)
-    if opponent
-      # --- Campeona: survive a fatal hit (200+ happiness, once per battle) -----
-      if PlayerClasses.current?(PlayerClasses::CAMPEONA) && attacker!=opponent &&
-         @battle.pbOwnedByPlayer?(opponent.index) && opponent.pokemon &&
-         !opponent.survivedThisBattle && damage>=opponent.hp
-        hap=opponent.pokemon.happiness
-        if hap>=PlayerClasses::AFFECTION_SURVIVE_MIN &&
-           opponent.hp>1 && @battle.pbRandom(100)<(PlayerClasses::AFFECTION_SURVIVE_CHANCE*100).round
-          damage=opponent.hp-1
-          opponent.survivedThisBattle=true
-          @battle.pbDisplay(_INTL("¡{1} sobrevivió gracias a su vínculo contigo!",opponent.pokemon.name)) #sucede antes de mostrar el daño
-          PBDebug.log("[Trabajo: Campeona] #{opponent.pbThis} sobrevivió gracias a la amistad")
-        end
-      end
-    end
-    return original_pbReduceHPDamage(damage,attacker,opponent)
   end
 end
 
@@ -350,5 +334,204 @@ class PokeBattle_Move
       end
     end
     return ret
+  end
+end
+
+#===============================================================================
+#  Survive-a-fatal-hit
+# affection effect (kept here since this is where "would this hit faint the
+# target" is known before the hit actually lands).
+#===============================================================================
+class PokeBattle_Move
+  alias original_pbReduceHPDamage pbReduceHPDamage
+  def pbReduceHPDamage(damage,attacker,opponent)
+    if opponent
+      # --- Campeona: survive a fatal hit (200+ happiness, once per battle) -----
+      if PlayerClasses.current?(PlayerClasses::CAMPEONA) && attacker!=opponent &&
+         @battle.pbOwnedByPlayer?(opponent.index) && opponent.pokemon &&
+         !opponent.survivedThisBattle && damage>=opponent.hp
+        hap=opponent.pokemon.happiness
+        if hap>=PlayerClasses::AFFECTION_SURVIVE_MIN &&
+           opponent.hp>1 && @battle.pbRandom(100)<(PlayerClasses::AFFECTION_SURVIVE_CHANCE*100).round
+          damage=opponent.hp-1
+          opponent.survivedThisBattle=true
+          @battle.pbDisplay(_INTL("¡{1} sobrevivió gracias a su vínculo contigo!",opponent.pokemon.name)) #sucede antes de mostrar el daño
+          PBDebug.log("[Trabajo: Campeona] #{opponent.pbThis} sobrevivió gracias a la amistad")
+        end
+      end
+    end
+    return original_pbReduceHPDamage(damage,attacker,opponent)
+  end
+end
+
+
+################################################################################
+################################################################################
+# ARISTOCRATA
+################################################################################
+################################################################################
+
+# Exchange money for EXP
+
+def distribute_EXP_for_money
+  #moneyString=_INTL("{1}ES",$Trainer.money) #muestra esencia actual
+  #goldwindow.text=_INTL("Esencia:\n{1}",moneyString)
+  
+  params=ChooseNumberParams.new
+  params.setRange(0,9999999)
+  params.setDefaultValue(0)
+
+  if $game_variables[30] == nil ||  $game_variables[30] == 0
+    quantity_to_exchange = Kernel.pbMessageChooseNumber(_INTL("\\g¿Cuánto dinero vas a gastar para el entrenamiento?"),params)
+    updated_money = $Trainer.money - quantity_to_exchange
+
+    if $Trainer.money < quantity_to_exchange
+      Kernel.pbMessage("\\gNo tienes suficiente dinero.")
+      return false
+    end
+
+    if quantity_to_exchange <=0 || Input.trigger?(Input::B)
+      return false 
+    end
+
+    if Kernel.pbConfirmMessage(_INTL("\\g¿Quieres gastar ${1}?\nTe quedarás con ${2}.",quantity_to_exchange, updated_money))
+      exchange_money_for_exp(quantity_to_exchange)
+    else
+      return false
+    end
+
+  else
+   exchange_money_for_exp($Trainer.money)
+  end
+end
+
+def exchange_money_for_exp(quantity_to_exchange)
+  $Trainer.money -= quantity_to_exchange
+  exp = quantity_to_exchange
+  for i in 0...$Trainer.party.length
+    pokemon = $Trainer.party[i]
+    maxexp=PBExperience.pbGetMaxExperience(pokemon.growthrate)
+        if pokemon.exp<maxexp
+          oldlevel=pokemon.level
+          pokemon.exp+=exp
+          if pokemon.level!=oldlevel
+           ##########
+           attackdiff=pokemon.attack
+           defensediff=pokemon.defense
+           speeddiff=pokemon.speed
+           spatkdiff=pokemon.spatk
+           spdefdiff=pokemon.spdef
+           totalhpdiff=pokemon.totalhp
+           newlevel=pokemon.level
+           pokemon.changeHappiness("level up")
+           pokemon.calcStats
+           Kernel.pbMessage(_INTL("¡{1} ha subido al nivel {2}!",pokemon.name,pokemon.level))
+           attackdiff=pokemon.attack-attackdiff
+           defensediff=pokemon.defense-defensediff
+           speeddiff=pokemon.speed-speeddiff
+           spatkdiff=pokemon.spatk-spatkdiff
+           spdefdiff=pokemon.spdef-spdefdiff
+           totalhpdiff=pokemon.totalhp-totalhpdiff
+           pbTopRightWindow(_INTL("PS Máx.<r>+{1}\r\nAtaque<r>+{2}\r\nDefensa<r>+{3}\r\nAt. Esp.<r>+{4}\r\nDef. Esp.<r>+{5}\r\nVelocidad<r>+{6}",
+             totalhpdiff,attackdiff,defensediff,spatkdiff,spdefdiff,speeddiff))
+           pbTopRightWindow(_INTL("PS Máx.<r>{1}\r\nAtaque<r>{2}\r\nDefensa<r>{3}\r\nAt. Esp.<r>{4}\r\nDef. Esp.<r>{5}\r\nVelocidad<r>{6}",
+             pokemon.totalhp,pokemon.attack,pokemon.defense,pokemon.spatk,pokemon.spdef,pokemon.speed))
+           movelist=pokemon.getMoveList
+           for i in movelist
+             if i[0]==pokemon.level          # Aprendió un movimiento nuevo
+               pbLearnMove(pokemon,i[1],true)
+             end
+           end
+           newspecies=pbCheckEvolution(pokemon)
+           if newspecies>0
+             pbFadeOutInWithMusic(99999){
+               evo=PokemonEvolutionScene.new
+               evo.pbStartScreen(pokemon,newspecies)
+               evo.pbEvolution
+               evo.pbEndScreen
+             }
+           end
+           ##########
+          end
+       end
+  end
+  for x in 0...$PokemonStorage.maxBoxes
+    for y in 0...$PokemonStorage.maxPokemon(x)
+         next if $PokemonStorage[x,y]==nil
+         next if $PokemonStorage[x,y].isEgg?
+           maxexp=PBExperience.pbGetMaxExperience($PokemonStorage[x,y].growthrate)
+          if $PokemonStorage[x,y].exp<maxexp
+             oldlevel=$PokemonStorage[x,y].level
+               exp=esencia
+               $PokemonStorage[x,y].exp+=(exp*0.3).floor #cambiar número para modificar
+              if $PokemonStorage[x,y].level!=oldlevel
+                 $PokemonStorage[x,y].calcStats
+                   movelist= $PokemonStorage[x,y].getMoveList
+                 for z in movelist
+                   $PokemonStorage[x,y].pbLearnMove(z[1]) if z[0]==$PokemonStorage[x,y].level       # Learned a new move
+                 end
+              end
+          end
+    end
+  end
+   $game_map.update
+   Kernel.pbMessage("¡El entrenamiento ha dado sus frutos!") 
+end
+
+#===============================================================================
+# Money Stats
+#-------------------------------------------------------------------------------
+# The player's own Pokemon (party and PC boxes) get a stat multiplier based
+# on how much money the player is carrying. Doesn't affect HP.
+# Capped at a maximum multiplier of x2.5
+# (reached at 2.500.000 money and beyond).
+#===============================================================================
+module MoneyStats
+  MONEY_PER_STEP  = 10000 # money needed for each +BONUS_PER_STEP
+  BONUS_PER_STEP  = 0.01
+  MAX_MULTIPLIER  = 2.5
+
+  module_function
+
+  def multiplier
+    return 1.0 if !$Trainer
+    steps=($Trainer.money/MONEY_PER_STEP).floor
+    mult=1.0+(steps*BONUS_PER_STEP)
+    return [mult,MAX_MULTIPLIER].min
+  end
+end
+
+#===============================================================================
+# Ownership check: is this exact Pokemon object one of the player's own team
+# members (party or PC box)? Deliberately not based on trainerID, since that
+# would wrongly exclude traded-in Pokemon (foreign OT) and could wrongly
+# include a freshly-generated wild Pokemon if it already carries the
+# player's ID before being caught.
+#===============================================================================
+class PokeBattle_Pokemon
+  def belongsToPlayer?
+    return false if !$Trainer
+    return true if $Trainer.party.any? { |p| p.equal?(self) }
+    if $PokemonStorage
+      for box in 0...$PokemonStorage.maxBoxes
+        for slot in 0...$PokemonStorage.maxPokemon(box)
+          return true if $PokemonStorage[box,slot].equal?(self)
+        end
+      end
+    end
+    return false
+  end
+
+  alias original_calcStats calcStats
+  def calcStats
+    original_calcStats
+    return if !belongsToPlayer?
+    mult=MoneyStats.multiplier
+    return if mult==1.0
+    @attack =(@attack*mult).round
+    @defense=(@defense*mult).round
+    @spatk  =(@spatk*mult).round
+    @spdef  =(@spdef*mult).round
+    @speed  =(@speed*mult).round
   end
 end

@@ -124,3 +124,37 @@ class PokeBattle_Battler
   end
 end
 =end
+
+# Make Marts more / less expensive
+class PokemonMartAdapter
+
+  alias original_getPrice getPrice
+  def getPrice(item,selling=false)
+      if $game_temp.mart_prices && $game_temp.mart_prices[item]
+        if selling
+          return $game_temp.mart_prices[item][1] if $game_temp.mart_prices[item][1]>=0
+        else
+          return $game_temp.mart_prices[item][0] if $game_temp.mart_prices[item][0]>0
+        end
+      end
+      price_modifier = $game_variables[29].to_f #convert the value of the variable to float
+      price_modifier = price_modifier / 100     #then becomes a value to modify the price
+      return $ItemData[item][ITEMPRICE] * price_modifier
+  end
+end
+
+#Exp. Para dar la experiencia en un evento llama al script giveExp() y entre los
+#paréntesis pon el número de puntos que quieres que ganen
+def giveExp(exp)
+  for i in 0...$Trainer.party.length
+   poke = $Trainer.party[i]
+   maxexp=PBExperience.pbGetMaxExperience(poke.growthrate)
+       if poke.exp<maxexp
+         oldlevel=poke.level
+         poke.exp+=exp
+         if poke.level!=oldlevel
+           poke.calcStats
+         end
+       end
+  end
+end

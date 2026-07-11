@@ -1,0 +1,710 @@
+﻿
+Si tienes cualquier duda o sugerencia, las puedes plantear en:
+Discord - Josicos:	discord.gg/pUg4ZpF59t
+MD en Twitter:		@mundo_bezier
+
+
+----- PBSEditor V.3.2.2 - 15/02/2025 -----
+
+**ERRORES**
+
+Regiones
+	- Problema al cargar en regiones que deja colgado el programa
+
+
+----- PBSEditor V.3.2.1 - 12/02/2025 -----
+
+**ERRORES**
+
+Pokémon
+	- Problema al leer los scripts de formas y evoluciones si el código no está bien alineado. Deja enganchado el editor en "Cargando: Pokémon"
+
+
+----- PBSEditor V.3.2.0 - 18/01/2025 -----
+
+**ERRORES**
+
+Pokémon
+	- Arregla un error en la presentación de los Pokémon
+
+
+
+----- PBSEditor V.3.1.0 - 09/01/2025 -----
+
+**ERRORES**
+
+Pokémon
+	- Arregla bug en panel de evolución
+
+**MEJORAS**
+
+	- Permite copiar textos de las tablas pulsando click medio con el ratón
+
+
+----- PBSEditor V.3.0.10 - 20/12/2024 -----
+
+**ERRORES**
+
+Pokémon
+	- Omite la cadena createPokemonFollow en los scripts para la búsqueda de Pokémon creados a mano para combates
+
+Entrenadores
+	- Al duplicar un tipo de entrenador, los ids aumentan de 2 en 2
+
+Regiones
+	- Carga los mapas ocultos en los Settings
+	- Añade un Checkbox en el panel de Regiones para mostrar / ocultar los mapas ocultos de cada región
+
+Ficheros
+	- Problema al leer y guardar ficheros, no siempre lo abre con el formato correcto.
+
+
+
+----- PBSEditor V.3.0.9 - 24/10/2024 -----
+
+
+**ERRORES**
+
+Mejora gestión de errores para mostrarlos en el panel de Errores
+
+Pokémon
+	- No se mostraba la imágen de fondo de combate en la vista previa del panel 'Pokémon->Combate'
+
+Metadata
+	- No guarda bien los puntos de curación
+
+Ficheros
+	- No abre bien los ficheros y los acentos no se cargan correctamente
+
+
+**MEJORAS**
+
+Interfaz
+	- Activa los botones principales cuando estén cargados los PBS principales
+
+Pokédex
+	- Marca los Pokémon que están en algún encuentro o entrenador pero no se han añadido a la Dex
+
+Entrenadores
+	* Tipos de entrenador
+		- Adaptación BES: Si no encuentra los sprites de entrenador de la carpeta Characters los busca en Battlers/Trainers
+	* Entrenadores y Mapas
+		- Buscador por Pokémon: Busca entrenadores que contengan un Pokémon (el filtro puede ser parte del nombre del Pokémon)
+
+
+Scripts
+	Busca las claves de Habilidades, Movimientos, Objetos, Pokémon y Entrenadores en los scripts
+	Añade pestañas en los paneles anteriores para mostrar los scripts que contienen claves de PBS
+
+
+
+
+----- PBSEditor V.3.0.8 - 07/05/2024 -----
+
+**ERRORES**
+
+Pokémon
+	Muestra la forma correcta cuando se define una evolución de forma
+	Corrige un error de sintaxis al leer scripts de combate creando al Pokémon con PokeBattle_Pokemon.new
+
+**MEJORAS**
+
+Essentials-BES
+	Primera adaptación la lectura de proyectos que usan la base Essentials-BES
+
+GitHub
+	Si encuentra la carpeta de control de versiones .git, mostrará la rama en la que se está trabajando en la cabecera del programa
+
+
+----- PBSEditor V.3.0.7 - 23/11/2023 -----
+
+**ERRORES**
+
+Metadatos
+	No estaba gestionando el id del mapa de buceo
+	Añade la gestión del mapa de buceo y la búsqueda del id a través del listado de mapas
+
+**AJUSTES**
+
+Metadatos
+	Reordena los campos en el PBS para que se guarden en el mismo orden que lo hace Essentials
+
+
+----- PBSEditor V.3.0.6 - 23/11/2023 -----
+
+**MEJORAS**
+
+Región
+	Lee el tamaño del mapa de región, en cuadros, para adaptarse a la resolución del mapa diseñado
+
+
+----- PBSEditor V.3.0.5 - 04/10/2023 -----
+
+**ERRORES**
+
+Pokedex
+Error a la hora de ordenar los Pokémon de la Pokédex
+
+----- PBSEditor V.3.0.4 - 30/07/2023 -----
+
+**ERRORES**
+
+Errores varios en el control de los ids de los elementos PBS en los paneles de
+Habilidades, Movimientos, Entrenadores...
+	* El contador de ids aumenta en 1 adicional, saltando los ids de 2 en 2
+	* No hay control preciso de ids o claves repetidas en algunos elementos
+
+**MEJORAS**
+
+Combobox de datos especiales
+	En los combos de selección avanzados se muestra el nombre y la clave (entre paréntesis)
+	Se ajustan al tamaño del texto para garantizar un visionado mejor de los datos
+
+
+----- PBSEditor V.3.0.3 - 25/07/2023 -----
+
+**ERRORES**
+
+Objetos
+Buscador de objetos
+	* Al hacer doble click en la tabla de mapas del buscador, no selecciona el mapa correcto
+
+Regiones
+	* No se puede desmarcar un destino de vuelo y quitar los datos asociados al punto
+
+
+----- PBSEditor V.3.0.2 - 14/07/2023 -----
+
+**MEJORAS**
+
+Objetos
+	* Muestra el nombre de los movimiento de las MTs en los paneles de Mapas RPG
+
+
+----- PBSEditor V.3.0.1 - 02/07/2023 -----
+
+**ERRORES**
+
+Tipos
+	* Evita que se guarden siempre los tipos
+
+Metadatos
+	* Duplica los comentarios
+
+
+----- PBSEditor V.3.0 - 02/06/2023 -----
+
+**ERRORES**
+
+Pokémon
+	* Ajusta las posiciones de los battlers en la preview de combate
+	* Al guardar salta un error generado por la sincronización con la ventana General
+
+Movimientos
+	* No permite crear mas de 1 movimiento sin guardar antes porque repite los ids
+
+** MEJORAS **
+
+Interfaz
+	* Incluye 3 tamaños de ventana: Pequeño, Mediano y Maximizado
+	* Escala los elementos de los paneles con los cambios de tamaño de ventana
+
+General
+	* Nuevo panel con datos generales
+		** Gestión de tipos
+		** Tabla de tipos
+		** Buscados de debilidades
+		** Combinaciones de tipos no usados
+		** Naturalezas
+
+Pokémon
+	* Función para mover los Pokémon y cambiar los IDs, cambiando los gráficos y gritos
+	* Exportar Pokémon seleccionados. Exporta habilidades, movimientos, mts, gráficos, gritos
+	* Importar Pokémon generados desde la exportación
+	* Filtro de Pokémon por tipo, en el listado general, para mostrar solo los del tipo seleccionado
+	* Filtro de eventos por tipo para mostrar los mapas / Pokémon que coincidan con el tipo de evento
+	* En el panel de Pokédex, al hacer doble click en el método evolutivo "Location" salta a Metadatos y selecciona el mapa
+
+
+----- PBSEditor V.2.0 Beta 2.0 - 14/03/2023 -----
+
+**ERRORES**
+
+Entrenadores
+	* Corrige error en la gestión de las habilidades. Si solo tiene 1 Habilidda y 1 Oculta, al seleccionar la oculta debe poner un 2 en el PBS pero ponía 1
+
+
+** MEJORAS **
+
+Habilidades
+	* Panel que muestra todos los Pokémon que tienen una habilidad y su posición
+
+Movimientos
+	* Nuevo botón para poder editar las banderas de movimiento
+		Muestra una ventana que permite editar las claves del comportamiento (para Essentials) y sus descripciones asociadas (para el Editor)
+	* Panel para poder editar movimientos de Pokémon en bloque.
+		Para cada movimiento se puede indicar a qué nivel(es) lo aprenden los Pokémon con solo indicar el número
+
+Pokémon
+	* Al seleccionar una forma en el combo del panel base para un Pokémon, se muestran los cambios de tipos, stats, evs, habilidades y movimientos de dicha forma
+	* La tabla de movimientos permite cambiar el nivel desde teclado estando en modo edición
+	* Mejoras en la ventana emergente para editar los movimientos del Pokémon
+		· Doble click en la tabla de movimientos añade el movimiento seleccionado a la lista del Pokémon
+		· Añade un botón para cambiar un movimiento por otro en el mismo nivel
+		· Permite cambiar el nivel de un movimiento directamente desde la fila, tecleando los números del nuevo nivel
+	* Muestra los sprites animados de los Pokémon tanto en el panel de Summary como en el combate
+
+Characters / Visor de OWs
+	* Nuevo panel para poder ver en grande el gráfico del Character animado
+
+
+
+----- PBSEditor V.2.0 Beta 1.9 - 25/02/2023 -----
+
+
+**ERRORES**
+
+Pokémon
+	* Corrige error en la gestión de id de las habilidades
+
+RPGMaker
+	* Mejora la lectura de los eventos de mapa para encontrar elementos que no se tenían en cuenta (objetos, pokémon y entrenadores)
+
+Entrenadores
+	* Tras mostrar los entrenadores de mapa, en el panel de entrenadores se quedan bloqueados los botones de editar y bloquear
+
+
+** MEJORAS **
+
+Objetos
+	* Panel "Mapas" con los mapas de RPGMaker y los eventos que contienen objetos o se usa alguna función relacionada con ellos
+		También lista los objetos que aparecen en algún mapa y permite ver todos los mapas en los que aparecen
+	* Muestra en el panel "Errores" aquellos objetos que no están definidos en los PBS
+
+Pokémon
+	* Panel con el listado de mapas de RPGMaker y los eventos que contienen Pokémon, ya sea para que suene el grito del Poke, combates, dar/quitar Pokémon al jugador, etc
+		También lista los Pokémon que aparecen en algún mapa y permite ver todos los mapas en los que aparecen
+	* Muestra en el panel "Errores" aquellos Pokémon que no están definidos en los PBS
+
+Pokédex
+	* Botón para abrir el editor de Pokémon seleccionado en la Dex de una región
+
+Entrenadores
+	* Panel "Mapas" con los mapas de RPGMaker y los eventos que contienen entrenadores
+		Considera tanto los que están en PBS (pbTrainerBattle) como los creados por script (createPokemon, createTrainer, customTrainerBattle)
+	* Muestra en el panel "Errores" aquellos entrenadores que no están definidos en los PBS
+
+
+** ESTILO **
+	* Ajustes menores de colores y tamaños de elementos en varias ventanas para unificar estilos
+
+
+
+----- PBSEditor V.2.0 Beta 1.8 - 14/02/2023 -----
+
+
+** ERRORES **
+
+Pokémon
+	* Al cambiar los movimientos de un Pokémon 'A' y, sin guardar, usarlos como base para importarlos en otro 'B',
+		se importan los movimientos de la base de datos y no los actuales del Pokémon 'A', quedando 'B' con movimientos incorrectos
+
+Entrenadores
+	* Corrige error en el selector de naturaleza
+	* Lista las formas teniendo en cuenta los gráficos y no solo el listado de formas de la Pokédex
+	* Muestra correctamente los stats que se ven modificados por una naturaleza
+	* No permite hacer shiny a un pokémon de entrenador
+
+
+** MEJORAS **
+
+Proyecto
+	* Mantiene los botones de proyecto abierto para poder cerrar y cargar otro
+
+PBS
+	* Lee el tamaño del icono de tipos desde scripts
+
+Movimientos
+	* Añade un botón encima del listado para listar las funciones y ver cual es el primer código de función disponible
+
+Objetos
+	* Mejora la ventana de búsqueda de movimientos para las MTs
+
+Pokémon
+	* Lee las posiciones de los sprites de combate desde scripts
+
+Metadatos
+	* Nueva función para copiar los metadatos de un mapa a otro
+
+Regiones
+	* Al duplicar un punto de región, este se añade después del original y no al final de la lista
+
+Pokédex
+	* Muestra cuántas regiones hay en la dex y evita que se solapen si hay mas de 2 regiones
+
+Encuentros
+	* Añade botones para copiar y pegar zonas entre mapas
+	* Mejora la edición de los pokémon para poder cambiar multiples datos con el teclado
+	* Añade atajos de teclado para copiar y pegar con Ctrl + C y Ctrl + V
+	* Añade botón "Caramelo raro" con el que poder aumentar o reducir los niveles seleccionados
+
+Entrenadores
+	* Al hacer doble click sobre un Pokémon de entrenador, abre la edición del entrenador y seleciona el Pokémon
+
+
+** ESTILO **
+
+Cambia el icono de los botones "Duplicar" para diferenciarlos de la función de "Copia
+
+
+
+
+----- PBSEditor V.2.0 Beta 1.7 - 06/02/2023 -----
+
+** ERRORES **
+
+Movimientos
+	* Corrige errores de lectura de las funciones de movimientos en los scripts
+
+Metadatos
+	* Al editar la posición de un mapa (RPG) que ya tiene una posición en el mapa de la región, no se selecciona el punto correcto en la ventana emergente
+	* Al guardar o cancelar cambios siempre selecciona el primer mapa, perdiendo el foco en el mapa actual
+	* Muestra los mapas del proyecto desordenados
+	* Al editar la posición de un mapa no indica el lugar de interés para poder diferenciar mapas
+	* El buscador solo encuentra el primer mapa que coincide con el texto
+
+Regiones
+	* No permite borrar varios puntos de región a la vez
+	* Al pulsar el botón de guardado general de regiones no se guarda el punto que se está creando / editando actualmente
+	* Al hacer doble click para crear / editar un punto no cambia el foco al campo del nombre
+	* Al marcar los checks de interruptor o destino de vuelo, se queda marcado siempre
+
+Encuentros
+	* Corrige error al leer el pbs de encuentros con datos incompletos
+	* Corrige error al cambiar las densidades de zona
+
+** MEJORAS **
+
+PBS
+	* Lee y guarda los comentarios de los pbs para no perderlos cuando actualiza los ficheros
+
+Objetos
+	* Nueva función para mover múltiples objetos de un bolsillo a otro
+
+Pokémon
+	* Lee los gráficos de los battlers de subcarpetas si no están en la raíz Graphics/Battlers
+
+Metadatos
+	* Doble click en un mapa cambia a modo edición como hacen el resto de paneles del programa
+	* Al cambiar la posición de un mapa en la región, se puede marcar un check que cambiará todas las posiciones de los submapas
+	* Pintar en violeta los puntos de región que ya se han definido al igual que se ha hecho en el panel de puntos de región
+
+Regiones
+	* Se ha modificado la disposición de los elementos para facilitar la inserción de puntos de región
+
+
+
+----- PBSEditor V.2.0 Beta 1.6 - 19/01/2023 -----
+
+** ERRORES **
+
+Pokémon
+	* Error al crear un Pokémon a raíz del cambio en la gestión de colores.
+
+MTs
+	* Al crear un nuevo objeto MT/MO desde el panel MTs, no se sincronizaban los paneles y no se pueden asignar Pokémon a esta nueva MT/MO
+
+** MEJORAS **
+
+Pokémon
+	* Nueva ventana para edición de formas desde la pestaña Pokédex del panel Pokémon
+
+MTs
+	* Permite crear un nuevo movimiento de Tutor desde el panel de MTs para editarlo en bloque.
+
+
+----- PBSEditor V.2.0 Beta 1.5 - 15/01/2023 -----
+
+** ERRORES **
+
+RPG Scripts
+	* Mejora la lectura de los scripts para adaptarse a los saltos de línea según el formato del texto.
+		Esto hacía que ciertos scripts no se leyeran correctamente
+	* Mejora el sistema de lectura de los pbs para evitar problemas de formato
+
+Movimientos
+	* Al modificar el nombre clave de un Movimiento no se actualizaban correctamente todos los usos en Pokémon, Objetos, MTs y Entrenadores
+		- Reportado por CarmaNekko
+	* Lee las funciones de los movimientos desde los scripts para estar siempre sincronizado con el juego
+
+Objetos
+	* Al borrar objetos se estaba considerando cada objeto a eliminar como una habilidad en vez de un item.
+		- Reportado por ShenseyGrenin
+
+Pokemon
+	* Carga los métodos evolutivos desde los scripts en vez de definirlos de forma interna
+	* Error al mostrar la línea evolutiva de Wumple en la pestaña Pokédex
+	* En la ventana de edición de movimientos, el filtro por tipo solo muestra los movimientos de ese tipo
+	* Lee los colores de los Pokémon desde los scripts
+	* Lee las compatibilidades huevo desde los scripts
+	* Lee las naturalezas desde los scripts
+
+Pokédex
+	* Los botones del panel central no se actualizaban correctamente en base a la selección de las tablas laterales
+
+Encuentros
+	* Error al copiar pokemon de una zona a otra
+
+Encuentros y Trainers
+	* Intenta corregir los posibles errores en las claves de los Pokémon mal escritos por aquellos que son correctos. Ejemplo: NIDORANFe debe ser NIDORANfE
+		Añade un warning indicando qué cambios se han hecho
+			
+** MEJORAS **
+
+Errores y Warnings
+	* Gestiona mas tipos de errores y warnings y añade un botón en algunos de ellos para poder acceder al panel correspondiente
+
+Pokédex
+	* Muestra un listado del número de pokémon de cada tipo que hay en cada región
+
+
+
+----- PBSEditor V.2.0 Beta 1.4 - 26/04/2022 -----
+
+** ERRORES **
+
+Encuentros
+	* Si se cambia 2 veces la clave de un Pokémon, desaparece de los encuentros
+	* Al copiar Pokémon de una zona y pegarlas en una zona nueva, da error de nulo
+	* Al pegar un Pokémon de zona, da error de null
+	* Al copiar una zona se añade a la tabla la lista y no el nombre
+	* Controlar que no haya huecos en blanco en una zona sin poner Pokémon
+	* Controlar que el nivel mínimo de un Pokémon sea siempre mayor que 1
+	* Controlar que el nivel máximo >= que el mínimo o cero
+
+Entrenadores
+	* Al cambiar la PokéBall, no se muestra correctamente qué ball ha sido asignada
+	* No se pueden quitar la habilidad de un Pokémon
+	* No se pueden quitar el objeto de un Pokémon
+	* Al editar y guardar un Entrenador los items y pokémon desaparecen
+
+** MEJORAS **
+
+Pokédex
+	* Muestra los tipos de los Pokémon en ambas tablas
+	* La tabla de la izquierda permite ordenar los Pokémon usando las columnas
+
+
+----- PBSEditor V.2.0 Beta 1.3 - 18/04/2022 -----
+
+** ERRORES **
+
+Pokédex
+	* Al cargar la dex, los Pokémon salen desplazados.
+	* Al guardar la dex, algunos pokémon se pierden.
+
+Entrenadores
+	* Actualiza la lista de PokéBalls en el panel de entrenadores cuando se crea una ball en Objetos
+
+
+** MEJORAS **
+
+Configuración
+	* Lee las Pokéball desde el script PItem_PokeBalls.
+
+
+----- PBSEditor V.2.0 Beta 1.2 - 10/04/2022 -----
+
+
+** MEJORAS **
+
+Configuración
+	* Lee los bolsillos desde el script Settings. El fichero de configuración BagPockets ya no se utilizará.
+	* Lee los tipos de encuentro desde el script PField_Encounters. El fichero de configuración EncounterTypes ya no se utilizará.
+
+Pokémon
+	** Nuevos valores por defecto para Pokémon nuevos dentro de los valores medios.
+
+
+----- PBSEditor V.2.0 Beta 1.1 - 09/04/2022 -----
+
+** ERRORES **
+
+Sincronización PBS
+	* El cambio de clave no se aplica a las evoluciones correctamente [Reporta: Shensey_Greninjashme]
+	* Al crear un nuevo Pokémon, no se actualiza el panel Pokédex si estaba abierto antes del alta.
+
+Pokémon
+	* Al editar y guardar un Pokémon, la lista de habilidades y movimientos se están duplicando [Reporta: Shensey_Grenin]
+
+
+----- PBSEditor V.2.0 Beta 1 - 09/04/2022 -----
+
+** IMPORTANTE **
+
+La estructura del proyecto ha cambiado significativamente, haciendo que dependa de varias dlls.
+Esto quiere decir que AHORA el programa NO debe estar dentro de la carpeta del juego.
+
+Si se ha modificado los ficheros de configuración de la carpeta PBSEditor:
+BagPockets.txt, DefaultEncounterChanges.txt, EncounterTypes.txt, MoveFlags.txt o MoveFunctions.txt
+Estos ficheros se moverán automáticamente a la carpeta local del proyecto del nuevo Editor, situada en la
+carpeta Projects/Nombre del proyecto/*.pjs, y tendrán una extensión .pjs (Project Settings)
+
+** ERRORES **
+
+Sincronización PBS
+	* Sincroniza los datos dependientes. Al borrar un elemento o cambiarle un dato importante, como la clave, propaga los cambios al resto de PBS para mantener la integridad.
+	* Usa datos temporales para poder cancelar los últimos cambios.
+	* Añade el botón de cancelar con una pregunta al usuario para advertirle que si cancela los cambios, se perderán.
+
+Objetos
+	* Al crear una MT o MO, actualizar el panel de MTs si está activo para reflejar los cambios.
+	* Al añadir una MT o MO desde el panel de MTs, los objetos no se marcaban como editados y no se guardaban.
+
+Pokémon
+	* Mostrar un mensaje de error si no se ha dado valor a las compatibilidades huevo. El juego los necesita.
+
+Entrenadores
+	* No se puede cambiar el género en el editor de entrenadores.
+	* No se pinta el género mixto en la tabla de tipos de entrenador.
+	* Faltaba terminar el panel de entrenadores y que se gestionaran los datos correctamente.
+
+
+** MEJORAS **
+
+Proyectos
+	* Permite buscar y cargar un proyecto .rxproj.
+	* Lectura de los ficheros rxdata de un proyecto RPG Maker.
+	* Gestión de proyectos a nivel local del editor para evitar añadir más ficheros al juego.
+
+Interfaz (general)
+	* Distinción entre el icono de borrar (ahora una papelera) y el de cancelar (la X roja).
+	* Muestra todos los botones en cada panel aunque estén deshabilitados para evitar parpadeos molestos en los cambios de función.
+
+Panel de Inicio
+	* Botón para cargar un proyecto y listado de los últimos 5 proyectos cargados.
+
+NUEVO panel para Errores / Warnings
+	* Lista los errores encontrados en la lectura de los PBS.
+	* Lista como warnings (avisos) aquellos errores de lectura que no suponen un error a la hora de jugar pero si suponen una carencia.
+
+Objetos
+	* Nueva gestión que permite tener sincronizados el resto de los datos cuando se cambia la clave de un objeto o se borra
+
+Pokémon
+	* Ventana de editar movimientos ahora tiene el listado de movimientos de la izquierda agrupados por tipo y ordenados por potencia
+
+Metadatos
+	* Lectura de los ficheros MapInfos.rxdata y los mapas del proyecto para usarlos en los metadatos.
+	* Cambia la tabla de los mapas por un árbol similar al de RPG Maker.
+	* Gestión sincronizada de los mapas de RPG Maker. Al cambiar un mapa, se actualiza el árbol automáticamente.
+	* La ventana de selección de mapas, los carga del proyecto RPG Maker
+
+Pokédex
+	* Ciertos cambios en la Pokédex no se estaban gestionando, por lo que no se consideraba como editado y no se actualizaban los PBS al guardar.
+	* Cancelar cambios no restaruaba el estado anterior de la Dex.
+	* Incluye una barra de carga que se mostrará si se están trasladando muchos Pokémon a la vez.
+
+Entrenadores
+	* El combo de género para el tipo de entrenador no tenía elementos.
+	* Cambios mínimos en los colores del interfaz para diferenciar etiquetas de campos con valor
+
+
+
+----- PBSEditor V.1.1.2 - 24/08/2021 -----
+
+** ERRORES **
+
+Reporter: CarmaNekko
+Pokemon
+	* Los valores de Altura y Peso se leen mal y conviernten los decimales en numeros enteros, aumentando las cifras con cada guardado y nueva lectura de pbs
+
+----- PBSEditor V.1.1.1 - 03/08/2021 -----
+
+** ERRORES **
+
+Reporter: Popegade29
+Movimientos
+	* En los objetivos de movimiento no se puede indicar otro que no sea Un Pokémon (error ya corregido pero que ha vuelto)
+	* El texto de "Todos los enemigos" está mal escrito y pone "Todos los nemigos"
+
+Reporter: Vaz (Pokémon Génesis)
+Pokémon -> Evoluciones
+	* La evolución Crits (Farfetch'd -> Sirfetch'd) no está controlada. Se guarda como Level sin valor y da error
+
+
+----- PBSEditor V.1.1 - 03/08/2021 -----
+
+** MEJORAS **
+
+Panel de Inicio
+	* Muestra la ruta de los PBS cargados. Clickando en la ruta de los PBS, se abre la carpeta en el explorador
+	* Nuevo fondo por cortesía de P4BL0 @pabl0_jp26
+
+Reporter: Pablus
+Actualiza las vistas de los combates
+	* Panel de Pokémon -> Pestaña Combate: Muestra el interfaz de combate con los gráficos del juego y fondos aleatorios
+	* Metadatos -> Ventana de selección de fondo de combate: Muestra una vista completa del interfaz de combate usando los gráficos del juego
+	
+Panel de Pokémon y ventana para importar estadísticas.
+	* Marca con colores el valor de las estadísticas base de un Pokémon de forma similar a como lo hacen las wikis
+Panel de Pokémon -> Pestaña Pokédex (V.1)
+	* Muestra las formas regionales en las evoluciones (pero no las formas del pokémon base)
+
+Panel de Regiones
+	* Al seleccionar mas de un punto de región, en el mapa se pintan todos esos puntos con un rectángulo rojo
+
+Panel de Encuentros -> Pestaña Mapas
+	* Al seleccionar mas de una zona, se listan los pokémon que aparecen de todas ellas, mostrando el rango de niveles mínimo y máximo
+	* En la ventana de selección de mapa se ha añadido un combo para filtrar los mapas por región
+Panel de Encuentros -> Pestaña Pokémon 
+	* Interfaz modificado para mostrar la región de los mapas y ver el mapa de región centrado
+	* Al seleccionar mas de un mapa, se marcan todas en el mapa y se listan todas las zonas juntas.
+
+** ERRORES **
+
+Pokémon -> Ventana de edición de evoluciónes
+	* Evolución por intercambio con objeto no selecciona bien el objeto
+	* Evolución por belleza no se actualiza el grado de belleza
+	* Al añadir una evolución, actualizar la dase de datos para poder cargar las evos de los pokémon afectados
+
+Reporter: Zettai (Pokémon Anamecer)
+Pokémon
+	* Al modificar a NIDORANfE o a NIDORANmA el campo clave convierte la f y la m minúsculas en mayúsculas y se pierden las referencias a los Pokémon
+		** Se han marcado internamente para solventar el error y permitir que el campo Clave de Pokémon pueda mantenerse en mayúsculas por defecto
+Entrenadores
+	* No se pueden cambiar los audios a los entrenadores
+
+Reporter: Gauna
+Pokémon -> Edición de habilidades
+	* Si no hay ningúna habilidad seleccionada en la ventana de edición de Habilidades, da un error al pulsar las flechas para añadir habiliad
+	
+Reporter: Pokémon Last Dream
+Encuentros
+	* No se guardan los niveles en los encuentros salvajes si editan diréctamente desde la tabla
+	
+Reporter: Pokémon Bifröst
+Movimientos
+	* No se puede borrar movimientos
+	
+Reporter: Davenn (Pokémon Siris)
+Dependencias del PBSEditor
+	* Si no se extrae del comprimido la carpeta PBSEditor y se coloca junto al programa, da error al cambiar la función de un movimiento
+	
+Reporter: Scept (Pokémon Armonía)
+Pokédex
+	* El panel Pokédex no inserta espacios en blanco en la posición indicada, siempre lo hace al final
+	
+Reporter: Deims (Pokémon Hope & Illusion)
+Error de lectura
+	* Dependiendo del idioma y/o configuración del pc, al leer números decimales desde los ficheros se omitían los caracteres de separación decimal,
+		haciendo que un 1.7 se lea como 17. Al guardar se hace como 17.0, por lo que al leer de nuevo pasa a ser 170, etc.
+	
+Reporter: Pokémon Visiones Etéreas
+Pokémon -> Evoluciones
+	* Las evoluciones por felicidad las guarda bien en fichero pero no las lee correctamente
+	
+** CAMBIOS MENORES **
+
+Panel de Pokémon
+	* Al editar un Pokémon, la ventana de edición tiene seleccionada por defecto la misma pestaña que el panel del listado base

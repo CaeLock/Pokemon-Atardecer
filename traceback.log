@@ -1,19 +1,23 @@
-Script error within event 3, map 1 ():
-Exception: NameError
-Message: undefined local variable or method `keys' for #<Window_TextEntry_Keyboard:0x1739eec0>
+Script error within event 3, map 1 (Intro):
+Exception: SyntaxError
+Message: (eval):6:in `pbExecuteScript': compile error
+(eval):2: syntax error
+(:LUXURYBALL,10)
+             ^
+***Line '(:LUXURYBALL,10)' shouldn't begin with '('. Try
+putting the '(' at the end of the previous line instead,
+or using 'extendtext.exe'.
+***Line '(:LUXURYCATALOG)' shouldn't begin with '('. Try
+putting the '(' at the end of the previous line instead,
+or using 'extendtext.exe'.
 ***Full script:
-pbTrainerName
+$PokemonBag.pbStoreItem
+(:LUXURYBALL,10)
+$PokemonBag.pbStoreItem
+(:LUXURYCATALOG)
+poke = $Trainer.party[0]
+poke.pbLearnMove(:PAYDAY)
 
-001_Interpreter.rb:248:in `pbExecuteScript'
-006_TextEntry.rb:1097:in `pbEntry1'
-006_TextEntry.rb:1085:in `loop'
-006_TextEntry.rb:1085:in `pbEntry1'
-006_TextEntry.rb:1150:in `pbEntry'
-006_TextEntry.rb:1669:in `pbStartScreen'
-006_TextEntry.rb:1683:in `pbEnterText'
-003_SpriteWindow.rb:1246:in `pbFadeOutIn'
-006_TextEntry.rb:1680:in `pbEnterText'
-006_TextEntry.rb:1696:in `pbEnterPlayerName'
 
 
 001_Interpreter.rb:281:in `pbExecuteScript'
