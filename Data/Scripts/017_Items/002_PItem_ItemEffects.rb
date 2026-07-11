@@ -781,6 +781,73 @@ ItemHandlers::UseOnPokemon.add(:SWIFTWING,proc{|item,pokemon,scene|
    end
 })
 
+ItemHandlers::UseOnPokemon.add(:HEALTHMOCHI,proc{|item,pokemon,scene|
+   if pbRaiseEffortValues(pokemon,PBStats::HP,10,false)==0
+     scene.pbDisplay(_INTL("No tendrá ningún efecto."))
+     next false
+   else
+     scene.pbRefresh
+     scene.pbDisplay(_INTL("Los PS de {1} se incrementaron.",pokemon.name))
+     pokemon.changeHappiness("vitamin")
+     next true
+   end
+})
+
+ItemHandlers::UseOnPokemon.add(:MUSCLEMOCHI,proc{|item,pokemon,scene|
+   if pbRaiseEffortValues(pokemon,PBStats::ATTACK,10,false)==0
+     scene.pbDisplay(_INTL("No tendrá ningún efecto."))
+     next false
+   else
+     scene.pbDisplay(_INTL("El Ataque de {1} se ha incrementado.",pokemon.name))
+     pokemon.changeHappiness("vitamin")
+     next true
+   end
+})
+
+ItemHandlers::UseOnPokemon.add(:RESISTMOCHI,proc{|item,pokemon,scene|
+   if pbRaiseEffortValues(pokemon,PBStats::DEFENSE,10,false)==0
+     scene.pbDisplay(_INTL("No tendrá ningún efecto."))
+     next false
+   else
+     scene.pbDisplay(_INTL("La Defensa de {1} se ha incrementado.",pokemon.name))
+     pokemon.changeHappiness("vitamin")
+     next true
+   end
+})
+
+ItemHandlers::UseOnPokemon.add(:GENIUSMOCHI,proc{|item,pokemon,scene|
+   if pbRaiseEffortValues(pokemon,PBStats::SPATK,10,false)==0
+     scene.pbDisplay(_INTL("No tendrá ningún efecto."))
+     next false
+   else
+     scene.pbDisplay(_INTL("El Ataque Especial de {1} se ha incrementado.",pokemon.name))
+     pokemon.changeHappiness("vitamin")
+     next true
+   end
+})
+
+ItemHandlers::UseOnPokemon.add(:CLEVERMOCHI,proc{|item,pokemon,scene|
+   if pbRaiseEffortValues(pokemon,PBStats::SPDEF,10,false)==0
+     scene.pbDisplay(_INTL("No tendrá ningún efecto."))
+     next false
+   else
+     scene.pbDisplay(_INTL("La Defensa Especial de {1} se ha incrementado.",pokemon.name))
+     pokemon.changeHappiness("vitamin")
+     next true
+   end
+})
+
+ItemHandlers::UseOnPokemon.add(:SWIFTMOCHI,proc{|item,pokemon,scene|
+   if pbRaiseEffortValues(pokemon,PBStats::SPEED,10,false)==0
+     scene.pbDisplay(_INTL("No tendrá ningún efecto."))
+     next false
+   else
+     scene.pbDisplay(_INTL("La Velocidad de {1} se ha incrementado.",pokemon.name))
+     pokemon.changeHappiness("vitamin")
+     next true
+   end
+})  
+
 ItemHandlers::UseOnPokemon.add(:RARECANDY,proc{|item,pokemon,scene|
    if pokemon.level>=PBExperience::MAXLEVEL || (pokemon.isShadow? rescue false)
      scene.pbDisplay(_INTL("No tendrá ningún efecto."))
