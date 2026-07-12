@@ -12,6 +12,7 @@ module PlayerClasses
   ARISTOCRATA = :ARISTOCRATA
   INDECISA    = :INDECISA
   ARQUEOLOGA  = :ARQUEOLOGA
+  ENTRENADORA_PROFESIONAL = :ENTRENADORA
 
   # --- Tunable balance constants ---------------------------------------------
 
@@ -55,6 +56,10 @@ module PlayerClasses
      ARQUEOLOGA => {
       :name        => _INTL("Arqueologa"),
       :description => _INTL("Yearn for the mines"    )
+    },
+    ENTRENADORA_PROFESIONAL => {
+      :name        => _INTL("Entrenadora Profesional"),
+      :description => _INTL("lalalala"    )
     },
   }
 
