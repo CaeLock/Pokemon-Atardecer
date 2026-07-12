@@ -158,3 +158,48 @@ def giveExp(exp)
        end
   end
 end
+
+
+#===============================================================================
+# Item Receive Fix
+#-------------------------------------------------------------------------------
+# Kernel.pbReceiveItem (002_PField_Field.rb) always shows the "You obtained
+# X!" message before even trying to store the item, so when the pocket is
+# full (very common for Arqueologa, whose pockets are much smaller) the
+# player sees a false "obtained" message and the item silently isn't added.
+# Since pbReceiveItem is called from event scripts scattered across every
+# map, fixing every call site individually isn't practical, so this wraps
+# the function itself: check first (with the side-effect-free pbCanStore?),
+# and only show the normal messages if the item will actually fit.
+#
+# showFailureMessage (default true) keeps every existing call site's old
+# behaviour: still get a "no cabe" message instead of a false "obtenido" one.
+# Pass false when calling this directly from an event's own conditional
+# branch (e.g. "Llamar Script" -> Kernel.pbReceiveItem(:ITEM,1,false)) to get
+# a silent true/false and handle the failure case yourself -- for example,
+# to show a custom message or leave the event's self-switch off so the
+# player can come back for the item later once they have room.
+#===============================================================================
+module Kernel
+  class << self
+    alias original_pbReceiveItem pbReceiveItem
+    def pbReceiveItem(item,quantity=1,showFailureMessage=false)
+      realItem=item
+      realItem=archaeology_exchange(realItem) if defined?(archaeology_exchange)
+      if realItem.is_a?(String) || realItem.is_a?(Symbol)
+        realItem=getID(PBItems,realItem)
+      end
+      return false if !realItem || realItem<=0 || quantity<1
+      if !$PokemonBag.pbCanStore?(realItem,quantity)
+        if showFailureMessage
+          itemname=(quantity>1) ? PBItems.getNamePlural(realItem) : PBItems.getName(realItem)
+          pocket=pbGetPocket(realItem)
+          Kernel.pbMessage(_INTL("¡No hay espacio en el bolsillo <icon=bagPocket{1}>{2} para \\c[1]{3}\\c[0]!",
+             pocket,PokemonBag.pocketNames()[pocket],itemname))
+        end
+        return false
+      end
+      return original_pbReceiveItem(item,quantity)
+    end
+  end
+end
