@@ -61,7 +61,8 @@ class Generate_Input_Pokemon
                   (PBStats.respond_to?(:getName) ? PBStats.getName(id) : id)
                   name.to_s.upcase.gsub(/\s+/, "_").to_sym
                   }
-=end
+=end      
+          $Trainer.partnerID=poke.personalID
           poke.iv[stat_order[0]] = rand(16..31)
           poke.iv[stat_order[1]] = rand(16..31)
           poke.iv[stat_order[2]] = rand(16..31)

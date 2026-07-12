@@ -49,7 +49,11 @@ module PCExp
     leveladjust=leveladjust**5
     leveladjust=Math.sqrt(leveladjust)
     exp=(exp*leveladjust).floor
-    pkmn.exp=[pkmn.exp+(exp*EXP_RATE).floor,maxexp].min
+    if $Trainer.playerClass == :ENTRENADORA #CHECK
+      pkmn.exp = [pkmn.exp + exp, maxexp].min
+    else
+      pkmn.exp = [pkmn.exp + (exp * EXP_RATE).floor, maxexp].min
+    end 
     return if pkmn.level==oldlevel
     pkmn.calcStats
     return if !LEARN_MOVES
