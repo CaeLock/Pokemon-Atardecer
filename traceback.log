@@ -1,23 +1,20 @@
-Script error within event 3, map 1 (Intro):
-Exception: SyntaxError
-Message: (eval):6:in `pbExecuteScript': compile error
-(eval):2: syntax error
-(:LUXURYBALL,10)
-             ^
-***Line '(:LUXURYBALL,10)' shouldn't begin with '('. Try
-putting the '(' at the end of the previous line instead,
-or using 'extendtext.exe'.
-***Line '(:LUXURYCATALOG)' shouldn't begin with '('. Try
-putting the '(' at the end of the previous line instead,
-or using 'extendtext.exe'.
+Script error within event 5, map 2 (Test):
+Exception: ArgumentError
+Message: (eval):1:in `pbReceiveItem': wrong number of arguments (0 for 1)
 ***Full script:
-$PokemonBag.pbStoreItem
-(:LUXURYBALL,10)
-$PokemonBag.pbStoreItem
-(:LUXURYCATALOG)
-poke = $Trainer.party[0]
-poke.pbLearnMove(:PAYDAY)
+Kernel.pbReceiveItem
+(PBItems::RELICVASE)
 
+001_Interpreter.rb:248:in `pbExecuteScript'
+(eval):1:in `pbExecuteScript'
+001_Interpreter.rb:1612:in `eval'
+001_Interpreter.rb:248:in `pbExecuteScript'
+001_Interpreter.rb:1612:in `command_355'
+001_Interpreter.rb:499:in `execute_command'
+001_Interpreter.rb:198:in `update'
+001_Interpreter.rb:111:in `loop'
+001_Interpreter.rb:111:in `update'
+001_Scene_Map.rb:103:in `updateold'
 
 
 001_Interpreter.rb:281:in `pbExecuteScript'

@@ -546,3 +546,43 @@ end
 # ARQUEOLOGA
 ################################################################################
 ################################################################################
+
+class Archaeologist
+  ARCHAEOLOGY_ITEM = {
+    :RELICCOPPER => :RELICCOPPER_ARCHAEOLOGY,
+    :RELICSILVER => :RELICSILVER_ARCHAEOLOGY,
+    :RELICGOLD   => :RELICGOLD_ARCHAEOLOGY,
+    :RELICCROWN  => :RELICCROWN_ARCHAEOLOGY,
+    :RELICVASE   => :RELICVASE_ARCHAEOLOGY,
+    :RELICSTATUE => :RELICSTATUE_ARCHAEOLOGY,
+    :RELICBAND   => :RELICBAND_ARCHAEOLOGY
+  }
+
+  ARCHAEOLOGY_POCKETSIZE = {
+     1   => 5, # "Objetos"
+     2   => 5, # "Medicinas"
+     3   => 5, # "Poké Balls" 
+     4   => 5, # "MTs / MOs" 
+     5   => 5, # "Bayas"       
+     6   => 5, #"Cristales Z"
+     7   => 5, # "Obj. Batallas" 
+     8   => 5  #"Obj. Claves"
+  }
+
+
+  def self.archaeology_item(item)
+    if item.is_a?(Integer) #in the case of being an ID, transform to sym
+      item = getConstantName(PBItems, item).to_sym
+    end
+    ARCHAEOLOGY_ITEM.fetch(item, item)
+  end
+
+  def self.return_archaeology_size(pocket)
+    return ARCHAEOLOGY_POCKETSIZE[pocket]
+  end
+  
+end
+
+def archaeology_exchange(item)
+  Archaeologist.archaeology_item(item)
+end

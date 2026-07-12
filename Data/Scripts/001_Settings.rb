@@ -110,6 +110,7 @@ def pbPocketNames; return ["",
    _INTL("Obj. Batallas"),
    _INTL("Obj. Claves")
 ]; end
+
 MAXPOCKETSIZE  = [0,-1,-1,-1,-1,-1,-1,-1,-1]
 BAGMAXPERSLOT  = 99
 POCKETAUTOSORT = [0,false,false,false,true,true,false,false,false]

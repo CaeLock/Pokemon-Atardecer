@@ -931,7 +931,11 @@ class PokemonBag
   end
   
   def maxPocketSize(pocket)
-    maxsize=MAXPOCKETSIZE[pocket]
+    if $Trainer.playerClass == :ARQUEOLOGA
+      maxsize = Archaeologist.return_archaeology_size(pocket) #Atardecer. Arqueóloga tiene límite.
+    else
+      maxsize=MAXPOCKETSIZE[pocket]
+    end
     return -1 if !maxsize
     return maxsize
   end

@@ -826,3 +826,10 @@
 821,ZERAORITE,Zeraorita,Zeraoritas,1,0,"Una de las misteriosas Megapiedras. Permite megaevolucionar a Zeraora en combate.",0,0,0
 1001,LUXURYCATALOG,Catalogo,Zeraoritas,1,0,"Una de las misteriosas Megapiedras. Permite megaevolucionar a Zeraora en combate.",2,0,0,
 1002,MININGKIT,Equipo de Minería,Equipos de Minería,1,0,"Kit de minería",2,0,0,
+1003,RELICCROWN_ARCHAEOLOGY,Corona Antigua2,Coronas Antiguas,1,600000,"Corona de más de tres mil años de antigüedad. Muy valorada por los coleccionistas.",0,0,0,
+1004,RELICSTATUE_ARCHAEOLOGY,Efigie Antigua2,Efigies Antiguas,1,400000,"Efigie de piedra de más de tres mil años de antigüedad. Muy valorado por los coleccionistas.",0,0,0,
+1005,RELICBAND_ARCHAEOLOGY,Brazal antiguo2,Brazales,1,200000,"Brazalete de más de tres mil años de antigüedad. Muy valorado por los coleccionistas.",0,0,0,
+1006,RELICVASE_ARCHAEOLOGY,Ánfora antigua2,Ánforas,1,100000,"Jarrón de más de tres mil años de antigüedad. Muy valorado por los coleccionistas.",0,0,0,
+1007,RELICCOPPER_ARCHAEOLOGY,Real de Cobre2,Reales Cobre,1,2000,"Moneda de cobre de más de tres mil años de antigüedad. Muy valorada por los coleccionistas.",0,0,0,
+1008,RELICSILVER_ARCHAEOLOGY,Real de Plata2,Reales Plata,1,10000,"Moneda de plata de más de tres mil años de antigüedad. Muy valorada por los coleccionistas.",0,0,0,
+1009,RELICGOLD_ARCHAEOLOGY,Real de Oro2,Reales Oro,1,20000,"Moneda de oro de más de tres mil años de antigüedad. Muy valorada por los coleccionistas.",0,0,0,

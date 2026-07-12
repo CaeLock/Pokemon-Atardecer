@@ -1937,6 +1937,7 @@ end
 # Gaining items
 #===============================================================================
 def Kernel.pbItemBall(item,quantity=1)
+  item = archaeology_exchange(item) #Archaeologist. Atardecer.
   if item.is_a?(String) || item.is_a?(Symbol)
     item=getID(PBItems,item)
   end
@@ -1974,6 +1975,7 @@ def Kernel.pbItemBall(item,quantity=1)
 end
 
 def Kernel.pbReceiveItem(item,quantity=1)
+  item = archaeology_exchange(item) #Archaeologist. Atardecer.
   if item.is_a?(String) || item.is_a?(Symbol)
     item=getID(PBItems,item)
   end
