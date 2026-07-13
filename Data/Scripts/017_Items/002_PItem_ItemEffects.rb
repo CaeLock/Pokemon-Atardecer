@@ -379,6 +379,8 @@ ItemHandlers::UseOnPokemon.add(:POTION,proc{|item,pokemon,scene|
 
   heal = heal_map[item] || 20 #Si no encuentra objeto, cura como si fuese una poción.
                               #Afecta a Zumo de bayas, corazón dulce y caramelo furia.
+  #Atardecer. MEDICO heals more.
+  heal = (heal * 1.2).floor if $Trainer.playerClass == :MEDICO
   next pbHPItem(pokemon,heal,scene)
 })
 
@@ -516,6 +518,8 @@ ItemHandlers::UseOnPokemon.add(:MAXREVIVE,proc{|item,pokemon,scene|
 
 ItemHandlers::UseOnPokemon.add(:ENERGYPOWDER,proc{|item,pokemon,scene|
   heal = (USENEWBATTLEMECHANICS) ? 60 : 50
+    #Atardecer. MEDICO heals more.
+  heal = (heal * 1.2).floor if $Trainer.playerClass == :MEDICO
   if pbHPItem(pokemon,heal,scene)
      pokemon.changeHappiness("powder")
      next true
@@ -525,6 +529,8 @@ ItemHandlers::UseOnPokemon.add(:ENERGYPOWDER,proc{|item,pokemon,scene|
 
 ItemHandlers::UseOnPokemon.add(:ENERGYROOT,proc{|item,pokemon,scene|
   heal = (USENEWBATTLEMECHANICS) ? 120 : 200
+  #Atardecer. MEDICO heals more.
+  heal = (heal * 1.2).floor if $Trainer.playerClass == :MEDICO
   if pbHPItem(pokemon,heal,scene)
     pokemon.changeHappiness("powder")
     next true
@@ -1347,6 +1353,8 @@ ItemHandlers::BattleUseOnPokemon.add(:POTION,proc{|item,pokemon,battler,scene|
   
   heal = heal_map[item] || 20 #Si no encuentra objeto, cura como si fuese una poción.
                               #Afecta a Zumo de bayas, corazón dulce y caramelo furia.
+  #Atardecer. MEDICO heals more.
+  heal = (heal * 1.2).floor if $Trainer.playerClass == :MEDICO
   next pbBattleHPItem(pokemon,battler,heal,scene)
 })
 
@@ -1507,6 +1515,8 @@ ItemHandlers::BattleUseOnPokemon.add(:MAXREVIVE,proc{|item,pokemon,battler,scene
 
 ItemHandlers::BattleUseOnPokemon.add(:ENERGYPOWDER,proc{|item,pokemon,battler,scene|
   heal = (USENEWBATTLEMECHANICS) ? 60 : 50
+    #Atardecer. MEDICO heals more.
+  heal = (heal * 1.2).floor if $Trainer.playerClass == :MEDICO
   if pbBattleHPItem(pokemon,battler,heal,scene)
      pokemon.changeHappiness("powder")
      next true
@@ -1516,6 +1526,8 @@ ItemHandlers::BattleUseOnPokemon.add(:ENERGYPOWDER,proc{|item,pokemon,battler,sc
 
 ItemHandlers::BattleUseOnPokemon.add(:ENERGYROOT,proc{|item,pokemon,battler,scene|
   heal = (USENEWBATTLEMECHANICS) ? 120 : 200
+    #Atardecer. MEDICO heals more.
+  heal = (heal * 1.2).floor if $Trainer.playerClass == :MEDICO
   if pbBattleHPItem(pokemon,battler,heal,scene)
      pokemon.changeHappiness("Energy Root")
      next true

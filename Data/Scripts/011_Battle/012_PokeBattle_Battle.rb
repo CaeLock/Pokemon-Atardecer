@@ -164,6 +164,10 @@ def pbThrowPokeBall(idxPokemon,ball,rareness=nil,showplayer=false,safari=false,f
         elsif $Trainer.pokedexOwned>30
           c=(x*0.5/6).floor
         end
+        #Atardecer. Additional critical chance if playing :ENTRENADORA
+        if $Trainer.playerClass == :ENTRENADORA
+          c=(x*1/6).floor
+        end
       end
       shakes=0; critical=false
       if x>255 || BallHandlers.isUnconditional?(ball,self,battler)
@@ -171,7 +175,8 @@ def pbThrowPokeBall(idxPokemon,ball,rareness=nil,showplayer=false,safari=false,f
       else
         x=1 if x<1
         y = ( 65536/((255.0/x)**0.1875) ).floor
-        if USECRITICALCAPTURE && pbRandom(256)<c
+        #Atardecer. Only critical catch with Poké Ball unless playing as :ENTRENADORA
+        if USECRITICALCAPTURE && pbRandom(256)<c && (itemname == "Poké Ball" || $Trainer.playerClass == :ENTRENADORA)
           critical=true
           shakes=4 if pbRandom(65536)<y
         else
@@ -1928,7 +1933,7 @@ class PokeBattle_Battle
     itemname = PBItems.getName(item)
     pbDisplayBrief(_INTL("¡{1} ha usado<br>{2}!", opponent.fullname, itemname))
     PBDebug.log("[Objeto usado] El rival ha usado #{itemname} en #{battler.pbThis(true)}")
-  
+
     healing_items = {
       :POTION       => 20,
       :SUPERPOTION  => (USENEWBATTLEMECHANICS ? 60 : 50),
@@ -1944,8 +1949,7 @@ class PokeBattle_Battle
       :ENERGYPOWDER  => (USENEWBATTLEMECHANICS) ? 60 : 50,
       :ENERGYROOT    => (USENEWBATTLEMECHANICS) ? 120 : 200
     }
-
-
+    
     pbCommonAnimation("UseItem",battler,nil) rescue nil
     if healing_items.keys.any? { |key| isConst?(item, PBItems, key) }
       heal_amount = healing_items.detect { |key, _| isConst?(item, PBItems, key) }[1]

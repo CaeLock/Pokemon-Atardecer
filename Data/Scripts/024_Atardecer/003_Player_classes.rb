@@ -8,11 +8,12 @@
 #===============================================================================
 module PlayerClasses
   # Job identifiers
-  CAMPEONA    = :CAMPEONA
-  ARISTOCRATA = :ARISTOCRATA
-  INDECISA    = :INDECISA
-  ARQUEOLOGA  = :ARQUEOLOGA
-  ENTRENADORA_PROFESIONAL = :ENTRENADORA
+  CAMPEONA                = :CAMPEONA
+  ARISTOCRATA             = :ARISTOCRATA
+  INDECISA                = :INDECISA
+  ARQUEOLOGA              = :ARQUEOLOGA
+  PRO_TRAINER             = :ENTRENADORA
+  MEDICO                  = :MEDICO  
 
   # --- Tunable balance constants ---------------------------------------------
 
@@ -43,23 +44,27 @@ module PlayerClasses
   DATA = {
     CAMPEONA => {
       :name        => _INTL("Campeona"),
-      :description => _INTL("Tus Pokémon ganan amistad al ganar combates y salir al campo, y desbloquean beneficios según su amistad, pero pierden más al debilitarse o subir de nivel en el PC."),
+      :description => _INTL(""),
     },
     ARISTOCRATA => {
       :name        => _INTL("Aristócrata"),
-      :description => _INTL("Money money money"    )
+      :description => _INTL("")
     },
     INDECISA => {
       :name        => _INTL("Indecisa"),
-      :description => _INTL("Bad Ending"    )
+      :description => _INTL("")
     },
      ARQUEOLOGA => {
       :name        => _INTL("Arqueologa"),
-      :description => _INTL("Yearn for the mines"    )
+      :description => _INTL("")
     },
-    ENTRENADORA_PROFESIONAL => {
+    PRO_TRAINER => {
       :name        => _INTL("Entrenadora Profesional"),
-      :description => _INTL("lalalala"    )
+      :description => _INTL("")
+    },
+    MEDICO => {
+      :name        => _INTL("Medico"),
+      :description => _INTL("")
     },
   }
 
@@ -576,7 +581,7 @@ class Archaeologist
 
 
   def self.archaeology_item(item)
-    if item.is_a?(Integer) #in the case of being an ID, transform to sym
+    if item.is_a?(Integer) #in the case of being an ID, transforms to sym
       item = getConstantName(PBItems, item).to_sym
     end
     ARCHAEOLOGY_ITEM.fetch(item, item)
