@@ -14,6 +14,7 @@ module PlayerClasses
   ARQUEOLOGA              = :ARQUEOLOGA
   PRO_TRAINER             = :ENTRENADORA
   MEDICO                  = :MEDICO  
+  MONTARAZ                = :MONTARAZ  
 
   # --- Tunable balance constants ---------------------------------------------
 
@@ -63,7 +64,11 @@ module PlayerClasses
       :description => _INTL("")
     },
     MEDICO => {
-      :name        => _INTL("Medico"),
+      :name        => _INTL("Médico"),
+      :description => _INTL("")
+    },
+    MONTARAZ => {
+      :name        => _INTL("Montaraz"),
       :description => _INTL("")
     },
   }
@@ -595,4 +600,116 @@ end
 
 def archaeology_exchange(item)
   Archaeologist.archaeology_item(item)
+end
+
+
+################################################################################
+################################################################################
+# PRO TRAINER
+################################################################################
+################################################################################
+
+#===============================================================================
+# Can't revive a fainted Pokemon
+#===============================================================================
+class PokeBattle_Pokemon
+  alias original_hp= hp=
+  def hp=(value)
+    if @hp==0 && value>0 && belongsToPlayer? &&
+       PlayerClasses.current?(PlayerClasses::PRO_TRAINER)
+      return
+    end
+    self.original_hp=(value)
+  end
+
+  alias original_healHP healHP
+  def healHP
+    if @hp==0 && belongsToPlayer? &&
+       PlayerClasses.current?(PlayerClasses::PRO_TRAINER)
+      return
+    end
+    original_healHP
+  end
+end
+
+#===============================================================================
+# Don't let Revive/Max Revive get consumed (or show a misleading "recovered
+# HP" message) on a Pokemon that's permanently fainted for this job
+#===============================================================================
+def pbEntrenadoraBlocksRevive?(item,pokemon)
+  return false if !PlayerClasses.current?(PlayerClasses::PRO_TRAINER)
+  return false if !pokemon || pokemon.hp>0
+  return false if !pokemon.respond_to?(:belongsToPlayer?) || !pokemon.belongsToPlayer?
+  reviveIDs=[getID(PBItems,:REVIVE),getID(PBItems,:MAXREVIVE),getID(PBItems,:REVIVALHERB)]
+  return reviveIDs.include?(item)
+end
+
+module ItemHandlers
+  class << self
+    alias original_triggerUseOnPokemon triggerUseOnPokemon
+    def triggerUseOnPokemon(item,pokemon,scene)
+      if pbEntrenadoraBlocksRevive?(item,pokemon)
+        scene.pbDisplay(_INTL("No tendrá ningún efecto."))
+        return false
+      end
+      return original_triggerUseOnPokemon(item,pokemon,scene)
+    end
+
+    alias original_triggerBattleUseOnPokemon triggerBattleUseOnPokemon
+    def triggerBattleUseOnPokemon(item,pokemon,battler,scene)
+      if pbEntrenadoraBlocksRevive?(item,pokemon)
+        scene.pbDisplay(_INTL("No tendrá ningún efecto."))
+        return false
+      end
+      return original_triggerBattleUseOnPokemon(item,pokemon,battler,scene)
+    end
+  end
+end
+
+#===============================================================================
+# Starter fainting forces an immediate loss
+#-------------------------------------------------------------------------------
+# Reuses the battle's own @decision flag (0=undecided,1=win,2=loss,3=escaped,
+# 4=caught) instead of duplicating any end-of-battle logic. Setting it here
+# lets the battle's existing turn loop notice and wrap up normally, the same
+# way it already does for a full party wipe.
+#===============================================================================
+class PokeBattle_Battler
+  alias entrenadora_hardcore_pbFaint pbFaint
+  def pbFaint(showMessage=true)
+    alreadyFainted=@fainted
+    ret=entrenadora_hardcore_pbFaint(showMessage)
+    if !alreadyFainted && @battle && @pokemon && @battle.decision==0 &&
+       @battle.pbOwnedByPlayer?(self.index) &&
+       @pokemon.respond_to?(:starter?) && @pokemon.starter? &&
+       PlayerClasses.current?(PlayerClasses::PRO_TRAINER)
+      @battle.decision=2
+    end
+    return ret
+  end
+end
+
+#===============================================================================
+# Game Over sequence, triggered once control is back in the field
+#-------------------------------------------------------------------------------
+# Uses $game_temp.gameover, the same flag RPG Maker XP's own "Game Over"
+# event command sets -- it shows the engine's native Game Over screen/jingle
+# (configured in the Database) and returns to the title screen on its own.
+# If you'd rather route this through a common event instead (for a custom
+# screen), swap the line below for: pbCommonEvent(N)
+#===============================================================================
+module EntrenadoraGameOver
+  module_function
+
+  def trigger
+    $game_temp.gameover=true if $game_temp
+  end
+end
+
+alias original_pbAfterBattle pbAfterBattle
+def pbAfterBattle(decision,canlose)
+  original_pbAfterBattle(decision,canlose)
+  if decision==2 && PlayerClasses.current?(PlayerClasses::PRO_TRAINER)
+    EntrenadoraGameOver.trigger
+  end
 end

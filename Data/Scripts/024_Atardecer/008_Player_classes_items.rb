@@ -24,7 +24,7 @@ ItemHandlers.addUseFromBag(:MININGKIT, proc {
 
 # MEDICO
 
-ItemHandlers::UseFromBag.add(:POKEVIAL,proc{|item|
+ItemHandlers::UseFromBag.add(:FIRSTAIDKIT,proc{|item|
    if $Trainer.pokemonCount==0
      Kernel.pbMessage(_INTL("No hay Pokémon."))
      next 0

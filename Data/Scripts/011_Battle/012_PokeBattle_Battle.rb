@@ -166,7 +166,7 @@ def pbThrowPokeBall(idxPokemon,ball,rareness=nil,showplayer=false,safari=false,f
         end
         #Atardecer. Additional critical chance if playing :ENTRENADORA
         if $Trainer.playerClass == :ENTRENADORA
-          c=(x*1/6).floor
+          c+=(x*1/6).floor
         end
       end
       shakes=0; critical=false
@@ -176,6 +176,7 @@ def pbThrowPokeBall(idxPokemon,ball,rareness=nil,showplayer=false,safari=false,f
         x=1 if x<1
         y = ( 65536/((255.0/x)**0.1875) ).floor
         #Atardecer. Only critical catch with Poké Ball unless playing as :ENTRENADORA
+        #TODO should use ID instead of name here...
         if USECRITICALCAPTURE && pbRandom(256)<c && (itemname == "Poké Ball" || $Trainer.playerClass == :ENTRENADORA)
           critical=true
           shakes=4 if pbRandom(65536)<y

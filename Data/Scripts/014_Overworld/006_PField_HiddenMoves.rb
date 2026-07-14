@@ -267,8 +267,8 @@ end
 # Corte / Cut
 #===============================================================================
 def Kernel.pbCut
-  if $DEBUG ||
-     (HIDDENMOVESCOUNTBADGES ? $Trainer.numbadges>=BADGEFORCUT : $Trainer.badges[BADGEFORCUT])
+  if $DEBUG || $Trainer.playerClass == :MONTARAZ || #Atardecer. Montaraz doesn't have M0 restrictions
+     (HIDDENMOVESCOUNTBADGES ? $Trainer.numbadges>=BADGEFORCUT : $Trainer.badges[BADGEFORCUT]) 
     movefinder=Kernel.pbCheckMove(:CUT)
     if $DEBUG || movefinder
       Kernel.pbMessage(_INTL("Hay unas espinas demasiado peligrosas como para pasar.\1"))
@@ -379,7 +379,7 @@ def pbRockSmashRandomEncounter
 end
 
 def Kernel.pbRockSmash
-  if $DEBUG ||
+  if $DEBUG || $Trainer.playerClass == :MONTARAZ || #Atardecer. Montaraz doesn't have M0 restrictions
     (HIDDENMOVESCOUNTBADGES ? $Trainer.numbadges>=BADGEFORROCKSMASH : $Trainer.badges[BADGEFORROCKSMASH])
     movefinder=Kernel.pbCheckMove(:ROCKSMASH)
     if $DEBUG || movefinder
@@ -431,7 +431,7 @@ HiddenMoveHandlers::UseMove.add(:ROCKSMASH,proc{|move,pokemon|
 def Kernel.pbStrength
   if $PokemonMap.strengthUsed
     Kernel.pbMessage(_INTL("Fuerza permite desplazar rocas."))
-  elsif $DEBUG ||
+  elsif $DEBUG || $Trainer.playerClass == :MONTARAZ || #Atardecer. Montaraz doesn't have M0 restrictions
     (HIDDENMOVESCOUNTBADGES ? $Trainer.numbadges>=BADGEFORSTRENGTH : $Trainer.badges[BADGEFORSTRENGTH])
     movefinder=Kernel.pbCheckMove(:STRENGTH)
     if $DEBUG || movefinder
@@ -492,7 +492,7 @@ def Kernel.pbSurf
   if $game_player.pbHasDependentEvents?
     return false
   end
-  if $DEBUG ||
+  if $DEBUG || $Trainer.playerClass == :MONTARAZ || #Atardecer. Montaraz doesn't have M0 restrictions
     (HIDDENMOVESCOUNTBADGES ? $Trainer.numbadges>=BADGEFORSURF : $Trainer.badges[BADGEFORSURF])
     movefinder=Kernel.pbCheckMove(:SURF)
     if $DEBUG || movefinder
@@ -643,7 +643,7 @@ def Kernel.pbDescendWaterfall(event=nil)
 end
 
 def Kernel.pbWaterfall
-  if $DEBUG ||
+  if $DEBUG || $Trainer.playerClass == :MONTARAZ || #Atardecer. Montaraz doesn't have M0 restrictions
     (HIDDENMOVESCOUNTBADGES ? $Trainer.numbadges>=BADGEFORWATERFALL : $Trainer.badges[BADGEFORWATERFALL])
     movefinder=Kernel.pbCheckMove(:WATERFALL)
     if $DEBUG || movefinder
@@ -703,7 +703,7 @@ HiddenMoveHandlers::UseMove.add(:WATERFALL,proc{|move,pokemon|
 def Kernel.pbDive
   divemap=pbGetMetadata($game_map.map_id,MetadataDiveMap)
   return false if !divemap
-  if $DEBUG ||
+  if $DEBUG || $Trainer.playerClass == :MONTARAZ || #Atardecer. Montaraz doesn't have M0 restrictions
     (HIDDENMOVESCOUNTBADGES ? $Trainer.numbadges>=BADGEFORDIVE : $Trainer.badges[BADGEFORDIVE])
     movefinder=Kernel.pbCheckMove(:DIVE)
     if $DEBUG || movefinder
@@ -902,7 +902,7 @@ HiddenMoveHandlers::UseMove.add(:DIVE,proc{|move,pokemon|
 # Vuelo  /  Fly
 #===============================================================================
 HiddenMoveHandlers::CanUseMove.add(:FLY,proc{|move,pkmn|
-   if !$DEBUG &&
+   if !$DEBUG && $Trainer.playerClass != :MONTARAZ || #Atardecer. Montaraz doesn't have M0 restrictions
       !(HIDDENMOVESCOUNTBADGES ? $Trainer.numbadges>=BADGEFORFLY : $Trainer.badges[BADGEFORFLY])
      Kernel.pbMessage(_INTL("No tienes el número necesario de medallas."))
      return false
@@ -944,7 +944,7 @@ HiddenMoveHandlers::UseMove.add(:FLY,proc{|move,pokemon|
 # Destello  /  Flash
 #===============================================================================
 HiddenMoveHandlers::CanUseMove.add(:FLASH,proc{|move,pkmn|
-   if !$DEBUG &&
+   if !$DEBUG && $Trainer.playerClass != :MONTARAZ || #Atardecer. Montaraz doesn't have M0 restrictions
       !(HIDDENMOVESCOUNTBADGES ? $Trainer.numbadges>=BADGEFORFLASH : $Trainer.badges[BADGEFORFLASH])
      Kernel.pbMessage(_INTL("Lo siento, necesitas una medalla nueva."))
      return false

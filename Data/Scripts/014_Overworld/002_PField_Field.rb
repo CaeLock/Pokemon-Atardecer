@@ -860,7 +860,11 @@ end
 
 def pbCheckAllFainted()
   if pbAllFainted
-    Kernel.pbMessage(_INTL("¡A {1} no le queda ningún Pokémon!\1",$Trainer.name))
+    if $Trainer.playerClass == :ENTRENADORA #Atardecer. If ENTRENADORA, starter defeat = party wipe out
+      Kernel.pbMessage(_INTL("¡Tu inicial se ha debilitado!"))
+    else
+      Kernel.pbMessage(_INTL("¡A {1} no le queda ningún Pokémon!\1",$Trainer.name))
+    end
     Kernel.pbMessage(_INTL("¡{1} se ha desmayado!",$Trainer.name))
     pbBGMFade(1.0)
     pbBGSFade(1.0)

@@ -781,7 +781,7 @@ class PokeBattle_Move
     c+=attacker.effects[PBEffects::ChiStrike] if attacker.effects[PBEffects::ChiStrike] #Dynamax
     c+=1 if hasHighCriticalRate?
     #Atardecer. Crit. chance increased in a pickle if playing ENTRENADORA
-    c+=1 if $Trainer.playerClass == :ENTRENADORA && attacker.hp<=(attacker.totalhp/6).floor 
+    c+=1 if $Trainer.playerClass == :ENTRENADORA && attacker.hp<=(attacker.totalhp/5).floor && @battle.pbOwnedByPlayer?(attacker.index)
     if (attacker.inHyperMode? rescue false) && isConst?(self.type,PBTypes,:SHADOW)
       c+=1
     end

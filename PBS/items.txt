@@ -833,3 +833,5 @@
 1007,RELICCOPPER_ARCHAEOLOGY,Real de Cobre2,Reales Cobre,1,2000,"Moneda de cobre de más de tres mil años de antigüedad. Muy valorada por los coleccionistas.",0,0,0,
 1008,RELICSILVER_ARCHAEOLOGY,Real de Plata2,Reales Plata,1,10000,"Moneda de plata de más de tres mil años de antigüedad. Muy valorada por los coleccionistas.",0,0,0,
 1009,RELICGOLD_ARCHAEOLOGY,Real de Oro2,Reales Oro,1,20000,"Moneda de oro de más de tres mil años de antigüedad. Muy valorada por los coleccionistas.",0,0,0,
+1010,FORAGINGBAG,Bolsa de Forrajeo,Bolsas de Forrajeo,1,0,"Bolsa de Forrajeo",2,0,0,
+1011,FIRSTAIDKIT,Botiquín,Botiquines,1,0,"Botiquín",2,0,0,
