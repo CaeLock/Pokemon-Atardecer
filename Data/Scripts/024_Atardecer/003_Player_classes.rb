@@ -713,3 +713,67 @@ def pbAfterBattle(decision,canlose)
     EntrenadoraGameOver.trigger
   end
 end
+
+################################################################################
+################################################################################
+# MEDICO
+################################################################################
+################################################################################
+#===============================================================================
+# The Medico job follows a Hippocratic Oath: it refuses to use any move that
+# requires sacrificing (fainting) its own Pokemon. Which moves count is an
+# editable blacklist below, so new ones can be added or removed freely.
+#-------------------------------------------------------------------------------
+# Implemented by aliasing pbCanChooseMove? (the same hook BES itself uses for
+# Taunt/Torment/Disable/Imprison/etc), so nothing in the core battle scripts
+# needs to be touched and every other reason to block a move keeps working.
+#===============================================================================
+module PlayerClasses
+  # Moves blocked by the Medico's Hippocratic Oath (self-destruct moves,
+  # Memento-style moves, Healing Wish-style moves, etc). Add or remove move
+  # ID symbols here to change what's blocked.
+  MEDICO_FORBIDDEN_MOVES = [
+    :SELFDESTRUCT,
+    :EXPLOSION,
+    :MISTYEXPLOSION,
+    :MEMENTO,
+    :FINALGAMBIT,
+    :HEALINGWISH,
+    :LUNARDANCE,
+    :MINDBLOWN,
+    :STEELBEAM,
+    :CHLOROBLAST
+  ]
+
+  module_function
+
+  # Resolves MEDICO_FORBIDDEN_MOVES (symbols) into their actual move IDs and
+  # caches the result, since PBMoves has to be loaded for getID to work.
+  def medicoForbiddenMoveIDs
+    @medicoForbiddenMoveIDs ||= MEDICO_FORBIDDEN_MOVES.map { |m| getID(PBMoves,m) }
+    return @medicoForbiddenMoveIDs
+  end
+
+  def medicoForbidsMove?(moveID)
+    return medicoForbiddenMoveIDs.include?(moveID)
+  end
+end
+
+class PokeBattle_Battle
+  alias medico_pbCanChooseMove pbCanChooseMove?
+  def pbCanChooseMove?(idxPokemon,idxMove,showMessages,sleeptalk=false)
+    ret=medico_pbCanChooseMove(idxPokemon,idxMove,showMessages,sleeptalk)
+    return ret if !ret
+    thispkmn=@battlers[idxPokemon]
+    thismove=thispkmn.moves[idxMove]
+    if thismove && pbOwnedByPlayer?(idxPokemon) &&
+       PlayerClasses.current?(PlayerClasses::MEDICO) &&
+       PlayerClasses.medicoForbidsMove?(thismove.id)
+      if showMessages
+        pbDisplayPaused(_INTL("¡No puedes usar ese movimiento! ¡Va contra el juramento hipocrático!"))
+      end
+      return false
+    end
+    return ret
+  end
+end
