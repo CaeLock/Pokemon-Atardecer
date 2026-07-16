@@ -1,25 +1,30 @@
-wrong number of arguments (1 for 0)
+Script error within event 5, map 2 (Test):
+Exception: NameError
+Message: undefined local variable or method `pbEmptyForagingBag' for #<Interpreter:0x17145b28>
+***Full script:
+pbEmptyForagingBag
+
+001_Interpreter.rb:248:in `pbExecuteScript'
+001_Interpreter.rb:1612:in `eval'
+001_Interpreter.rb:248:in `pbExecuteScript'
+001_Interpreter.rb:1612:in `command_355'
+001_Interpreter.rb:499:in `execute_command'
+001_Interpreter.rb:198:in `update'
+001_Interpreter.rb:111:in `loop'
+001_Interpreter.rb:111:in `update'
+001_Scene_Map.rb:103:in `updateold'
+001_Scene_Map.rb:101:in `loop'
 
-Pokémon compañero inseparable.rb:157:in `playerClass'
-Pokémon compañero inseparable.rb:157:in `pbPlace'
-016_PScreen_Storage.rb:1977:in `pbStartScreen'
-016_PScreen_Storage.rb:1922:in `loop'
-016_PScreen_Storage.rb:1922:in `pbStartScreen'
-016_PScreen_Storage.rb:2694:in `pbPokeCenterPC'
-003_SpriteWindow.rb:1246:in `pbFadeOutIn'
-016_PScreen_Storage.rb:2691:in `pbPokeCenterPC'
-001_Debug.rb:440:in `pbDebugMenu'
-001_Debug.rb:298:in `loop'
-001_Debug.rb:298:in `pbDebugMenu'
-001_PScreen_PauseMenu.rb:371:in `load_scripts_from_folder'
-003_SpriteWindow.rb:1246:in `pbFadeOutIn'
-001_PScreen_PauseMenu.rb:370:in `load_scripts_from_folder'
-001_PScreen_PauseMenu.rb:135:in `call'
-001_PScreen_PauseMenu.rb:135:in `pbStartPokemonMenu'
-001_PScreen_PauseMenu.rb:128:in `loop'
-001_PScreen_PauseMenu.rb:128:in `pbStartPokemonMenu'
-001_Scene_Map.rb:197:in `call_menu'
-001_Scene_Map.rb:167:in `updateold'
+
+001_Interpreter.rb:281:in `pbExecuteScript'
+001_Interpreter.rb:1612:in `command_355'
+001_Interpreter.rb:499:in `execute_command'
+001_Interpreter.rb:198:in `update'
+001_Interpreter.rb:111:in `loop'
+001_Interpreter.rb:111:in `update'
+001_Scene_Map.rb:103:in `updateold'
+001_Scene_Map.rb:101:in `loop'
+001_Scene_Map.rb:101:in `updateold'
 002_Unreal_time.rb:299:in `update'
 001_Scene_Map.rb:68:in `main'
 001_Scene_Map.rb:65:in `loop'

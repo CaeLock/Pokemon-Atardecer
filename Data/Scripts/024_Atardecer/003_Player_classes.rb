@@ -14,7 +14,9 @@ module PlayerClasses
   ARQUEOLOGA              = :ARQUEOLOGA
   PRO_TRAINER             = :ENTRENADORA
   MEDICO                  = :MEDICO  
-  MONTARAZ                = :MONTARAZ  
+  MONTARAZ                = :MONTARAZ
+  SUPERMODELO             = :SUPERMODELO  
+  MEDIUM                  = :MEDIUM  
 
   # --- Tunable balance constants ---------------------------------------------
 
@@ -69,6 +71,14 @@ module PlayerClasses
     },
     MONTARAZ => {
       :name        => _INTL("Montaraz"),
+      :description => _INTL("")
+    },
+    SUPERMODELO => {
+      :name        => _INTL("Supermodelo"),
+      :description => _INTL("")
+    },
+     MEDIUM => {
+      :name        => _INTL("Medium"),
       :description => _INTL("")
     },
   }
@@ -760,9 +770,9 @@ module PlayerClasses
 end
 
 class PokeBattle_Battle
-  alias medico_pbCanChooseMove pbCanChooseMove?
+  alias original_pbCanChooseMove pbCanChooseMove?
   def pbCanChooseMove?(idxPokemon,idxMove,showMessages,sleeptalk=false)
-    ret=medico_pbCanChooseMove(idxPokemon,idxMove,showMessages,sleeptalk)
+    ret=original_pbCanChooseMove(idxPokemon,idxMove,showMessages,sleeptalk)
     return ret if !ret
     thispkmn=@battlers[idxPokemon]
     thismove=thispkmn.moves[idxMove]
@@ -775,5 +785,551 @@ class PokeBattle_Battle
       return false
     end
     return ret
+  end
+end
+
+#===============================================================================
+#EXP gain is skipped entirely for wild battles (party AND
+# PC, since this wraps the same pbGainEXP that both party gain and
+# pc_exp.rb's PC gain funnel through). Trainer battles are unaffected.
+#
+# Switch 39: if ON during a wild battle, EXP is granted as normal. Use this
+# to flag scripted "boss" encounters that are technically wild battles but
+# should still reward EXP -- turn it on right before the encounter and off
+# right after.
+#===============================================================================
+MEDICO_NO_WILD_EXP_SWITCH = 39
+
+class PokeBattle_Battle
+  alias medico_pbGainEXP pbGainEXP
+  def pbGainEXP
+    if PlayerClasses.current?(PlayerClasses::MEDICO) && !@opponent &&
+       !$game_switches[MEDICO_NO_WILD_EXP_SWITCH]
+      return
+    end
+    medico_pbGainEXP
+  end
+end
+
+################################################################################
+################################################################################
+# MONTARAZ
+################################################################################
+################################################################################
+#===============================================================================
+# The Montaraz job doesn't trust artificial medicine: it can't use consumable
+# items such as potions, ethers, or vitamins, either from the field bag or the
+# battle bag. Which items count is an editable blacklist below, so new ones
+# can be added or removed freely.
+#-------------------------------------------------------------------------------
+# Implemented by aliasing ItemHandlers.triggerUseOnPokemon (field use on a
+# Pokemon) and triggerBattleUseOnPokemon (battle use on a Pokemon) -- the same
+# hooks Entrenadora's Revive block already uses -- so nothing in the core
+# item scripts needs to be touched. A dedicated alias name is used (instead of
+# reusing "original_...") to avoid clashing with Entrenadora's own aliases on
+# these same methods.
+#===============================================================================
+module PlayerClasses
+  # Items blocked for the Montaraz job (potions, ethers/elixirs, vitamins,
+  # and status-healing sprays). Add or remove item ID symbols here to change
+  # what's blocked.
+  MONTARAZ_FORBIDDEN_ITEMS = [
+    :POTION,:SUPERPOTION,:HYPERPOTION,:MAXPOTION,:FULLRESTORE,
+    :ETHER,:MAXETHER,:ELIXIR,:MAXELIXIR,
+    :HPUP,:PROTEIN,:IRON,:CALCIUM,:ZINC,:CARBOS,:PPUP,:PPMAX,
+    :FULLHEAL,:ANTIDOTE,:PARLYZHEAL,:BURNHEAL,:ICEHEAL,:AWAKENING
+  ]
+
+  module_function
+
+  # Resolves MONTARAZ_FORBIDDEN_ITEMS (symbols) into their actual item IDs
+  # and caches the result, since PBItems has to be loaded for getID to work.
+  def montarazForbiddenItemIDs
+    @montarazForbiddenItemIDs ||= MONTARAZ_FORBIDDEN_ITEMS.map { |i| getID(PBItems,i) }
+    return @montarazForbiddenItemIDs
+  end
+
+  def montarazForbidsItem?(itemID)
+    return montarazForbiddenItemIDs.include?(itemID)
+  end
+end
+
+#===============================================================================
+# Shared check: does the Montaraz job block using this item on this Pokemon?
+# Only blocks the current player's own job, and only on the player's own
+# Pokemon (so it never affects NPC trainers).
+#===============================================================================
+def pbMontarazBlocksItem?(item,pokemon)
+  return false if !PlayerClasses.current?(PlayerClasses::MONTARAZ)
+  return false if !pokemon || !pokemon.respond_to?(:belongsToPlayer?) || !pokemon.belongsToPlayer?
+  return PlayerClasses.montarazForbidsItem?(item)
+end
+
+module ItemHandlers
+  class << self
+    alias montaraz_triggerUseOnPokemon triggerUseOnPokemon
+    def triggerUseOnPokemon(item,pokemon,scene)
+      if pbMontarazBlocksItem?(item,pokemon)
+        scene.pbDisplay(_INTL("¡Es mejor no usar algo tan artificial!"))
+        return false
+      end
+      return montaraz_triggerUseOnPokemon(item,pokemon,scene)
+    end
+
+    alias montaraz_triggerBattleUseOnPokemon triggerBattleUseOnPokemon
+    def triggerBattleUseOnPokemon(item,pokemon,battler,scene)
+      if pbMontarazBlocksItem?(item,pokemon)
+        scene.pbDisplay(_INTL("¡Es mejor no usar algo tan artificial!"))
+        return false
+      end
+      return montaraz_triggerBattleUseOnPokemon(item,pokemon,battler,scene)
+    end
+  end
+end
+
+################################################################################
+################################################################################
+# SUPERMODELO
+################################################################################
+################################################################################
+#===============================================================================
+# The Supermodelo job tracks a shared, in-battle-only "Style Score" (a single
+# counter per battle, shared by all of the player's own Pokemon -- not saved
+# between battles). Various things that happen during a round add or remove
+# points; at the end of the round, the net score for that round decides a
+# tier of effects that stays active for the whole of the FOLLOWING round,
+# then gets recalculated again from a fresh 0.
+#
+# Tiers are cumulative: reaching tier 3 keeps tier 1 and tier 2's effects too
+# (and so on). Negative tiers scale the same way in reverse (-3 is worse
+# than -1).
+#
+# Permanent downside (always on while this job is active, regardless of
+# tier): non-critical, non-super-effective damage dealt by the player's own
+# Pokemon is halved.
+#-------------------------------------------------------------------------------
+# Nothing in the core battle scripts is edited -- this file only reopens
+# classes and aliases methods, same approach used by every other job.
+#===============================================================================
+
+module PlayerClasses
+  SUPERMODELO = :SUPERMODELO
+end
+
+PlayerClasses::DATA[PlayerClasses::SUPERMODELO] = {
+  :name        => _INTL("Supermodelo"),
+  :description => _INTL("Gana Puntos de Estilo luciéndose en combate (OHKOs, golpes críticos, ataques superefectivos...) y piérdelos por errores. Sus efectos varían según el marcador, pero sus ataques normales pegan flojo.")
+}
+
+module SupermodelStyle
+  WEATHER_MOVES = {
+    PBWeather::SUNNYDAY  => [:SOLARBEAM,:SOLARBLADE,:MORNINGSUN,:SYNTHESIS,:WEATHERBALL],
+    PBWeather::RAINDANCE => [:THUNDER,:HURRICANE,:WEATHERBALL],
+    PBWeather::HAIL      => [:BLIZZARD,:WEATHERBALL,:AURORAVEIL],
+    PBWeather::SANDSTORM => [:WEATHERBALL]
+  }
+
+  TERRAIN_MOVES = {
+    PBEffects::ElectricTerrain => [:RISINGVOLTAGE,:TERRAINPULSE],
+    PBEffects::GrassyTerrain   => [:GRASSYGLIDE,:TERRAINPULSE],
+    PBEffects::PsychicTerrain  => [:EXPANDINGFORCE,:TERRAINPULSE],
+    PBEffects::MistyTerrain    => [:MISTYEXPLOSION,:TERRAINPULSE]
+  }
+
+  SEMI_INVULNERABLE_COUNTERS = {
+    :DIG  => [:EARTHQUAKE,:MAGNITUDE],
+    :DIVE => [:SURF,:WHIRLPOOL],
+    :FLY  => [:GUST,:TWISTER,:THUNDER,:HURRICANE,:SKYUPPERCUT,:SMACKDOWN,:THOUSANDARROWS]
+  }
+
+  DOUBLE_POWER_MOVES = [
+    :HEX,:VENOSHOCK,:AVALANCHE,:REVENGE,:ASSURANCE,:BRINE,:FACADE,
+    :ACROBATICS,:RETALIATE,:LASHOUT,:FISHIOUSREND,:BOLTBEAK
+  ]
+
+  module_function
+
+  def moveID(sym)
+    @moveIDCache ||= {}
+    @moveIDCache[sym] ||= getID(PBMoves,sym)
+    return @moveIDCache[sym]
+  end
+
+  def resolvedIDList(list)
+    @resolvedIDLists ||= {}
+    @resolvedIDLists[list] ||= list.map { |s| getID(PBMoves,s) }
+    return @resolvedIDLists[list]
+  end
+
+  def idListIncludes?(list,id)
+    return false if !list
+    return resolvedIDList(list).include?(id)
+  end
+
+  def active?(battle)
+    return PlayerClasses.current?(PlayerClasses::SUPERMODELO)
+  end
+
+  def gainPoint(battle,reason="")
+    return if !active?(battle)
+    battle.supermodelStyleScore += 1
+    PBDebug.log("[Supermodelo] +1 punto de estilo (#{reason}), total: #{battle.supermodelStyleScore}")
+  end
+
+  def losePoint(battle,reason="")
+    return if !active?(battle)
+    battle.supermodelStyleScore -= 1
+    PBDebug.log("[Supermodelo] -1 punto de estilo (#{reason}), total: #{battle.supermodelStyleScore}")
+  end
+
+  def tierForScore(score)
+    p score+3
+    return -3 if score <= -3
+    return 5 if score >= 5
+    return score+3
+  end
+
+  # Called once per end of round. Reverts the previous round's stat penalty
+  # (if any) with a single combined message/animation per Pokemon, works out
+  # the new tier from this round's score, applies its stat penalty (if any)
+  # -- again with a single combined message/animation per Pokemon -- and
+  # resets the score for the new round.
+  #
+  # Pending penalties are tracked per Pokemon (object identity), not per
+  # battler slot/index: if the Pokemon that had the pending penalty fainted
+  # or was switched out before the revert, its entry is simply dropped
+  # instead of being wrongly applied to whichever different Pokemon now
+  # occupies that slot.
+  def pbApplyEndOfRound(battle)
+    return if !active?(battle)
+    pending = battle.supermodelPendingStatDelta
+    if !pending.empty?
+      pending.each_value do |entry|
+        battler = battle.battlers[entry[:index]]
+        next if !battler || battler.isFainted?
+        next if !battler.pokemon || !battler.pokemon.equal?(entry[:pokemon])
+        changed = false
+        entry[:deltas].each do |stat,delta|
+          next if delta==0
+          battler.pbIncreaseStatBasic(stat,-delta,battler,true,true)
+          changed = true
+        end
+        if changed
+          battle.pbCommonAnimation("StatUp",battler,nil)
+          battle.pbDisplay(_INTL("¡La mala impresión ha desaparecido! Las estadísticas de {1} han vuelto a la normalidad.",battler.pbThis))
+        end
+      end
+      battle.supermodelPendingStatDelta = {}
+    end
+    tier = tierForScore(battle.supermodelStyleScore)
+    battle.supermodelStyleTier = tier
+    if tier<0
+      amount = -tier
+      newPending = {}
+      statList = [PBStats::ATTACK,PBStats::DEFENSE,PBStats::SPATK,PBStats::SPDEF,PBStats::SPEED]
+      msgByAmount = {
+        1 => "¡Has creado una mala impresión en la ronda anterior! Las estadísticas de {1} han disminuido.",
+        2 => "¡Has creado una mala impresión en la ronda anterior! Las estadísticas de {1} han disminuido bastante.",
+        3 => "¡Has creado una mala impresión en la ronda anterior! Las estadísticas de {1} han disminuido drásticamente."
+      }
+      (0...4).each do |idx|
+        battler = battle.battlers[idx]
+        next if !battler || battler.isFainted? || !battle.pbOwnedByPlayer?(idx)
+        deltas = {}
+        changed = false
+        statList.each do |stat|
+          before = battler.stages[stat]
+          battler.pbReduceStatBasic(stat,amount,battler,true,true)
+          deltas[stat] = battler.stages[stat]-before
+          changed = true if deltas[stat]!=0
+        end
+        newPending[idx] = {:index => idx, :pokemon => battler.pokemon, :deltas => deltas}
+        if changed
+          battle.pbCommonAnimation("StatDown",battler,nil)
+          battle.pbDisplay(_INTL(msgByAmount[[amount,3].min],battler.pbThis))
+        end
+      end
+      battle.supermodelPendingStatDelta = newPending
+    end
+    battle.supermodelStyleScore = 0
+  end
+
+  def pbConditionalDoublePowerMove?(move,user,target)
+    id = move.id
+    case id
+    when moveID(:HEX)
+      return target.status!=0
+    when moveID(:VENOSHOCK)
+      return target.status==PBStatuses::POISON
+    when moveID(:AVALANCHE),moveID(:REVENGE)
+      return user.tookDamage
+    when moveID(:ASSURANCE)
+      return target.tookDamage
+    when moveID(:BRINE)
+      return target.hp<=(target.totalhp/2.0)
+    when moveID(:FACADE)
+      return user.status!=0
+    when moveID(:ACROBATICS)
+      return user.item==0
+    when moveID(:RETALIATE)
+      return user.pbOwnSide.effects[PBEffects::LastRoundFainted]==user.battle.turncount-1
+    when moveID(:LASHOUT)
+      return user.effects[PBEffects::LashOut]
+    when moveID(:FISHIOUSREND),moveID(:BOLTBEAK)
+      return !target.hasMovedThisRound?
+    end
+    return false
+  end
+
+  # Weather/terrain move match, checked once per move use via the
+  # pbUseMove hook below -- this covers self/side-target moves like Aurora
+  # Veil, Synthesis or Morning Sun, which never reach
+  # pbEffectsOnDealingDamage since they don't deal damage to a target.
+  def pbWeatherTerrainMoveMatch?(move,battle)
+    list = WEATHER_MOVES[battle.pbWeather]
+    return true if idListIncludes?(list,move.id)
+    TERRAIN_MOVES.each do |effect,moves|
+      next if battle.field.effects[effect]<=0
+      return true if idListIncludes?(moves,move.id)
+    end
+    return false
+  end
+
+  def pbCounterSemiInvulnerable?(move,target)
+    chargedMove = target.effects[PBEffects::TwoTurnAttack]
+    return false if !chargedMove || chargedMove==0
+    SEMI_INVULNERABLE_COUNTERS.each do |chargingMove,counters|
+      next if chargedMove!=moveID(chargingMove)
+      return idListIncludes?(counters,move.id)
+    end
+    return false
+  end
+
+  # Called once per move use (see the pbUseMove hook below, which is the
+  # only point common to every kind of move -- damaging, status, self or
+  # side-target). Not gated on whether the move's own effect actually went
+  # through (e.g. Aurora Veil failing for being already active): for
+  # weather/terrain moves the wrong-weather case is already excluded by the
+  # move/weather table itself, and rewarding "using the right move for the
+  # conditions" doesn't need the hit itself to land.
+  def pbCheckMoveUseTriggers(move,user)
+    battle = user.battle
+    return if !active?(battle)
+    return if !battle.pbOwnedByPlayer?(user.index)
+    gainPoint(battle,"movimiento de clima/terreno") if pbWeatherTerrainMoveMatch?(move,battle)
+  end
+
+  # Called after damage (if any) has been dealt to a target.
+  def pbCheckHitTriggers(move,user,target,damage)
+    battle = user.battle
+    return if !active?(battle)
+    return if !battle.pbOwnedByPlayer?(user.index)
+    isFoe = !battle.pbOwnedByPlayer?(target.index)
+    if isFoe
+      gainPoint(battle,"golpe crítico") if target.damagestate.critical
+      gainPoint(battle,"ataque superefectivo") if target.damagestate.typemod>8
+      gainPoint(battle,"movimiento potenciado por condición") if pbConditionalDoublePowerMove?(move,user,target)
+      gainPoint(battle,"golpe a través de Cava/Buceo/Vuelo") if pbCounterSemiInvulnerable?(move,target)
+      if target.isFainted? && damage>0 && target.level>=user.level
+        if (target.hp+damage)>=target.totalhp
+          gainPoint(battle,"OHKO to adversary with more or equal level than you")
+        elsif (target.level-user.level)>=5
+          gainPoint(battle,"defeated with at least 5 less levels")
+        end
+      end
+      if damage>0
+        statList = [PBStats::ATTACK,PBStats::DEFENSE,PBStats::SPATK,PBStats::SPDEF,PBStats::SPEED,PBStats::EVASION,PBStats::ACCURACY]
+        if statList.any? { |s| user.stages[s]>=3 }
+          gainPoint(battle,"golpe con estadística potenciada")
+        end
+      end
+      # Note: type-immunity ("ataque sin efecto") is handled in the
+      # pbSuccessCheck alias below, not here -- see the comment there.
+    else
+      losePoint(battle,"golpeaste a tu aliado") if target.index!=user.index
+    end
+  end
+end
+
+class PokeBattle_Battle
+  attr_writer :supermodelStyleScore
+  attr_writer :supermodelStyleTier
+  attr_writer :supermodelPendingStatDelta
+
+  def supermodelStyleScore
+    @supermodelStyleScore = 0 if !@supermodelStyleScore
+    return @supermodelStyleScore
+  end
+
+  def supermodelStyleTier
+    @supermodelStyleTier = 0 if !@supermodelStyleTier
+    return @supermodelStyleTier
+  end
+
+  def supermodelPendingStatDelta
+    @supermodelPendingStatDelta = {} if !@supermodelPendingStatDelta
+    return @supermodelPendingStatDelta
+  end
+
+  alias supermodelo_pbEndOfRoundPhase pbEndOfRoundPhase
+  def pbEndOfRoundPhase
+    supermodelo_pbEndOfRoundPhase
+    SupermodelStyle.pbApplyEndOfRound(self)
+  end
+end
+
+class PokeBattle_Battler
+  # Runs exactly once for every move use, regardless of whether it has a
+  # discrete target (damaging/status moves against a Pokemon) or not
+  # (self/side/field moves like Aurora Veil, which take a completely
+  # different code path inside pbUseMove and never reach
+  # pbProcessMoveAgainstTarget at all).
+  alias supermodelo_pbUseMove pbUseMove
+  def pbUseMove(choice,specialusage=false)
+    ret = supermodelo_pbUseMove(choice,specialusage)
+    thismove = choice[2]
+    SupermodelStyle.pbCheckMoveUseTriggers(thismove,self) if thismove && thismove.id!=0
+    return ret
+  end
+
+  alias supermodelo_pbEffectsOnDealingDamage pbEffectsOnDealingDamage
+  def pbEffectsOnDealingDamage(move,user,target,damage)
+    supermodelo_pbEffectsOnDealingDamage(move,user,target,damage)
+    SupermodelStyle.pbCheckHitTriggers(move,user,target,damage)
+  end
+
+  alias supermodelo_pbFaint pbFaint
+  def pbFaint(showMessage=true)
+    shouldScore = SupermodelStyle.active?(@battle) && @battle.pbOwnedByPlayer?(index) &&
+                  self.isFainted? && !@fainted
+    SupermodelStyle.losePoint(@battle,"Pokémon debilitado") if shouldScore
+    supermodelo_pbFaint(showMessage)
+  end
+
+  alias supermodelo_pbConsumeItem pbConsumeItem
+  def pbConsumeItem(recycle=true,pickup=true)
+    shouldScore = SupermodelStyle.active?(@battle) && @battle.pbOwnedByPlayer?(index)
+    supermodelo_pbConsumeItem(recycle,pickup)
+    SupermodelStyle.gainPoint(@battle,"objeto equipado activado") if shouldScore
+  end
+
+  # Tier 5 ("ignora las habilidades del rival") is implemented by treating
+  # the player's own Pokemon as if it had Mold Breaker while that tier is
+  # active -- the same mechanism the game already uses for that ability.
+  # This only bypasses ignorable ABILITIES (what Mold Breaker has always
+  # done); it does not touch stat stages, which are handled separately.
+  alias supermodelo_hasMoldBreaker hasMoldBreaker
+  def hasMoldBreaker
+    if SupermodelStyle.active?(@battle) && @battle.pbOwnedByPlayer?(index) &&
+       @battle.supermodelStyleTier>=5
+      return true
+    end
+    return supermodelo_hasMoldBreaker
+  end
+
+  # Tier 5 also breaks through Protect/Detect and similar move-blocking
+  # effects (Spiky Shield, Mat Block, King's Shield, Baneful Bunker, etc),
+  # the same way the move Feint does -- by temporarily setting
+  # ProtectNegation on the target for the duration of this check. It's
+  # restored to its prior value afterwards.
+  #
+  # This is also the only reliable place to detect real type immunity
+  # ("no afecta al rival"): pbSuccessCheck itself checks
+  # thismove.pbTypeModifier(...)==0 and returns false right here, which
+  # means pbEffect/pbEffectsOnDealingDamage never run at all for a truly
+  # immune hit -- damagestate.typemod defaults to 0 on reset regardless of
+  # whether the move actually got that far, so checking it from
+  # pbEffectsOnDealingDamage can never distinguish a real immunity from a
+  # move that simply never reached the damage step.
+  alias supermodelo_pbSuccessCheck pbSuccessCheck
+  def pbSuccessCheck(thismove,user,target,turneffects,accuracy=true)
+    if user && SupermodelStyle.active?(@battle) && @battle.pbOwnedByPlayer?(user.index) &&
+       !@battle.pbOwnedByPlayer?(target.index) && thismove.pbIsDamaging?
+      type = thismove.pbType(thismove.type,user,target)
+      typemod = thismove.pbTypeModifier(type,user,target)
+      SupermodelStyle.losePoint(@battle,"ataque sin efecto") if typemod==0
+    end
+    breaksProtect = user && SupermodelStyle.active?(@battle) &&
+                    @battle.pbOwnedByPlayer?(user.index) && @battle.supermodelStyleTier>=5
+    if breaksProtect
+      wasNegated = self.effects[PBEffects::ProtectNegation]
+      self.effects[PBEffects::ProtectNegation] = true
+      ret = supermodelo_pbSuccessCheck(thismove,user,target,turneffects,accuracy)
+      self.effects[PBEffects::ProtectNegation] = wasNegated
+      return ret
+    end
+    return supermodelo_pbSuccessCheck(thismove,user,target,turneffects,accuracy)
+  end
+end
+
+class PokeBattle_Move
+  STAGE_MUL = [10,10,10,10,10,10,10,15,20,25,30,35,40]
+  STAGE_DIV = [40,35,30,25,20,15,10,10,10,10,10,10,10]
+
+  # Applies the permanent damage penalty (non-crit, non-super-effective
+  # damage halved) and tier 1+'s crit/super-effective boost.
+  alias supermodelo_pbCalcDamage pbCalcDamage
+  def pbCalcDamage(attacker,opponent,options=0)
+    damage = supermodelo_pbCalcDamage(attacker,opponent,options)
+    return damage if damage==0
+    battle = attacker.battle
+    return damage if !SupermodelStyle.active?(battle) || !battle.pbOwnedByPlayer?(attacker.index)
+    tier = battle.supermodelStyleTier
+    isCrit = opponent.damagestate.critical
+    isSuperEffective = opponent.damagestate.typemod>8
+    if isCrit || isSuperEffective
+      damage = (damage*1.25).round if tier>=1
+    else
+      damage = (damage*0.5).round
+    end
+    damage = 1 if damage<1
+    opponent.damagestate.calcdamage = damage
+    return damage
+  end
+
+  # Tier 2+: +50% accuracy. Done by temporarily boosting the move's own
+  # accuracy value rather than duplicating the whole accuracy formula.
+  alias supermodelo_pbAccuracyCheck pbAccuracyCheck
+  def pbAccuracyCheck(attacker,opponent)
+    battle = attacker.battle
+    if SupermodelStyle.active?(battle) && battle.pbOwnedByPlayer?(attacker.index) &&
+       battle.supermodelStyleTier>=2 && @accuracy>0
+      oldAccuracy = @accuracy
+      @accuracy = (@accuracy*1.5).round
+      ret = supermodelo_pbAccuracyCheck(attacker,opponent)
+      @accuracy = oldAccuracy
+      return ret
+    end
+    return supermodelo_pbAccuracyCheck(attacker,opponent)
+  end
+
+  # Tier 3+: +1 priority.
+  alias supermodelo_pbPriority pbPriority
+  def pbPriority(attacker)
+    ret = supermodelo_pbPriority(attacker)
+    battle = attacker.battle
+    if SupermodelStyle.active?(battle) && battle.pbOwnedByPlayer?(attacker.index) &&
+       battle.supermodelStyleTier>=3
+      ret += 1
+    end
+    return ret
+  end
+
+  # Tier 4+: every attack is a critical hit (tier 5+, via hasMoldBreaker
+  # above, also bypasses Battle Armor/Shell Armor; tier 4 alone still
+  # respects them).
+  alias supermodelo_pbIsCritical? pbIsCritical?
+  def pbIsCritical?(attacker,opponent)
+    battle = attacker.battle
+    if SupermodelStyle.active?(battle) && battle.pbOwnedByPlayer?(attacker.index)
+      tier = battle.supermodelStyleTier
+      if tier>=5
+        return true
+      elsif tier>=4
+        return false if opponent.hasWorkingAbility(:BATTLEARMOR) || opponent.hasWorkingAbility(:SHELLARMOR)
+        return true
+      end
+    end
+    return supermodelo_pbIsCritical?(attacker,opponent)
   end
 end

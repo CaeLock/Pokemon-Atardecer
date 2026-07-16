@@ -91,3 +91,1132 @@ Move's damage calculated to be 15
 El movimiento golpeó 1 vez(es), daño total=9
 
 ***Jugador ganó***
+Prueba
+
+******************************************
+
+***Round 1***
+[AI] Manectric salvaje's moves: Onda Trueno=100, Malicioso=100, Aullido=100, Ataque Rápido=100
+[AI] Will use Malicioso
+[Priority] Manectric salvaje (1), Ariados (0)
+Manectric salvaje usó Malicioso
+[Cambio características] Defensa de Ariados bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Ariados cleared timer for Defensa due to reduction
+Prueba
+Prueba
+
+******************************************
+[Habilidad disparada] Llovizna de Pelipper hizo llover
+
+***Round 1***
+
+******************************************
+
+***Round 1***
+[AI] Placaje damage calculated (14=>24% of target's 59 HP), score change 100=>124
+[AI] Rodar damage calculated (11=>17% of target's 59 HP), score change 150=>167
+[AI] Cañón Resplandor damage calculated (21=>36% of target's 59 HP), score change 100=>136
+[AI] Ferrothorn salvaje's moves: Placaje=124, Rodar=167, Arraigo=112, Cañón Resplandor=136
+[AI] Will use Rodar
+[Priority] Absol (0), Ferrothorn salvaje (1)
+Absol usó Fuego Fatuo
+[Cambio de estado] Ferrothorn salvaje ha sido quemado
+El movimiento golpeó 1 vez(es), daño total=0
+Ferrothorn salvaje usó Rodar
+[Habilidad disparada] Presión de Absol (en pbChangeTarget)
+Move's damage calculated to be 5
+[Modificación PS] Absol perdió 5 PS (59=>54)
+El movimiento golpeó 1 vez(es), daño total=5
+[Final de la ronda]
+[Daño por estado] Ferrothorn salvaje recibió daño por la quemadura
+[Modificación PS] Ferrothorn salvaje perdió 3 PS (63=>60)
+
+***Round 2***
+[Reutilización de comandos] Ferrothorn salvaje
+[Priority] Absol (0), Ferrothorn salvaje (1)
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 0, ahora 1)
+[StatDuration] Absol set timer for Evasión = 7
+Ferrothorn salvaje usó Rodar
+Continuación de movimiento multi-turnos Rodar
+[Habilidad disparada] Presión de Absol (en pbChangeTarget)
+Move's damage calculated to be 10
+[Modificación PS] Absol perdió 10 PS (54=>44)
+El movimiento golpeó 1 vez(es), daño total=10
+[Final de la ronda]
+[Daño por estado] Ferrothorn salvaje recibió daño por la quemadura
+[Modificación PS] Ferrothorn salvaje perdió 3 PS (60=>57)
+
+***Round 3***
+[Reutilización de comandos] Ferrothorn salvaje
+[Priority] Absol (0), Ferrothorn salvaje (1)
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 1, ahora 2)
+[StatDuration] Absol set timer for Evasión = 7
+Ferrothorn salvaje usó Rodar
+Continuación de movimiento multi-turnos Rodar
+[Habilidad disparada] Presión de Absol (en pbChangeTarget)
+[Movimiento falló] Falló pbAccuracyCheck (código de función D3) o el objetivo es semi-invulnerable
+[Final de la ronda]
+[Daño por estado] Ferrothorn salvaje recibió daño por la quemadura
+[Modificación PS] Ferrothorn salvaje perdió 3 PS (57=>54)
+
+***Round 4***
+[AI] Placaje damage calculated (7=>10% of target's 44 HP), score change 100=>110
+[AI] Rodar damage calculated (6=>7% of target's 44 HP), score change 150=>157
+[AI] Cañón Resplandor damage calculated (21=>29% of target's 44 HP), score change 100=>129
+[AI] Ferrothorn salvaje's moves: Placaje=110, Rodar=157, Arraigo=112, Cañón Resplandor=129
+[AI] Will use Arraigo
+[Priority] Absol (0), Ferrothorn salvaje (1)
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 2, ahora 3)
+[StatDuration] Absol set timer for Evasión = 7
+Ferrothorn salvaje usó Arraigo
+[Final de la ronda]
+[Efecto prolongado disparado] Arraigo de Ferrothorn salvaje
+[Modificación PS] Ferrothorn salvaje ganó 3 PS (54=>57)
+[Daño por estado] Ferrothorn salvaje recibió daño por la quemadura
+[Modificación PS] Ferrothorn salvaje perdió 3 PS (57=>54)
+
+***Round 5***
+[AI] Placaje damage calculated (7=>8% of target's 44 HP), score change 100=>108
+[AI] Rodar damage calculated (6=>6% of target's 44 HP), score change 150=>156
+[AI] Cañón Resplandor damage calculated (21=>24% of target's 44 HP), score change 100=>124
+[AI] Ferrothorn salvaje's moves: Placaje=108, Rodar=156, Arraigo=0, Cañón Resplandor=124
+[AI] Will use Cañón Resplandor
+[Priority] Absol (0), Ferrothorn salvaje (1)
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 3, ahora 4)
+[StatDuration] Absol set timer for Evasión = 7
+Ferrothorn salvaje usó Cañón Resplandor
+[Habilidad disparada] Presión de Absol (en pbChangeTarget)
+[Movimiento falló] Falló pbAccuracyCheck (código de función 46) o el objetivo es semi-invulnerable
+[Final de la ronda]
+[Efecto prolongado disparado] Arraigo de Ferrothorn salvaje
+[Modificación PS] Ferrothorn salvaje ganó 3 PS (54=>57)
+[Daño por estado] Ferrothorn salvaje recibió daño por la quemadura
+[Modificación PS] Ferrothorn salvaje perdió 3 PS (57=>54)
+
+***Round 6***
+[AI] Placaje damage calculated (7=>7% of target's 44 HP), score change 100=>107
+[AI] Rodar damage calculated (6=>5% of target's 44 HP), score change 150=>155
+[AI] Cañón Resplandor damage calculated (21=>20% of target's 44 HP), score change 100=>120
+[AI] Ferrothorn salvaje's moves: Placaje=107, Rodar=155, Arraigo=0, Cañón Resplandor=120
+[AI] Will use Cañón Resplandor
+[Priority] Absol (0), Ferrothorn salvaje (1)
+Absol usó Infortunio
+Move's damage calculated to be 17
+[Modificación PS] Ferrothorn salvaje perdió 9 PS (54=>45)
+[Supermodelo] +1 punto de estilo (movimiento potenciado por condición), total: 1
+[Supermodelo] +1 punto de estilo (golpe con estadística potenciada), total: 2
+El movimiento golpeó 1 vez(es), daño total=9
+Ferrothorn salvaje usó Cañón Resplandor
+[Habilidad disparada] Presión de Absol (en pbChangeTarget)
+[Movimiento falló] Falló pbAccuracyCheck (código de función 46) o el objetivo es semi-invulnerable
+[Final de la ronda]
+[Efecto prolongado disparado] Arraigo de Ferrothorn salvaje
+[Modificación PS] Ferrothorn salvaje ganó 3 PS (45=>48)
+[Daño por estado] Ferrothorn salvaje recibió daño por la quemadura
+[Modificación PS] Ferrothorn salvaje perdió 3 PS (48=>45)
+
+***Round 7***
+
+******************************************
+
+***Round 1***
+
+***Jugador ganó***
+
+******************************************
+
+***Round 1***
+
+***Jugador ganó***
+
+******************************************
+
+***Round 1***
+[AI] Tornado damage calculated (6=>10% of target's 59 HP), score change 100=>110
+[AI] Ataque Rápido damage calculated (7=>12% of target's 59 HP), score change 100=>112
+[AI] Pidgeotto rival's moves: Espejo=112, Tornado=110, Ataque Rápido=112, Remolino=112
+[AI] Will use Espejo
+[Priority] Absol (0), Pidgeotto rival (1)
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 0, ahora 1)
+[StatDuration] Absol set timer for Evasión = 7
+Pidgeotto rival usó Espejo
+El movimiento golpeó 1 vez(es), daño total=0
+[Final de la ronda]
+
+***Round 2***
+[AI] Tornado damage calculated (6=>8% of target's 59 HP), score change 100=>108
+[AI] Ataque Rápido damage calculated (7=>9% of target's 59 HP), score change 100=>109
+[AI] Pidgeotto rival's moves: Espejo=112, Tornado=108, Ataque Rápido=109, Remolino=112
+[AI] Will use Ataque Rápido
+[Priority] Pidgeotto rival (1), Absol (0)
+Pidgeotto rival usó Ataque Rápido
+Move's damage calculated to be 9
+[Modificación PS] Absol perdió 9 PS (59=>50)
+El movimiento golpeó 1 vez(es), daño total=9
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 1, ahora 2)
+[StatDuration] Absol set timer for Evasión = 7
+[Final de la ronda]
+
+***Round 3***
+[AI] Tornado damage calculated (6=>7% of target's 50 HP), score change 100=>107
+[AI] Ataque Rápido damage calculated (7=>8% of target's 50 HP), score change 100=>108
+[AI] Pidgeotto rival's moves: Espejo=112, Tornado=107, Ataque Rápido=108, Remolino=112
+[AI] Will use Remolino
+[Priority] Absol (0), Pidgeotto rival (1)
+Absol usó Fuego Fatuo
+[Cambio de estado] Pidgeotto rival ha sido quemado
+El movimiento golpeó 1 vez(es), daño total=0
+Pidgeotto rival usó Remolino
+El movimiento golpeó 1 vez(es), daño total=0
+[Sacar Pokémon] El jugador envió a Snover en posición 0
+[Habilidad disparada] Nevada de Snover provocó granizo
+[Final de la ronda]
+[Daño por estado] Pidgeotto rival recibió daño por la quemadura
+[Modificación PS] Pidgeotto rival perdió 3 PS (51=>48)
+
+***Round 4***
+[AI] Tornado damage calculated (14=>24% of target's 59 HP), score change 100=>124
+[AI] Ataque Rápido damage calculated (8=>14% of target's 59 HP), score change 100=>114
+[AI] Pidgeotto rival's moves: Espejo=50, Tornado=124, Ataque Rápido=114, Remolino=112
+[AI] Will use Espejo
+[Priority] Pidgeotto rival (1), Snover (0)
+Pidgeotto rival usó Espejo
+El movimiento golpeó 1 vez(es), daño total=0
+Snover usó Velo Aurora
+[Final de la ronda]
+[Daño por estado] Pidgeotto rival recibió daño por la quemadura
+[Modificación PS] Pidgeotto rival perdió 3 PS (48=>45)
+
+***Round 5***
+[AI] Tornado damage calculated (14=>24% of target's 59 HP), score change 100=>124
+[AI] Ataque Rápido damage calculated (8=>14% of target's 59 HP), score change 100=>114
+[AI] Pidgeotto rival's moves: Espejo=50, Tornado=124, Ataque Rápido=114, Remolino=112
+[AI] Will use Remolino
+[Priority] Snover (0), Pidgeotto rival (1)
+Snover usó Esquirla Helada
+Move's damage calculated to be 28
+[Modificación PS] Pidgeotto rival perdió 28 PS (45=>17)
+[Supermodelo] +1 punto de estilo (ataque superefectivo), total: 1
+El movimiento golpeó 1 vez(es), daño total=28
+Pidgeotto rival usó Remolino
+El movimiento golpeó 1 vez(es), daño total=0
+[Sacar Pokémon] El jugador envió a Pelipper en posición 0
+[Habilidad disparada] Llovizna de Pelipper hizo llover
+[Final de la ronda]
+[Daño por estado] Pidgeotto rival recibió daño por la quemadura
+[Modificación PS] Pidgeotto rival perdió 3 PS (17=>14)
+
+***Round 6***
+[AI] Tornado damage calculated (6=>11% of target's 56 HP), score change 100=>111
+[AI] Ataque Rápido damage calculated (5=>9% of target's 56 HP), score change 100=>109
+[AI] Pidgeotto rival's moves: Espejo=112, Tornado=111, Ataque Rápido=109, Remolino=112
+[AI] Will use Tornado
+[Priority] Pelipper (0), Pidgeotto rival (1)
+Pelipper usó Hidropulso
+Move's damage calculated to be 56
+[Modificación PS] Pidgeotto rival perdió 14 PS (14=>0)
+El movimiento golpeó 1 vez(es), daño total=14
+[Pokémon debilitado] Pidgeotto rival
+[Final de la ronda]
+[Sacar Pokémon] Rival envió a Rattata en posición 1
+
+***Round 7***
+[AI] Mordisco damage calculated (6=>11% of target's 56 HP), score change 130=>141
+[AI] Persecución damage calculated (5=>9% of target's 56 HP), score change 100=>109
+[AI] Hipercolmillo damage calculated (8=>13% of target's 56 HP), score change 130=>143
+[AI] Rattata rival's moves: Mordisco=141, Persecución=109, Aguzar=112, Hipercolmillo=143
+[AI] Will use Hipercolmillo
+[Priority] Pelipper (0), Rattata rival (1)
+[Sacar Pokémon] Jugador sacó Pelipper
+[Sacar Pokémon] El jugador envió a Absol en posición 0
+Rattata rival usó Hipercolmillo
+Move's damage calculated to be 24
+[Modificación PS] Absol perdió 24 PS (50=>26)
+El movimiento golpeó 1 vez(es), daño total=24
+[Final de la ronda]
+[Item triggered] Absol's Baya Aranja
+[Modificación PS] Absol ganó 10 PS (26=>36)
+[Supermodelo] +1 punto de estilo (objeto equipado activado), total: 1
+
+***Round 8***
+[AI] Mordisco damage calculated (5=>14% of target's 36 HP), score change 130=>144
+[AI] Persecución damage calculated (3=>8% of target's 36 HP), score change 100=>108
+[AI] Hipercolmillo damage calculated (11=>28% of target's 36 HP), score change 130=>158
+[AI] Rattata rival's moves: Mordisco=144, Persecución=108, Aguzar=112, Hipercolmillo=158
+[AI] Will use Mordisco
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Infortunio
+[Movimiento falló] Inmunidad por tipo
+Rattata rival usó Mordisco
+Move's damage calculated to be 3
+[Modificación PS] Absol perdió 3 PS (36=>33)
+[Efecto de mov. disparado] Efecto secundario de Mordisco
+El movimiento golpeó 1 vez(es), daño total=3
+[Final de la ronda]
+[Fin de efecto] Velo Aurora del lado del jugador se terminó.
+[StatDuration] Absol Evasión timer expired - stage reset
+
+***Round 9***
+[AI] Mordisco damage calculated (5=>15% of target's 33 HP), score change 130=>145
+[AI] Persecución damage calculated (3=>9% of target's 33 HP), score change 100=>109
+[AI] Hipercolmillo damage calculated (11=>30% of target's 33 HP), score change 130=>160
+[AI] Rattata rival's moves: Mordisco=145, Persecución=109, Aguzar=112, Hipercolmillo=160
+[AI] Will use Persecución
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Infortunio
+[Movimiento falló] Inmunidad por tipo
+Rattata rival usó Persecución
+Move's damage calculated to be 3
+[Modificación PS] Absol perdió 3 PS (33=>30)
+El movimiento golpeó 1 vez(es), daño total=3
+[Final de la ronda]
+[Fin de efecto] El clima Lluvia se terminó
+
+***Round 10***
+[AI] Mordisco damage calculated (5=>17% of target's 30 HP), score change 130=>147
+[AI] Persecución damage calculated (3=>10% of target's 30 HP), score change 100=>110
+[AI] Hipercolmillo damage calculated (11=>33% of target's 30 HP), score change 130=>163
+[AI] Rattata rival's moves: Mordisco=147, Persecución=110, Aguzar=112, Hipercolmillo=163
+[AI] Will use Mordisco
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 0, ahora 1)
+[StatDuration] Absol set timer for Evasión = 7
+Rattata rival usó Mordisco
+Move's damage calculated to be 4
+[Modificación PS] Absol perdió 4 PS (30=>26)
+[Efecto de mov. disparado] Efecto secundario de Mordisco
+El movimiento golpeó 1 vez(es), daño total=4
+[Final de la ronda]
+
+***Round 11***
+[AI] Mordisco damage calculated (5=>14% of target's 26 HP), score change 130=>144
+[AI] Persecución damage calculated (3=>9% of target's 26 HP), score change 100=>109
+[AI] Hipercolmillo damage calculated (11=>29% of target's 26 HP), score change 130=>159
+[AI] Rattata rival's moves: Mordisco=144, Persecución=109, Aguzar=112, Hipercolmillo=159
+[AI] Will use Mordisco
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 1, ahora 2)
+[StatDuration] Absol set timer for Evasión = 7
+Rattata rival usó Mordisco
+Move's damage calculated to be 4
+[Modificación PS] Absol perdió 4 PS (26=>22)
+[Efecto de mov. disparado] Efecto secundario de Mordisco
+El movimiento golpeó 1 vez(es), daño total=4
+[Final de la ronda]
+
+***Round 12***
+[AI] Mordisco damage calculated (5=>14% of target's 22 HP), score change 130=>144
+[AI] Persecución damage calculated (3=>8% of target's 22 HP), score change 100=>108
+[AI] Hipercolmillo damage calculated (11=>27% of target's 22 HP), score change 130=>157
+[AI] Rattata rival's moves: Mordisco=144, Persecución=108, Aguzar=112, Hipercolmillo=157
+[AI] Will use Hipercolmillo
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 2, ahora 3)
+[StatDuration] Absol set timer for Evasión = 7
+Rattata rival usó Hipercolmillo
+Move's damage calculated to be 14
+[Modificación PS] Absol perdió 14 PS (22=>8)
+El movimiento golpeó 1 vez(es), daño total=14
+[Final de la ronda]
+
+***Round 13***
+[AI] Mordisco damage calculated (5=>31% of target's 8 HP), score change 130=>161
+[AI] Persecución damage calculated (3=>19% of target's 8 HP), score change 100=>119
+[AI] Hipercolmillo damage calculated (11=>62% of target's 8 HP), score change 130=>192
+[AI] Rattata rival's moves: Mordisco=161, Persecución=119, Aguzar=112, Hipercolmillo=192
+[AI] Will use Aguzar
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Foco Energía
+Rattata rival usó Aguzar
+[Final de la ronda]
+
+***Round 14***
+[AI] Mordisco damage calculated (5=>31% of target's 8 HP), score change 130=>161
+[AI] Persecución damage calculated (3=>19% of target's 8 HP), score change 100=>119
+[AI] Hipercolmillo damage calculated (11=>62% of target's 8 HP), score change 130=>192
+[AI] Rattata rival's moves: Mordisco=161, Persecución=119, Aguzar=112, Hipercolmillo=192
+[AI] Will use Hipercolmillo
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Fuego Fatuo
+[Cambio de estado] Rattata rival ha sido quemado
+El movimiento golpeó 1 vez(es), daño total=0
+Rattata rival usó Hipercolmillo
+[Movimiento falló] Falló pbAccuracyCheck (código de función 0F) o el objetivo es semi-invulnerable
+[Final de la ronda]
+[Daño por estado] Rattata rival recibió daño por la quemadura
+[Modificación PS] Rattata rival perdió 2 PS (36=>34)
+
+***Round 15***
+
+***Jugador ganó***
+
+******************************************
+[Habilidad disparada] Nevada de Snover provocó granizo
+
+***Round 1***
+[AI] Placaje damage calculated (11=>19% of target's 59 HP), score change 100=>119
+[AI] Rodar damage calculated (16=>24% of target's 59 HP), score change 150=>174
+[AI] Cañón Resplandor damage calculated (52=>88% of target's 59 HP), score change 100=>188
+[AI] Ferrothorn salvaje's moves: Placaje=5, Rodar=174, Arraigo=5, Cañón Resplandor=188
+[AI] Prefer Cañón Resplandor
+[Priority] Snover (0), Ferrothorn salvaje (1)
+Snover usó Fuego Fatuo
+[Cambio de estado] Ferrothorn salvaje ha sido quemado
+El movimiento golpeó 1 vez(es), daño total=0
+Ferrothorn salvaje usó Cañón Resplandor
+Move's damage calculated to be 42
+[Modificación PS] Snover perdió 42 PS (59=>17)
+El movimiento golpeó 1 vez(es), daño total=42
+[Final de la ronda]
+[Daño por estado] Ferrothorn salvaje recibió daño por la quemadura
+[Modificación PS] Ferrothorn salvaje perdió 3 PS (60=>57)
+[Objeto disparado] Toxiestrella de Ferrothorn salvaje
+[Modificación PS] Ferrothorn salvaje perdió 7 PS (57=>50)
+
+***Round 2***
+[AI] Placaje damage calculated (6=>35% of target's 17 HP), score change 100=>135
+[AI] Rodar damage calculated (8=>42% of target's 17 HP), score change 150=>192
+[AI] Cañón Resplandor damage calculated (52=>160% of target's 17 HP), score change 100=>260
+[AI] Ferrothorn salvaje's moves: Placaje=5, Rodar=192, Arraigo=5, Cañón Resplandor=260
+[AI] Prefer Cañón Resplandor
+[Priority] Snover (0), Ferrothorn salvaje (1)
+Snover usó Velo Aurora
+[Supermodelo] +1 punto de estilo (movimiento de clima/terreno), total: 1
+Ferrothorn salvaje usó Cañón Resplandor
+Move's damage calculated to be 21
+[Modificación PS] Snover perdió 17 PS (17=>0)
+El movimiento golpeó 1 vez(es), daño total=17
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: 0
+[Pokémon debilitado] Snover
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: -1
+[Final de la ronda]
+[Daño por estado] Ferrothorn salvaje recibió daño por la quemadura
+[Modificación PS] Ferrothorn salvaje perdió 3 PS (50=>47)
+[Objeto disparado] Toxiestrella de Ferrothorn salvaje
+[Modificación PS] Ferrothorn salvaje perdió 7 PS (47=>40)
+[Sacar Pokémon] El jugador envió a Absol en posición 0
+[Cambio características] Ataque de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Ataque due to reduction
+[Cambio características] Defensa de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Defensa due to reduction
+[Cambio características] Ataque Especial de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Ataque Especial due to reduction
+[Cambio características] Defensa Especial de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Defensa Especial due to reduction
+[Cambio características] Velocidad de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Velocidad due to reduction
+
+***Round 3***
+[AI] Placaje damage calculated (5=>8% of target's 59 HP), score change 100=>108
+[AI] Rodar damage calculated (4=>6% of target's 59 HP), score change 150=>156
+[AI] Cañón Resplandor damage calculated (15=>25% of target's 59 HP), score change 100=>125
+[AI] Ferrothorn salvaje's moves: Placaje=108, Rodar=156, Arraigo=112, Cañón Resplandor=125
+[AI] Will use Rodar
+[Priority] Absol (0), Ferrothorn salvaje (1)
+Absol usó Meteorobola
+Move's damage calculated to be 10
+[Modificación PS] Ferrothorn salvaje perdió 5 PS (40=>35)
+El movimiento golpeó 1 vez(es), daño total=5
+[Supermodelo] +1 punto de estilo (movimiento de clima/terreno), total: 1
+Ferrothorn salvaje usó Rodar
+Move's damage calculated to be 4
+[Modificación PS] Absol perdió 4 PS (59=>55)
+El movimiento golpeó 1 vez(es), daño total=4
+[Final de la ronda]
+[Daño por estado] Ferrothorn salvaje recibió daño por la quemadura
+[Modificación PS] Ferrothorn salvaje perdió 3 PS (35=>32)
+[Objeto disparado] Toxiestrella de Ferrothorn salvaje
+[Modificación PS] Ferrothorn salvaje perdió 7 PS (32=>25)
+[Cambio características] Defensa Especial de Absol subió 1 nivel(es) (era -1, ahora 0)
+[StatDuration] Absol set timer for Defensa Especial = 7
+[Cambio características] Ataque de Absol subió 1 nivel(es) (era -1, ahora 0)
+[StatDuration] Absol set timer for Ataque = 7
+[Cambio características] Defensa de Absol subió 1 nivel(es) (era -1, ahora 0)
+[StatDuration] Absol set timer for Defensa = 7
+[Cambio características] Velocidad de Absol subió 1 nivel(es) (era -1, ahora 0)
+[StatDuration] Absol set timer for Velocidad = 7
+[Cambio características] Ataque Especial de Absol subió 1 nivel(es) (era -1, ahora 0)
+[StatDuration] Absol set timer for Ataque Especial = 7
+
+***Round 4***
+[Reutilización de comandos] Ferrothorn salvaje
+[Priority] Absol (0), Ferrothorn salvaje (1)
+Absol usó Foco Energía
+Ferrothorn salvaje usó Rodar
+Continuación de movimiento multi-turnos Rodar
+Move's damage calculated to be 5
+[Modificación PS] Absol perdió 5 PS (55=>50)
+El movimiento golpeó 1 vez(es), daño total=5
+[Final de la ronda]
+[Daño por estado] Ferrothorn salvaje recibió daño por la quemadura
+[Modificación PS] Ferrothorn salvaje perdió 3 PS (25=>22)
+[Objeto disparado] Toxiestrella de Ferrothorn salvaje
+[Modificación PS] Ferrothorn salvaje perdió 7 PS (22=>15)
+
+***Round 5***
+[Reutilización de comandos] Ferrothorn salvaje
+[Priority] Absol (0), Ferrothorn salvaje (1)
+Absol usó Meteorobola
+Move's damage calculated to be 20
+[Modificación PS] Ferrothorn salvaje perdió 15 PS (15=>0)
+[Supermodelo] +1 punto de estilo (golpe crítico), total: 1
+El movimiento golpeó 1 vez(es), daño total=15
+[Pokémon debilitado] Ferrothorn salvaje
+[Supermodelo] +1 punto de estilo (movimiento de clima/terreno), total: 2
+
+***Jugador ganó***
+
+******************************************
+[Habilidad disparada] Nevada de Snover provocó granizo
+
+***Round 1***
+[AI] Tornado damage calculated (14=>24% of target's 59 HP), score change 100=>124
+[AI] Ataque Rápido damage calculated (8=>14% of target's 59 HP), score change 100=>114
+[AI] Pidgeotto rival's moves: Espejo=50, Tornado=124, Ataque Rápido=114, Remolino=112
+[AI] Will use Ataque Rápido
+[Priority] Pidgeotto rival (1), Snover (0)
+Pidgeotto rival usó Ataque Rápido
+Move's damage calculated to be 9
+[Modificación PS] Snover perdió 9 PS (59=>50)
+El movimiento golpeó 1 vez(es), daño total=9
+Snover usó Velo Aurora
+[Supermodelo] +1 punto de estilo (movimiento de clima/terreno), total: 1
+[Final de la ronda]
+
+***Round 2***
+[AI] Tornado damage calculated (14=>28% of target's 50 HP), score change 100=>128
+[AI] Ataque Rápido damage calculated (8=>16% of target's 50 HP), score change 100=>116
+[AI] Pidgeotto rival's moves: Espejo=50, Tornado=128, Ataque Rápido=116, Remolino=112
+[AI] Will use Remolino
+[Priority] Snover (0), Pidgeotto rival (1)
+Snover usó Fuego Fatuo
+[Cambio de estado] Pidgeotto rival ha sido quemado
+El movimiento golpeó 1 vez(es), daño total=0
+Pidgeotto rival usó Remolino
+El movimiento golpeó 1 vez(es), daño total=0
+[Sacar Pokémon] El jugador envió a Absol en posición 0
+[Final de la ronda]
+[Daño por estado] Pidgeotto rival recibió daño por la quemadura
+[Modificación PS] Pidgeotto rival perdió 3 PS (51=>48)
+
+***Round 3***
+[AI] Tornado damage calculated (5=>9% of target's 53 HP), score change 100=>109
+[AI] Ataque Rápido damage calculated (6=>11% of target's 53 HP), score change 100=>111
+[AI] Pidgeotto rival's moves: Espejo=112, Tornado=109, Ataque Rápido=111, Remolino=112
+[AI] Will use Tornado
+[Priority] Absol (0), Pidgeotto rival (1)
+Absol usó Foco Energía
+Pidgeotto rival usó Tornado
+Move's damage calculated to be 3
+[Modificación PS] Absol perdió 3 PS (53=>50)
+El movimiento golpeó 1 vez(es), daño total=3
+[Final de la ronda]
+[Daño por estado] Pidgeotto rival recibió daño por la quemadura
+[Modificación PS] Pidgeotto rival perdió 3 PS (48=>45)
+
+***Round 4***
+[AI] Tornado damage calculated (5=>10% of target's 50 HP), score change 100=>110
+[AI] Ataque Rápido damage calculated (6=>12% of target's 50 HP), score change 100=>112
+[AI] Pidgeotto rival's moves: Espejo=112, Tornado=110, Ataque Rápido=112, Remolino=112
+[AI] Will use Espejo
+[Priority] Absol (0), Pidgeotto rival (1)
+Absol usó Meteorobola
+Move's damage calculated to be 88
+[Modificación PS] Pidgeotto rival perdió 45 PS (45=>0)
+[Supermodelo] +1 punto de estilo (golpe crítico), total: 1
+[Supermodelo] +1 punto de estilo (ataque superefectivo), total: 2
+El movimiento golpeó 1 vez(es), daño total=45
+[Pokémon debilitado] Pidgeotto rival
+[Supermodelo] +1 punto de estilo (movimiento de clima/terreno), total: 3
+[Final de la ronda]
+[Sacar Pokémon] Rival envió a Rattata en posición 1
+
+***Round 5***
+[AI] Mordisco damage calculated (5=>10% of target's 50 HP), score change 130=>140
+[AI] Persecución damage calculated (4=>8% of target's 50 HP), score change 100=>108
+[AI] Hipercolmillo damage calculated (12=>22% of target's 50 HP), score change 130=>152
+[AI] Rattata rival's moves: Mordisco=140, Persecución=108, Aguzar=112, Hipercolmillo=152
+[AI] Will use Mordisco
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 0, ahora 1)
+[StatDuration] Absol set timer for Evasión = 7
+Rattata rival usó Mordisco
+[Movimiento falló] Falló pbAccuracyCheck (código de función 0F) o el objetivo es semi-invulnerable
+[Final de la ronda]
+[Fin de efecto] El clima Granizo terminó
+[Fin de efecto] Velo Aurora del lado del jugador se terminó.
+
+***Round 6***
+[AI] Mordisco damage calculated (5=>8% of target's 50 HP), score change 130=>138
+[AI] Persecución damage calculated (4=>6% of target's 50 HP), score change 100=>106
+[AI] Hipercolmillo damage calculated (12=>16% of target's 50 HP), score change 130=>146
+[AI] Rattata rival's moves: Mordisco=138, Persecución=106, Aguzar=112, Hipercolmillo=146
+[AI] Will use Hipercolmillo
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 1, ahora 2)
+[StatDuration] Absol set timer for Evasión = 7
+Rattata rival usó Hipercolmillo
+[Movimiento falló] Falló pbAccuracyCheck (código de función 0F) o el objetivo es semi-invulnerable
+[Final de la ronda]
+
+***Round 7***
+[AI] Mordisco damage calculated (5=>6% of target's 50 HP), score change 130=>136
+[AI] Persecución damage calculated (4=>5% of target's 50 HP), score change 100=>105
+[AI] Hipercolmillo damage calculated (12=>13% of target's 50 HP), score change 130=>143
+[AI] Rattata rival's moves: Mordisco=136, Persecución=105, Aguzar=112, Hipercolmillo=143
+[AI] Will use Hipercolmillo
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 2, ahora 3)
+[StatDuration] Absol set timer for Evasión = 7
+Rattata rival usó Hipercolmillo
+Move's damage calculated to be 17
+[Modificación PS] Absol perdió 17 PS (50=>33)
+El movimiento golpeó 1 vez(es), daño total=17
+[Final de la ronda]
+
+***Round 8***
+[AI] Mordisco damage calculated (5=>8% of target's 33 HP), score change 130=>138
+[AI] Persecución damage calculated (4=>6% of target's 33 HP), score change 100=>106
+[AI] Hipercolmillo damage calculated (12=>16% of target's 33 HP), score change 130=>146
+[AI] Rattata rival's moves: Mordisco=138, Persecución=106, Aguzar=112, Hipercolmillo=146
+[AI] Will use Aguzar
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Golpe Kárate
+Move's damage calculated to be 106
+[Modificación PS] Rattata rival perdió 36 PS (36=>0)
+[Supermodelo] +1 punto de estilo (golpe crítico), total: 1
+[Supermodelo] +1 punto de estilo (ataque superefectivo), total: 2
+[Supermodelo] +1 punto de estilo (golpe con estadística potenciada), total: 3
+El movimiento golpeó 1 vez(es), daño total=36
+[Pokémon debilitado] Rattata rival
+[Final de la ronda]
+[Sacar Pokémon] Rival envió a Bulbasaur en posición 1
+
+***Round 9***
+[AI] Hoja Afilada damage calculated (9=>13% of target's 33 HP), score change 100=>113
+[AI] Bomba Germen damage calculated (12=>18% of target's 33 HP), score change 100=>118
+[AI] Bulbasaur rival's moves: Hoja Afilada=113, Polvo Veneno=45, Somnífero=69, Bomba Germen=118
+[AI] Will use Somnífero
+[Priority] Absol (0), Bulbasaur rival (1)
+Absol usó Meteorobola
+Move's damage calculated to be 18
+[Modificación PS] Bulbasaur rival perdió 23 PS (47=>24)
+[Supermodelo] +1 punto de estilo (golpe crítico), total: 1
+[Supermodelo] +1 punto de estilo (golpe con estadística potenciada), total: 2
+El movimiento golpeó 1 vez(es), daño total=23
+Bulbasaur rival usó Somnífero
+[Movimiento falló] Falló pbAccuracyCheck (código de función 03) o el objetivo es semi-invulnerable
+[Final de la ronda]
+
+***Round 10***
+[AI] Hoja Afilada damage calculated (9=>13% of target's 33 HP), score change 100=>113
+[AI] Bomba Germen damage calculated (12=>18% of target's 33 HP), score change 100=>118
+[AI] Bulbasaur rival's moves: Hoja Afilada=113, Polvo Veneno=45, Somnífero=69, Bomba Germen=118
+[AI] Will use Bomba Germen
+[Priority] Absol (0), Bulbasaur rival (1)
+[Sacar Pokémon] Jugador sacó Absol
+[Sacar Pokémon] El jugador envió a Pelipper en posición 0
+[Habilidad disparada] Llovizna de Pelipper hizo llover
+Bulbasaur rival usó Bomba Germen
+Move's damage calculated to be 14
+[Modificación PS] Pelipper perdió 14 PS (56=>42)
+El movimiento golpeó 1 vez(es), daño total=14
+[Final de la ronda]
+
+***Round 11***
+[AI] Hoja Afilada damage calculated (6=>14% of target's 42 HP), score change 100=>114
+[AI] Bomba Germen damage calculated (9=>21% of target's 42 HP), score change 100=>121
+[AI] Bulbasaur rival's moves: Hoja Afilada=114, Polvo Veneno=90, Somnífero=119, Bomba Germen=121
+[AI] Will use Polvo Veneno
+[Priority] Pelipper (0), Bulbasaur rival (1)
+[Sacar Pokémon] Jugador sacó Pelipper
+[Sacar Pokémon] El jugador envió a Absol en posición 0
+Bulbasaur rival usó Polvo Veneno
+[Cambio de estado] Absol ha sido envenenado
+El movimiento golpeó 1 vez(es), daño total=0
+[Final de la ronda]
+[Daño por estado] Absol recibió daño por el veneno/tóxico
+[Modificación PS] Absol perdió 7 PS (33=>26)
+
+***Round 12***
+
+***Jugador ganó***
+
+******************************************
+[Habilidad disparada] Nevada de Snover provocó granizo
+
+***Round 1***
+[AI] Tornado damage calculated (14=>28% of target's 50 HP), score change 100=>128
+[AI] Ataque Rápido damage calculated (9=>18% of target's 50 HP), score change 100=>118
+[AI] Pidgeotto rival's moves: Espejo=50, Tornado=128, Ataque Rápido=118, Remolino=112
+[AI] Will use Tornado
+[Priority] Pidgeotto rival (1), Snover (0)
+Pidgeotto rival usó Tornado
+Move's damage calculated to be 18
+[Modificación PS] Snover perdió 18 PS (50=>32)
+El movimiento golpeó 1 vez(es), daño total=18
+Snover usó Infortunio
+[Supermodelo] -1 punto de estilo (ataque sin efecto), total: -1
+[Movimiento falló] Inmunidad por tipo
+[Final de la ronda]
+[Cambio características] Ataque de Snover bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Snover cleared timer for Ataque due to reduction
+[Cambio características] Defensa de Snover bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Snover cleared timer for Defensa due to reduction
+[Cambio características] Ataque Especial de Snover bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Snover cleared timer for Ataque Especial due to reduction
+[Cambio características] Defensa Especial de Snover bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Snover cleared timer for Defensa Especial due to reduction
+[Cambio características] Velocidad de Snover bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Snover cleared timer for Velocidad due to reduction
+
+***Round 2***
+[AI] Tornado damage calculated (18=>56% of target's 32 HP), score change 100=>156
+[AI] Ataque Rápido damage calculated (13=>41% of target's 32 HP), score change 100=>141
+[AI] Pidgeotto rival's moves: Espejo=50, Tornado=156, Ataque Rápido=141, Remolino=112
+[AI] Prefer Tornado
+[Priority] Pidgeotto rival (1), Snover (0)
+Pidgeotto rival usó Tornado
+Move's damage calculated to be 24
+[Modificación PS] Snover perdió 24 PS (32=>8)
+El movimiento golpeó 1 vez(es), daño total=24
+Snover usó Velo Aurora
+[Supermodelo] +1 punto de estilo (movimiento de clima/terreno), total: 1
+[Final de la ronda]
+[Cambio características] Defensa Especial de Snover subió 1 nivel(es) (era -1, ahora 0)
+[StatDuration] Snover set timer for Defensa Especial = 7
+[Cambio características] Ataque de Snover subió 1 nivel(es) (era -1, ahora 0)
+[StatDuration] Snover set timer for Ataque = 7
+[Cambio características] Defensa de Snover subió 1 nivel(es) (era -1, ahora 0)
+[StatDuration] Snover set timer for Defensa = 7
+[Cambio características] Velocidad de Snover subió 1 nivel(es) (era -1, ahora 0)
+[StatDuration] Snover set timer for Velocidad = 7
+[Cambio características] Ataque Especial de Snover subió 1 nivel(es) (era -1, ahora 0)
+[StatDuration] Snover set timer for Ataque Especial = 7
+
+***Round 3***
+[AI] Tornado damage calculated (14=>160% of target's 8 HP), score change 100=>260
+[AI] Ataque Rápido damage calculated (9=>153% of target's 8 HP), score change 100=>253
+[AI] Pidgeotto rival's moves: Espejo=50, Tornado=260, Ataque Rápido=253, Remolino=112
+[AI] Prefer Tornado
+[Priority] Pidgeotto rival (1), Snover (0)
+[Sacar Pokémon] Jugador sacó Snover
+[Sacar Pokémon] El jugador envió a Pelipper en posición 0
+[Habilidad disparada] Llovizna de Pelipper hizo llover
+Pidgeotto rival usó Tornado
+Move's damage calculated to be 4
+[Modificación PS] Pelipper perdió 4 PS (42=>38)
+El movimiento golpeó 1 vez(es), daño total=4
+[Final de la ronda]
+
+***Round 4***
+[AI] Tornado damage calculated (6=>16% of target's 38 HP), score change 100=>116
+[AI] Ataque Rápido damage calculated (5=>13% of target's 38 HP), score change 100=>113
+[AI] Pidgeotto rival's moves: Espejo=112, Tornado=116, Ataque Rápido=113, Remolino=112
+[AI] Will use Espejo
+[Priority] Pelipper (0), Pidgeotto rival (1)
+[Sacar Pokémon] Jugador sacó Pelipper
+[Sacar Pokémon] El jugador envió a Snover en posición 0
+[Habilidad disparada] Nevada de Snover provocó granizo
+Pidgeotto rival usó Espejo
+El movimiento golpeó 1 vez(es), daño total=0
+[Final de la ronda]
+
+***Round 5***
+[AI] Tornado damage calculated (14=>160% of target's 8 HP), score change 100=>260
+[AI] Ataque Rápido damage calculated (9=>153% of target's 8 HP), score change 100=>253
+[AI] Pidgeotto rival's moves: Espejo=50, Tornado=260, Ataque Rápido=253, Remolino=112
+[AI] Prefer Tornado
+[Priority] Pidgeotto rival (1), Snover (0)
+[Sacar Pokémon] Jugador sacó Snover
+[Sacar Pokémon] El jugador envió a Absol en posición 0
+Pidgeotto rival usó Tornado
+Move's damage calculated to be 3
+[Modificación PS] Absol perdió 3 PS (62=>59)
+El movimiento golpeó 1 vez(es), daño total=3
+[Final de la ronda]
+
+***Round 6***
+[AI] Tornado damage calculated (5=>8% of target's 59 HP), score change 100=>108
+[AI] Ataque Rápido damage calculated (7=>12% of target's 59 HP), score change 100=>112
+[AI] Pidgeotto rival's moves: Espejo=112, Tornado=108, Ataque Rápido=112, Remolino=112
+[AI] Will use Ataque Rápido
+[Priority] Pidgeotto rival (1), Absol (0)
+Pidgeotto rival usó Ataque Rápido
+Move's damage calculated to be 6
+[Modificación PS] Absol perdió 6 PS (59=>53)
+El movimiento golpeó 1 vez(es), daño total=6
+Absol usó Meteorobola
+Move's damage calculated to be 64
+[Modificación PS] Pidgeotto rival perdió 51 PS (51=>0)
+[Supermodelo] +1 punto de estilo (ataque superefectivo), total: 1
+El movimiento golpeó 1 vez(es), daño total=51
+[Pokémon debilitado] Pidgeotto rival
+[Supermodelo] +1 punto de estilo (movimiento de clima/terreno), total: 2
+[Final de la ronda]
+[Fin de efecto] Velo Aurora del lado del jugador se terminó.
+[Sacar Pokémon] El jugador envió a Snover en posición 0
+[Sacar Pokémon] Rival envió a Rattata en posición 1
+[Habilidad disparada] Nevada de Snover provocó granizo
+
+***Round 7***
+[AI] Mordisco damage calculated (10=>160% of target's 8 HP), score change 130=>290
+[AI] Persecución damage calculated (7=>88% of target's 8 HP), score change 100=>188
+[AI] Hipercolmillo damage calculated (13=>160% of target's 8 HP), score change 130=>290
+[AI] Rattata rival's moves: Mordisco=290, Persecución=188, Aguzar=112, Hipercolmillo=290
+[AI] Prefer Mordisco
+[Priority] Rattata rival (1), Snover (0)
+Rattata rival usó Mordisco
+Move's damage calculated to be 8
+[Modificación PS] Snover perdió 8 PS (8=>0)
+El movimiento golpeó 1 vez(es), daño total=8
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: -1
+[Pokémon debilitado] Snover
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: -2
+[Final de la ronda]
+[Sacar Pokémon] El jugador envió a Absol en posición 0
+[Cambio características] Ataque de Absol bajó 2 nivel(es) (era 0, ahora -2)
+[StatDuration] Absol cleared timer for Ataque due to reduction
+[Cambio características] Defensa de Absol bajó 2 nivel(es) (era 0, ahora -2)
+[StatDuration] Absol cleared timer for Defensa due to reduction
+[Cambio características] Ataque Especial de Absol bajó 2 nivel(es) (era 0, ahora -2)
+[StatDuration] Absol cleared timer for Ataque Especial due to reduction
+[Cambio características] Defensa Especial de Absol bajó 2 nivel(es) (era 0, ahora -2)
+[StatDuration] Absol cleared timer for Defensa Especial due to reduction
+[Cambio características] Velocidad de Absol bajó 2 nivel(es) (era 0, ahora -2)
+[StatDuration] Absol cleared timer for Velocidad due to reduction
+
+***Round 8***
+[AI] Mordisco damage calculated (8=>15% of target's 53 HP), score change 130=>145
+[AI] Persecución damage calculated (6=>11% of target's 53 HP), score change 200=>211
+[AI] Hipercolmillo damage calculated (21=>36% of target's 53 HP), score change 130=>166
+[AI] Rattata rival's moves: Mordisco=145, Persecución=211, Aguzar=112, Hipercolmillo=166
+[AI] Will use Aguzar
+[Priority] Rattata rival (1), Absol (0)
+[Objeto usado] El jugador ha usado Defensa X 3 en Absol
+[Cambio características] Ataque de Absol subió 1 nivel(es) (era -2, ahora -1)
+[StatDuration] Absol set timer for Ataque = 7
+Rattata rival usó Aguzar
+[Final de la ronda]
+[Cambio características] Defensa Especial de Absol subió 2 nivel(es) (era -2, ahora 0)
+[StatDuration] Absol set timer for Defensa Especial = 7
+[Cambio características] Ataque de Absol subió 2 nivel(es) (era -1, ahora 1)
+[StatDuration] Absol set timer for Ataque = 7
+[Cambio características] Defensa de Absol subió 2 nivel(es) (era -2, ahora 0)
+[StatDuration] Absol set timer for Defensa = 7
+[Cambio características] Velocidad de Absol subió 2 nivel(es) (era -2, ahora 0)
+[StatDuration] Absol set timer for Velocidad = 7
+[Cambio características] Ataque Especial de Absol subió 2 nivel(es) (era -2, ahora 0)
+[StatDuration] Absol set timer for Ataque Especial = 7
+
+***Round 9***
+[AI] Mordisco damage calculated (4=>8% of target's 53 HP), score change 130=>138
+[AI] Persecución damage calculated (3=>6% of target's 53 HP), score change 100=>106
+[AI] Hipercolmillo damage calculated (11=>19% of target's 53 HP), score change 130=>149
+[AI] Rattata rival's moves: Mordisco=138, Persecución=106, Aguzar=112, Hipercolmillo=149
+[AI] Will use Hipercolmillo
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Doble Equipo
+[Cambio características] Evasión de Absol subió 1 nivel(es) (era 0, ahora 1)
+[StatDuration] Absol set timer for Evasión = 7
+Rattata rival usó Hipercolmillo
+[Movimiento falló] Falló pbAccuracyCheck (código de función 0F) o el objetivo es semi-invulnerable
+[Final de la ronda]
+
+******************************************
+[Habilidad disparada] Nevada de Snover provocó granizo
+
+***Round 1***
+[AI] Hoja Mágica damage calculated (24=>60% of target's 50 HP), score change 100=>160
+[AI] Cherrim salvaje's moves: Desarrollo=137, Defensa Floral=5, Refuerzo=0, Hoja Mágica=160
+[AI] Prefer Hoja Mágica
+[Priority] Cherrim salvaje (1), Snover (0)
+[Sacar Pokémon] Jugador sacó Snover
+[Sacar Pokémon] El jugador envió a Absol en posición 0
+Cherrim salvaje usó Hoja Mágica
+Move's damage calculated to be 32
+[Modificación PS] Absol perdió 32 PS (62=>30)
+El movimiento golpeó 1 vez(es), daño total=32
+[Final de la ronda]
+[Item triggered] Absol's Baya Aranja
+[Modificación PS] Absol ganó 10 PS (30=>40)
+[Supermodelo] +1 punto de estilo (objeto equipado activado), total: 1
+
+***Round 2***
+[AI] Hoja Mágica damage calculated (38=>159% of target's 40 HP), score change 100=>259
+[AI] Cherrim salvaje's moves: Desarrollo=5, Defensa Floral=5, Refuerzo=0, Hoja Mágica=259
+[AI] Prefer Hoja Mágica
+[Priority] Cherrim salvaje (1), Absol (0)
+Cherrim salvaje usó Hoja Mágica
+Move's damage calculated to be 35
+[Modificación PS] Absol perdió 35 PS (40=>5)
+El movimiento golpeó 1 vez(es), daño total=35
+Absol usó Foco Energía
+[Final de la ronda]
+
+***Round 3***
+[AI] Hoja Mágica damage calculated (38=>160% of target's 5 HP), score change 100=>260
+[AI] Cherrim salvaje's moves: Desarrollo=5, Defensa Floral=5, Refuerzo=0, Hoja Mágica=260
+[AI] Prefer Hoja Mágica
+[Priority] Cherrim salvaje (1), Absol (0)
+Cherrim salvaje usó Hoja Mágica
+Move's damage calculated to be 33
+[Modificación PS] Absol perdió 5 PS (5=>0)
+El movimiento golpeó 1 vez(es), daño total=5
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: -1
+
+******************************************
+[Habilidad disparada] Nevada de Snover provocó granizo
+
+***Round 1***
+[AI] Mordisco damage calculated (26=>52% of target's 50 HP), score change 160=>212
+[AI] Desquite damage calculated (52=>144% of target's 50 HP), score change 100=>244
+[AI] Aire Afilado damage calculated (100=>160% of target's 50 HP), score change 100=>260
+[AI] Tornadus salvaje's moves: Mordisco=212, Desquite=244, Aire Afilado=260, Agilidad=5
+[AI] Prefer Aire Afilado
+[Priority] Tornadus salvaje (1), Snover (0)
+Tornadus salvaje usó Aire Afilado
+Move's damage calculated to be 88
+[Modificación PS] Snover perdió 50 PS (50=>0)
+El movimiento golpeó 1 vez(es), daño total=50
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: -1
+[Pokémon debilitado] Snover
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: -2
+[Final de la ronda]
+[Sacar Pokémon] El jugador envió a Absol en posición 0
+[Cambio características] Ataque de Absol bajó 2 nivel(es) (era 0, ahora -2)
+[StatDuration] Absol cleared timer for Ataque due to reduction
+[Cambio características] Defensa de Absol bajó 2 nivel(es) (era 0, ahora -2)
+[StatDuration] Absol cleared timer for Defensa due to reduction
+[Cambio características] Ataque Especial de Absol bajó 2 nivel(es) (era 0, ahora -2)
+[StatDuration] Absol cleared timer for Ataque Especial due to reduction
+[Cambio características] Defensa Especial de Absol bajó 2 nivel(es) (era 0, ahora -2)
+[StatDuration] Absol cleared timer for Defensa Especial due to reduction
+[Cambio características] Velocidad de Absol bajó 2 nivel(es) (era 0, ahora -2)
+[StatDuration] Absol cleared timer for Velocidad due to reduction
+
+***Round 2***
+[AI] Mordisco damage calculated (31=>50% of target's 62 HP), score change 160=>210
+[AI] Desquite damage calculated (124=>160% of target's 62 HP), score change 100=>260
+[AI] Aire Afilado damage calculated (78=>160% of target's 62 HP), score change 100=>260
+[AI] Tornadus salvaje's moves: Mordisco=210, Desquite=260, Aire Afilado=260, Agilidad=5
+[AI] Prefer Desquite
+[Priority] Absol (0), Tornadus salvaje (1)
+[Objeto usado] El jugador ha usado Defensa X en Absol
+[Cambio características] Ataque de Absol subió 1 nivel(es) (era -2, ahora -1)
+[StatDuration] Absol set timer for Ataque = 7
+Tornadus salvaje usó Desquite
+Move's damage calculated to be 116
+[Modificación PS] Absol perdió 62 PS (62=>0)
+El movimiento golpeó 1 vez(es), daño total=62
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: -1
+[Pokémon debilitado] Absol
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: -2
+[Final de la ronda]
+
+******************************************
+[Habilidad disparada] Nevada de Snover provocó granizo
+
+***Round 1***
+[AI] Mordisco damage calculated (26=>52% of target's 50 HP), score change 160=>212
+[AI] Desquite damage calculated (52=>144% of target's 50 HP), score change 100=>244
+[AI] Aire Afilado damage calculated (112=>160% of target's 50 HP), score change 100=>260
+[AI] Tornadus salvaje's moves: Mordisco=212, Desquite=244, Aire Afilado=260, Agilidad=5
+[AI] Prefer Aire Afilado
+[Priority] Tornadus salvaje (1), Snover (0)
+Tornadus salvaje usó Aire Afilado
+[Movimiento falló] Falló pbAccuracyCheck (código de función 00) o el objetivo es semi-invulnerable
+Snover usó Velo Aurora
+[Supermodelo] +1 punto de estilo (movimiento de clima/terreno), total: 1
+[Final de la ronda]
+
+***Round 2***
+[AI] Mordisco damage calculated (13=>26% of target's 50 HP), score change 160=>186
+[AI] Desquite damage calculated (26=>52% of target's 50 HP), score change 100=>152
+[AI] Aire Afilado damage calculated (56=>146% of target's 50 HP), score change 100=>246
+[AI] Tornadus salvaje's moves: Mordisco=186, Desquite=5, Aire Afilado=246, Agilidad=5
+[AI] Prefer Aire Afilado
+[Priority] Tornadus salvaje (1), Snover (0)
+Tornadus salvaje usó Aire Afilado
+[Movimiento falló] Falló pbAccuracyCheck (código de función 00) o el objetivo es semi-invulnerable
+Snover usó Fuego Fatuo
+[Movimiento falló] Falló pbAccuracyCheck (código de función 0A) o el objetivo es semi-invulnerable
+[Final de la ronda]
+
+***Round 3***
+[AI] Mordisco damage calculated (13=>26% of target's 50 HP), score change 160=>186
+[AI] Desquite damage calculated (26=>52% of target's 50 HP), score change 100=>152
+[AI] Aire Afilado damage calculated (56=>146% of target's 50 HP), score change 100=>246
+[AI] Tornadus salvaje's moves: Mordisco=186, Desquite=5, Aire Afilado=246, Agilidad=5
+[AI] Prefer Aire Afilado
+[Priority] Tornadus salvaje (1), Snover (0)
+Tornadus salvaje usó Aire Afilado
+Move's damage calculated to be 54
+[Modificación PS] Snover perdió 50 PS (50=>0)
+El movimiento golpeó 1 vez(es), daño total=50
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: -1
+[Pokémon debilitado] Snover
+[Final de la ronda]
+[Sacar Pokémon] El jugador envió a Absol en posición 0
+[Cambio características] Ataque de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Ataque due to reduction
+[Cambio características] Defensa de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Defensa due to reduction
+[Cambio características] Ataque Especial de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Ataque Especial due to reduction
+[Cambio características] Defensa Especial de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Defensa Especial due to reduction
+[Cambio características] Velocidad de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Velocidad due to reduction
+
+**Exception: wrong number of arguments (2 for 1)
+["003_Player_classes.rb:1044:in `pbDisplay'", "003_Player_classes.rb:1044:in `pbApplyEndOfRound'", "003_Player_classes.rb:1030:in `each'", "003_Player_classes.rb:1030:in `pbApplyEndOfRound'", "003_Player_classes.rb:1172:in `__statdur_pbEndOfRoundPhase'", "005_Limited_Stat_Changes.rb:117:in `pbEndOfRoundPhase_fp'", "007_Trainer_texts.rb:581:in `pbEndOfRoundPhase'", "012_PokeBattle_Battle.rb:3211:in `pbStartBattleCore'", "005_PBDebug.rb:4:in `logonerr'", "012_PokeBattle_Battle.rb:3210:in `pbStartBattleCore'", "012_PokeBattle_Battle.rb:3192:in `loop'", "012_PokeBattle_Battle.rb:3192:in `pbStartBattleCore'", "012_PokeBattle_Battle.rb:2986:in `pbStartBattle'", "005_PField_Battles.rb:37:in `pbWildBattle'", "002_PField_Field.rb:479:in `pbSceneStandby'", "005_PField_Battles.rb:36:in `pbWildBattle'", "002_PField_Field.rb:575:in `pbBattleAnimation'", "005_PField_Battles.rb:35:in `pbWildBattle'", "(eval):1:in `pbExecuteScript'", "001_Interpreter.rb:799:in `eval'", "001_Interpreter.rb:248:in `pbExecuteScript'", "001_Interpreter.rb:799:in `command_111'", "001_Interpreter.rb:325:in `execute_command'", "001_Interpreter.rb:198:in `update'", "001_Interpreter.rb:111:in `loop'", "001_Interpreter.rb:111:in `update'", "001_Scene_Map.rb:103:in `updateold'", "001_Scene_Map.rb:101:in `loop'", "001_Scene_Map.rb:101:in `updateold'", "002_Unreal_time.rb:299:in `update'", "001_Scene_Map.rb:68:in `main'", "001_Scene_Map.rb:65:in `loop'", "001_Scene_Map.rb:65:in `main'", "999_Main.rb:55:in `mainFunctionDebug'", "999_Main.rb:35:in `mainFunction'", "999_Main.rb:65:in `load_scripts_from_folder'", "999_Main.rb:64:in `loop'", "999_Main.rb:64:in `load_scripts_from_folder'", "000:Main:32:in `eval'", "000:Main:35:in `load_scripts_from_folder'", "000:Main:32:in `each'", "000:Main:32:in `load_scripts_from_folder'", "000:Main:45:in `load_scripts_from_folder'", "000:Main:44:in `each'", "000:Main:44:in `load_scripts_from_folder'", "000:Main:49"]
+
+
+***Round 4***
+
+******************************************
+[Habilidad disparada] Nevada de Snover provocó granizo
+
+***Round 1***
+[AI] Mordisco damage calculated (27=>54% of target's 50 HP), score change 160=>214
+[AI] Desquite damage calculated (54=>148% of target's 50 HP), score change 100=>248
+[AI] Aire Afilado damage calculated (106=>160% of target's 50 HP), score change 100=>260
+[AI] Tornadus salvaje's moves: Mordisco=214, Desquite=248, Aire Afilado=260, Agilidad=5
+[AI] Prefer Aire Afilado
+[Priority] Tornadus salvaje (1), Snover (0)
+Tornadus salvaje usó Aire Afilado
+Move's damage calculated to be 100
+[Modificación PS] Snover perdió 50 PS (50=>0)
+El movimiento golpeó 1 vez(es), daño total=50
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: -1
+[Pokémon debilitado] Snover
+[Final de la ronda]
+[Sacar Pokémon] El jugador envió a Absol en posición 0
+[Cambio características] Ataque de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Ataque due to reduction
+[Cambio características] Defensa de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Defensa due to reduction
+[Cambio características] Ataque Especial de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Ataque Especial due to reduction
+[Cambio características] Defensa Especial de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Defensa Especial due to reduction
+[Cambio características] Velocidad de Absol bajó 1 nivel(es) (era 0, ahora -1)
+[StatDuration] Absol cleared timer for Velocidad due to reduction
+
+***Round 2***
+[AI] Mordisco damage calculated (23=>37% of target's 62 HP), score change 160=>197
+[AI] Desquite damage calculated (92=>160% of target's 62 HP), score change 100=>260
+[AI] Aire Afilado damage calculated (60=>92% of target's 62 HP), score change 100=>192
+[AI] Tornadus salvaje's moves: Mordisco=197, Desquite=260, Aire Afilado=192, Agilidad=5
+[AI] Prefer Desquite
+[Priority] Absol (0), Tornadus salvaje (1)
+Absol usó Foco Energía
+Tornadus salvaje usó Desquite
+Move's damage calculated to be 90
+[Modificación PS] Absol perdió 62 PS (62=>0)
+El movimiento golpeó 1 vez(es), daño total=62
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: -1
+
+******************************************
+[Habilidad disparada] Nevada de Snover provocó granizo
+
+***Round 1***
+[AI] Tornado damage calculated (14=>28% of target's 50 HP), score change 100=>128
+[AI] Ataque Rápido damage calculated (8=>16% of target's 50 HP), score change 100=>116
+[AI] Pidgeotto rival's moves: Espejo=50, Tornado=128, Ataque Rápido=116, Remolino=112
+[AI] Will use Tornado
+[Priority] Pidgeotto rival (1), Snover (0)
+Pidgeotto rival usó Tornado
+Move's damage calculated to be 18
+[Modificación PS] Snover perdió 18 PS (50=>32)
+El movimiento golpeó 1 vez(es), daño total=18
+Snover usó Velo Aurora
+[Supermodelo] +1 punto de estilo (movimiento de clima/terreno), total: 1
+[Final de la ronda]
+
+***Round 2***
+[AI] Tornado damage calculated (14=>44% of target's 32 HP), score change 100=>144
+[AI] Ataque Rápido damage calculated (8=>25% of target's 32 HP), score change 100=>125
+[AI] Pidgeotto rival's moves: Espejo=50, Tornado=144, Ataque Rápido=125, Remolino=112
+[AI] Will use Remolino
+[Priority] Snover (0), Pidgeotto rival (1)
+Snover usó Esquirla Helada
+Move's damage calculated to be 40
+[Modificación PS] Pidgeotto rival perdió 50 PS (51=>1)
+[Supermodelo] +1 punto de estilo (golpe crítico), total: 1
+[Supermodelo] +1 punto de estilo (ataque superefectivo), total: 2
+El movimiento golpeó 1 vez(es), daño total=50
+Pidgeotto rival usó Remolino
+El movimiento golpeó 1 vez(es), daño total=0
+[Sacar Pokémon] El jugador envió a Absol en posición 0
+[Final de la ronda]
+
+***Round 3***
+[AI] Tornado damage calculated (6=>10% of target's 62 HP), score change 100=>110
+[AI] Ataque Rápido damage calculated (7=>11% of target's 62 HP), score change 100=>111
+[AI] Pidgeotto rival's moves: Espejo=112, Tornado=110, Ataque Rápido=111, Remolino=112
+[AI] Will use Tornado
+[Priority] Absol (0), Pidgeotto rival (1)
+Absol usó Meteorobola
+Move's damage calculated to be 110
+[Modificación PS] Pidgeotto rival perdió 1 PS (1=>0)
+[Supermodelo] +1 punto de estilo (golpe crítico), total: 1
+[Supermodelo] +1 punto de estilo (ataque superefectivo), total: 2
+El movimiento golpeó 1 vez(es), daño total=1
+[Pokémon debilitado] Pidgeotto rival
+[Supermodelo] +1 punto de estilo (movimiento de clima/terreno), total: 3
+[Final de la ronda]
+[Sacar Pokémon] Rival envió a Rattata en posición 1
+
+***Round 4***
+[AI] Mordisco damage calculated (4=>6% of target's 62 HP), score change 130=>136
+[AI] Persecución damage calculated (3=>5% of target's 62 HP), score change 100=>105
+[AI] Hipercolmillo damage calculated (11=>16% of target's 62 HP), score change 130=>146
+[AI] Rattata rival's moves: Mordisco=136, Persecución=105, Aguzar=112, Hipercolmillo=146
+[AI] Will use Hipercolmillo
+[Priority] Absol (0), Rattata rival (1)
+Absol usó Golpe Kárate
+Move's damage calculated to be 86
+[Modificación PS] Rattata rival perdió 36 PS (36=>0)
+[Supermodelo] +1 punto de estilo (golpe crítico), total: 1
+[Supermodelo] +1 punto de estilo (ataque superefectivo), total: 2
+El movimiento golpeó 1 vez(es), daño total=36
+[Pokémon debilitado] Rattata rival
+[Final de la ronda]
+[Sacar Pokémon] Rival envió a Bulbasaur en posición 1
+
+***Round 5***
+
+***Jugador ganó***
+
+******************************************
+[Habilidad disparada] Nevada de Snover provocó granizo
+
+***Round 1***
+[AI] Pin Misil damage calculated (128=>160% of target's 34 HP), score change 100=>260
+[AI] Brazo Pincho damage calculated (37=>160% of target's 34 HP), score change 160=>320
+[AI] Derribo damage calculated (72=>160% of target's 34 HP), score change 90=>250
+[AI] Bomba Germen damage calculated (49=>160% of target's 34 HP), score change 100=>260
+[AI] Chesnaught salvaje's moves: Pin Misil=260, Brazo Pincho=320, Derribo=250, Bomba Germen=260
+[AI] Will use Bomba Germen
+[Priority] Chesnaught salvaje (1), Snover (0)
+Chesnaught salvaje usó Bomba Germen
+Move's damage calculated to be 62
+[Modificación PS] Snover perdió 34 PS (34=>0)
+El movimiento golpeó 1 vez(es), daño total=34
+[Supermodelo] -1 punto de estilo (Pokémon debilitado), total: -1
+[Pokémon debilitado] Snover
+[Final de la ronda]

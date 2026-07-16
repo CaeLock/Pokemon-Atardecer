@@ -44,6 +44,7 @@ GRASS_SOUND               = true
 GRASS_NO_ANIM             = false
 
 SELL_ITEMPRICE            = 2
+$INTERNAL                 = true if $DEBUG
 #===============================================================================
 # Interfaces
 # Aquí se configuran las rutas de las carpetas de interfaces.
