@@ -1,18 +1,22 @@
 ﻿[000]
+TrainerVictoryME=Victory - Trainer.ogg
+TrainerBattleBGM=Battle! (Trainer)
 WildVictoryME=Victory - Wild Pokemon.ogg
+WildBattleBGM=Battle! (Wild Pokemon)
 PlayerB=POKEMONTRAINER_Leaf,trchar001,girl_bike,girl_surf_offset,girl_run,girl_surf_offset,girl_fish_offset,girl_fish_offset
 PlayerA=POKEMONTRAINER_Red,trchar000,boy_bike,boy_surf_offset,boy_run,boy_surf_offset,boy_fish_offset,boy_fish_offset
-TrainerVictoryME=Victory - Trainer.ogg
-Home=3,7,5,8
-TrainerBattleBGM=Battle! (Trainer)
 BicycleBGM=Bike
-WildBattleBGM=Battle! (Wild Pokemon)
+Home=3,7,5,8
 SurfBGM=Surf
 [001]
 # Intro
 [002]
 # Test
 SnapEdges=true
-Bicycle=true
 ShowArea=true
+Outdoor=true
+Bicycle=true
+[003]
+# test route-spring
+SnapEdges=true
 Outdoor=true

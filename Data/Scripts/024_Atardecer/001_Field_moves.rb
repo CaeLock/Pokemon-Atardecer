@@ -67,11 +67,11 @@ module Kernel
   # Returns nil if nobody
   def self.pbCheckMove(move)
     move = getID(PBMoves, move)
-    return nil if !move || move <= 0
+    ignoreFainted = defined?(MediumEffects) && MediumEffects.active?
 
     #Check for Pokemon with the move learned that is not egg/debilitated
     for p in $Trainer.party
-      next if !p || p.isEgg? || p.hp <= 0
+      next if !p || p.isEgg? || (p.hp <= 0 && !ignoreFainted)      
       for mm in p.moves
         return p if mm.id == move
       end
@@ -79,7 +79,7 @@ module Kernel
 
     #Check for MT/M0-compatible Pokémon
     for p in $Trainer.party
-      next if !p || p.isEgg? || p.hp <= 0
+      next if !p || p.isEgg? || (p.hp <= 0 && !ignoreFainted)      
       begin
         return p if p.isCompatibleWithMove?(move)  
       rescue
@@ -89,7 +89,7 @@ module Kernel
 
     #Check for movelist-compatible Pokémon
     for p in $Trainer.party
-      next if !p || p.isEgg? || p.hp <= 0
+      next if !p || p.isEgg? || (p.hp <= 0 && !ignoreFainted)      
       begin
         return p if Kernel.pb_species_can_learn_by_level?(p.species, move)
         return p if Kernel.pb_species_has_eggmove?(p.species, move)

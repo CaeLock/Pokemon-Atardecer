@@ -1,0 +1,56 @@
+
+Quiero dar las gracias a todos los que me habéis ayudado,
+de un modo u otro, en el desarrollo de esta herramienta.
+
+En especial, a quienes me habéis acompañado durante el proceso,
+dando apoyo, consejos, información, testeo u otros aportes:
+
+  Pablus94 ---------------- Asesor #1 All-in-one (Test, PBS, Diseño, Promo...)
+  Scream ------------------ Tester #1
+  PandaInDaGame ----------- Tester, PBS Master
+  P4BL0JP ----------------- Banner chulísimo
+  Shensey_Grenin ---------- Tester #1
+  Scept ------------------- Test Breaker, Promo
+  List -------------------- Tester
+  Degel ------------------- Tester
+  Orionirico -------------- Tester, Asesor diseño nuevo interfaz
+  EricLostie -------------- Tester, Promo, Inspiración para panel MTs
+
+En particular, a los makers que me ofrecieron sus proyectos o PBS,
+en las fases tempranas del editor, para depurarlo y mejorarlo.
+Algunos proyectos estaban en pleno desarrollo de una nueva beta,
+por lo que agradezco dóblemente su confianza al prestármelos
+antes de la salida oficial:
+
+  Pokémon Berilo ----------------- @Pablus94
+  Pokémon Africanvs -------------- @PkmnAfricanus
+  Pokémon Armonía ---------------- @PkmArmonia, @PkScept
+  Pokémon Ópalo ------------------ @EricLostie
+  Pokémon Atlas ------------------ @Pokemon_Atlas, @KioRaka
+  Pokemon Trainer Championship --- @Krislaz07
+  Pokémon Pririta ---------------- @Pkmn_Pirita, @Orionirico
+  Pokémon Génesis ---------------- @PKM_Genesis
+  Pokémon Primordial Titals ------ @PkPrimordial
+
+Y por último, gracias a todos aquellos que me habéis dado feedback,
+habéis apoyado el proyecto en redes, discord y testeando por libre.
+
+  Eduardo Moreno
+  Sofia Flores
+  Pokémon Visiones Etéreas ---- @PJavigarni
+  Pokémon Edición Celestial --- @PkmCelestial
+  Vicgonxin ------------------- @vicgonxin
+  Deims ----------------------- Pokémon Hope & Illusion
+  HatsuKurogami --------------- @PkmnZirconio
+  Pokémon Last Dream ---------- @PkmnLastDream
+  Davenn ---------------------- @Pkmn_Siris
+  Pokémon Bifröst ------------- @PkmnBifrost
+  Gauna ----------------------- @PkGauna (Pokémon Amya)
+  Zettai ---------------------- @PokemonAmanecer
+  Popegade29 ------------------ 
+  CarmaNekko ------------------ @ArtsCarmaNekko, @LatinumOficial (Pokémon Latinum)
+
+
+Muchas gracias. <3
+
+    Bezier

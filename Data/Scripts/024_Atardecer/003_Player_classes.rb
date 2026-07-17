@@ -168,10 +168,10 @@ end
 # (or no job) keeps BES's normal behaviour untouched.
 #===============================================================================
 class PokeBattle_Pokemon
-  alias original_changeHappiness changeHappiness
+  alias campeona_changeHappiness changeHappiness
   def changeHappiness(method)
     if !PlayerClasses.current?(PlayerClasses::CAMPEONA)
-      original_changeHappiness(method)
+      campeona_changeHappiness(method)
       return
     end
     oldHappiness=@happiness
@@ -180,7 +180,7 @@ class PokeBattle_Pokemon
       # bigger Campeona-specific loss instead of the normal flat -1.
       @happiness=[0,@happiness-PlayerClasses::CAMPEONA_FAINT_HAPPINESS_LOSS].max
     else
-      original_changeHappiness(method)
+      campeona_changeHappiness(method)
     end
     if @happiness<oldHappiness && (starter? || oldHappiness>=PlayerClasses::AFFECTION_MAX)
       @happiness=oldHappiness # starters and maxed-out Pokemon never lose happiness
@@ -200,11 +200,11 @@ end
 # TRAINER's Pokemon (not a wild one)
 #===============================================================================
 class PokeBattle_Battler
-  alias original_pbFaint pbFaint
+  alias campeona_pbFaint pbFaint
   def pbFaint(showMessage=true)
     wasOpposing=@battle && !@battle.pbOwnedByPlayer?(self.index)
     isTrainerBattle=@battle && @battle.opponent
-    ret=original_pbFaint(showMessage)
+    ret=campeona_pbFaint(showMessage)
     if wasOpposing && isTrainerBattle && PlayerClasses.current?(PlayerClasses::CAMPEONA)
       for b in @battle.battlers
         next if !b || b.isFainted? || !@battle.pbOwnedByPlayer?(b.index)
@@ -221,9 +221,9 @@ end
 # mid-battle switches, since both go through pbSendOut)
 #===============================================================================
 class PokeBattle_Battle
-  alias original_pbSendOut pbSendOut
+  alias campeona_pbSendOut pbSendOut
   def pbSendOut(index,pokemon)
-    original_pbSendOut(index,pokemon)
+    campeona_pbSendOut(index,pokemon)
     if pbOwnedByPlayer?(index) && PlayerClasses.current?(PlayerClasses::CAMPEONA)
       pokemon.pbGainHappiness(PlayerClasses::CAMPEONA_FIELD_HAPPINESS_GAIN)
     end
@@ -237,10 +237,10 @@ end
 if defined?(PCExp)
   module PCExp
     class << self
-      alias original_pbGivePCExpOne pbGivePCExpOne
+      alias campeona_pbGivePCExpOne pbGivePCExpOne
       def pbGivePCExpOne(pkmn,defeated)
         oldlevel=pkmn.level
-        original_pbGivePCExpOne(pkmn,defeated)
+        campeona_pbGivePCExpOne(pkmn,defeated)
         if pkmn.level>oldlevel && PlayerClasses.current?(PlayerClasses::CAMPEONA)
           levelsGained=pkmn.level-oldlevel
           pkmn.happiness=[0,pkmn.happiness-(PlayerClasses::CAMPEONA_PC_LEVELUP_LOSS*levelsGained)].max
@@ -259,13 +259,13 @@ end
 # (base + bonus) instead of two separate messages.
 #===============================================================================
 class PokeBattle_Battle
-  alias original_pbGainExpOne pbGainExpOne
+  alias campeona_pbGainExpOne pbGainExpOne
   def pbGainExpOne(index,defeated,partic,expshare,haveexpall,showmessages=true)
     thispoke=@party1[index]
     qualifies=thispoke && PlayerClasses.current?(PlayerClasses::CAMPEONA) &&
               thispoke.happiness>=PlayerClasses::AFFECTION_EXP_MIN
     beforeExp=thispoke ? thispoke.exp : 0
-    ret=original_pbGainExpOne(index,defeated,partic,expshare,haveexpall,qualifies ? false : showmessages)
+    ret=campeona_pbGainExpOne(index,defeated,partic,expshare,haveexpall,qualifies ? false : showmessages)
     if qualifies
       gained=thispoke.exp-beforeExp
       if gained>0
@@ -303,9 +303,9 @@ end
 # internals.
 #===============================================================================
 class PokeBattle_Battle
-  alias original_pbEndOfRoundPhase pbEndOfRoundPhase
+  alias campeona_pbEndOfRoundPhase pbEndOfRoundPhase
   def pbEndOfRoundPhase
-    ret=original_pbEndOfRoundPhase
+    ret=campeona_pbEndOfRoundPhase
     if PlayerClasses.current?(PlayerClasses::CAMPEONA)
       for b in @battlers
         next if !b || b.isFainted? || !pbOwnedByPlayer?(b.index)
@@ -338,9 +338,9 @@ end
 # Evasion (215+ happiness, avoidable attacks only) + crit rate bonus (255)
 #===============================================================================
 class PokeBattle_Move
-  alias original_pbAccuracyCheck pbAccuracyCheck
+  alias campeona_pbAccuracyCheck pbAccuracyCheck
   def pbAccuracyCheck(attacker,opponent)
-    ret=original_pbAccuracyCheck(attacker,opponent)
+    ret=campeona_pbAccuracyCheck(attacker,opponent)
     if ret && accuracy>0 && PlayerClasses.current?(PlayerClasses::CAMPEONA) && opponent.pokemon &&
        @battle.pbOwnedByPlayer?(opponent.index) &&
        opponent.pokemon.happiness>=PlayerClasses::AFFECTION_EVADE_MIN
@@ -352,9 +352,9 @@ class PokeBattle_Move
     return ret
   end
 
-  alias original_pbIsCritical? pbIsCritical?
+  alias campeona_pbIsCritical? pbIsCritical?
   def pbIsCritical?(attacker,opponent)
-    ret=original_pbIsCritical?(attacker,opponent)
+    ret=campeona_pbIsCritical?(attacker,opponent)
     if !ret && PlayerClasses.current?(PlayerClasses::CAMPEONA) && attacker.pokemon &&
        @battle.pbOwnedByPlayer?(attacker.index) &&
        attacker.pokemon.happiness>=PlayerClasses::AFFECTION_MAX
@@ -373,7 +373,7 @@ end
 # target" is known before the hit actually lands).
 #===============================================================================
 class PokeBattle_Move
-  alias original_pbReduceHPDamage pbReduceHPDamage
+  alias campeona_pbReduceHPDamage pbReduceHPDamage
   def pbReduceHPDamage(damage,attacker,opponent)
     if opponent
       # --- Campeona: survive a fatal hit (200+ happiness, once per battle) -----
@@ -390,7 +390,7 @@ class PokeBattle_Move
         end
       end
     end
-    return original_pbReduceHPDamage(damage,attacker,opponent)
+    return campeona_pbReduceHPDamage(damage,attacker,opponent)
   end
 end
 
@@ -552,9 +552,9 @@ class PokeBattle_Pokemon
     return false
   end
 
-  alias original_calcStats calcStats
+  alias aristocrata_calcStats calcStats
   def calcStats
-    original_calcStats
+    aristocrata_calcStats
     return if !belongsToPlayer?
     mult=MoneyStats.multiplier
     return if mult==1.0
@@ -623,22 +623,22 @@ end
 # Can't revive a fainted Pokemon
 #===============================================================================
 class PokeBattle_Pokemon
-  alias original_hp= hp=
+  alias protrainer_hp= hp=
   def hp=(value)
     if @hp==0 && value>0 && belongsToPlayer? &&
        PlayerClasses.current?(PlayerClasses::PRO_TRAINER)
       return
     end
-    self.original_hp=(value)
+    self.protrainer_hp=(value)
   end
 
-  alias original_healHP healHP
+  alias protrainer_healHP healHP
   def healHP
     if @hp==0 && belongsToPlayer? &&
        PlayerClasses.current?(PlayerClasses::PRO_TRAINER)
       return
     end
-    original_healHP
+    protrainer_healHP
   end
 end
 
@@ -656,22 +656,22 @@ end
 
 module ItemHandlers
   class << self
-    alias original_triggerUseOnPokemon triggerUseOnPokemon
+    alias protrainer_triggerUseOnPokemon triggerUseOnPokemon
     def triggerUseOnPokemon(item,pokemon,scene)
       if pbEntrenadoraBlocksRevive?(item,pokemon)
         scene.pbDisplay(_INTL("No tendrá ningún efecto."))
         return false
       end
-      return original_triggerUseOnPokemon(item,pokemon,scene)
+      return protrainer_triggerUseOnPokemon(item,pokemon,scene)
     end
 
-    alias original_triggerBattleUseOnPokemon triggerBattleUseOnPokemon
+    alias protrainer_triggerBattleUseOnPokemon triggerBattleUseOnPokemon
     def triggerBattleUseOnPokemon(item,pokemon,battler,scene)
       if pbEntrenadoraBlocksRevive?(item,pokemon)
         scene.pbDisplay(_INTL("No tendrá ningún efecto."))
         return false
       end
-      return original_triggerBattleUseOnPokemon(item,pokemon,battler,scene)
+      return protrainer_triggerBattleUseOnPokemon(item,pokemon,battler,scene)
     end
   end
 end
@@ -716,9 +716,9 @@ module EntrenadoraGameOver
   end
 end
 
-alias original_pbAfterBattle pbAfterBattle
+alias protrainer_pbAfterBattle pbAfterBattle
 def pbAfterBattle(decision,canlose)
-  original_pbAfterBattle(decision,canlose)
+  protrainer_pbAfterBattle(decision,canlose)
   if decision==2 && PlayerClasses.current?(PlayerClasses::PRO_TRAINER)
     EntrenadoraGameOver.trigger
   end
@@ -770,9 +770,9 @@ module PlayerClasses
 end
 
 class PokeBattle_Battle
-  alias original_pbCanChooseMove pbCanChooseMove?
+  alias medico_pbCanChooseMove pbCanChooseMove?
   def pbCanChooseMove?(idxPokemon,idxMove,showMessages,sleeptalk=false)
-    ret=original_pbCanChooseMove(idxPokemon,idxMove,showMessages,sleeptalk)
+    ret=medico_pbCanChooseMove(idxPokemon,idxMove,showMessages,sleeptalk)
     return ret if !ret
     thispkmn=@battlers[idxPokemon]
     thismove=thispkmn.moves[idxMove]
@@ -1331,5 +1331,234 @@ class PokeBattle_Move
       end
     end
     return supermodelo_pbIsCritical?(attacker,opponent)
+  end
+end
+
+################################################################################
+################################################################################
+# MEDIUM
+################################################################################
+################################################################################
+#===============================================================================
+# The Medium job channels a Pokemon's "spirit" back whenever it's revived
+# with an item: each item-based revival nudges a random not-yet-maxed IV up
+# by 2, at the cost of the world's "normalcy rate" ($game_variables[33]).
+#
+# Once that rate has bottomed out at 0 AND the Pokemon being revived already
+# has perfect IVs (so there's no stat left to bump), reality slips further
+# instead: the Pokemon tries to learn a move borrowed from an unrelated
+# species, and the normalcy rate resets to a random 3-5.
+#-------------------------------------------------------------------------------
+# $game_variables[33] ("tasa de normalidad") starts at 0 via the game's
+# opening event; this script only ever floors it at 0 (never lets its own
+# -1 push it below that) -- it's assumed to be raised again elsewhere,
+# outside this file, as things return to normal between revivals.
+#
+# Hooked via ItemHandlers.triggerUseOnPokemon / triggerBattleUseOnPokemon --
+# the same pair Entrenadora's Revive block and Montaraz's item block already
+# use -- so both field and in-battle Revive/Max Revive/Revival Herb usage
+# are covered without touching core item scripts. A dedicated alias name is
+# used to avoid clashing with those other jobs' aliases on these same hooks.
+#===============================================================================
+
+module MediumEffects
+  NORMALCY_VARIABLE  = 33  # $game_variables[33], "tasa de normalidad"
+  BST_RANGE          = 10  # +/- range used for the first donor-species pass
+  NORMALCY_RESET_MIN = 3
+  NORMALCY_RESET_MAX = 5
+
+  module_function
+
+  def active?
+    return PlayerClasses.current?(PlayerClasses::MEDIUM)
+  end
+
+  def normalcy
+    $game_variables[NORMALCY_VARIABLE] = 0 if !$game_variables[NORMALCY_VARIABLE]
+    return $game_variables[NORMALCY_VARIABLE]
+  end
+
+  # Floors at 0 -- this is the only place this script ever lowers the
+  # variable, so this is enough to guarantee it never drops below that.
+  def normalcy=(value)
+    $game_variables[NORMALCY_VARIABLE] = [value,0].max
+  end
+
+  #-----------------------------------------------------------------------------
+  # Entry point: called after any item successfully brings a Pokemon back
+  # from 0 HP (see the ItemHandlers hooks below).
+  #-----------------------------------------------------------------------------
+  def pbOnRevive(pokemon)
+    return if !active?
+    return if !pokemon || !pokemon.respond_to?(:belongsToPlayer?) || !pokemon.belongsToPlayer?
+    if normalcy==0 && pbPerfectIVs?(pokemon)
+      pbAttemptSpiritMove(pokemon)
+      self.normalcy = NORMALCY_RESET_MIN+rand(NORMALCY_RESET_MAX-NORMALCY_RESET_MIN+1)
+    else
+      pbBoostRandomIV(pokemon)
+      self.normalcy -= 1
+    end
+  end
+
+  def pbPerfectIVs?(pokemon)
+    return (0..5).all? { |i| pokemon.iv[i]==31 }
+  end
+
+  def pbBoostRandomIV(pokemon)
+    candidates = (0..5).select { |i| pokemon.iv[i]<31 }
+    return if candidates.empty?   # already perfect -- nothing to bump
+    stat = candidates[rand(candidates.length)]
+    pokemon.iv[stat] = [pokemon.iv[stat]+2,31].min
+    pokemon.calcStats
+  end
+
+  #-----------------------------------------------------------------------------
+  # Species dex-data lookups for the donor search below. Uses a throwaway
+  # PokeBattle_Pokemon (withMoves=false, so it skips reading its own starting
+  # moveset) rather than duplicating dexdata.dat's byte layout here -- a few
+  # species (Rotom, Arceus, Genesect...) resolve their base stats/types/moves
+  # through form handlers that expect a normally-initialized Pokemon (item,
+  # ability, etc. all set), so a real (if minimal) instantiation is used
+  # instead of PokeBattle_Pokemon.allocate to stay safe across the whole dex.
+  # This runs the full species list only in the rare "spirit move" branch,
+  # not on every ordinary revival.
+  #-----------------------------------------------------------------------------
+  def pbDummyFor(species)
+    return PokeBattle_Pokemon.new(species,1,$Trainer,false)
+  end
+
+  def pbSpeciesTypes(species)
+    dummy = pbDummyFor(species)
+    return [dummy.type1,dummy.type2]
+  end
+
+  def pbSpeciesBST(species)
+    return pbDummyFor(species).baseStats.inject(0) { |sum,stat| sum+stat }
+  end
+
+  def pbSpeciesMoveList(species)
+    return pbDummyFor(species).getMoveList
+  end
+
+  #-----------------------------------------------------------------------------
+  # Finds a donor species with none of the user's types, preferring one with
+  # a similar (+/-10) BST, chosen at random among ties. Falls back to the
+  # closest BST below that range, then the closest BST above it -- for
+  # those two fallback passes a single closest match is used (ties broken by
+  # lowest species ID) rather than a random pick among them.
+  #-----------------------------------------------------------------------------
+  def pbFindDonorSpecies(userTypes,userBST)
+    eligible = []
+    (1..PBSpecies.maxValue).each do |sp|
+      t1,t2 = pbSpeciesTypes(sp)
+      next if userTypes.include?(t1) || userTypes.include?(t2)
+      eligible.push([sp,pbSpeciesBST(sp)])
+    end
+    return nil if eligible.empty?
+
+    inRange = eligible.select { |sp,bst| (bst-userBST).abs<=BST_RANGE }
+    if !inRange.empty?
+    sp,_ = inRange[rand(inRange.length)]
+      return sp
+    end
+
+    below = eligible.select { |sp,bst| bst<userBST-BST_RANGE }
+    if !below.empty?
+      maxBst = below.map { |sp,bst| bst }.max
+      return below.select { |sp,bst| bst==maxBst }.map { |sp,bst| sp }.min
+    end
+
+    above = eligible.select { |sp,bst| bst>userBST+BST_RANGE }
+    if !above.empty?
+      minBst = above.map { |sp,bst| bst }.min
+      return above.select { |sp,bst| bst==minBst }.map { |sp,bst| sp }.min
+    end
+
+    return nil   # every species in the dex shares a type with the user
+  end
+
+  #-----------------------------------------------------------------------------
+  # Picks which of the donor's level-up moves to try to teach: the one it
+  # learns exactly at the user's level; else the next level up that teaches
+  # one; else (if the donor never learns anything at or above that level)
+  # the last one it learns below it.
+  #-----------------------------------------------------------------------------
+  def pbPickDonorMove(donorSpecies,userLevel)
+    moveList = pbSpeciesMoveList(donorSpecies)
+    return nil if !moveList || moveList.empty?
+
+    exact = moveList.select { |lvl,mv| lvl==userLevel }
+    return exact.first[1] if !exact.empty?
+
+    above = moveList.select { |lvl,mv| lvl>userLevel }.sort_by { |lvl,mv| lvl }
+    return above.first[1] if !above.empty?
+
+    below = moveList.select { |lvl,mv| lvl<userLevel }.sort_by { |lvl,mv| lvl }
+    return below.last[1] if !below.empty?
+
+    return nil
+  end
+
+  def pbAttemptSpiritMove(pokemon)
+    userTypes = [pokemon.type1,pokemon.type2]
+    userBST   = pokemon.baseStats.inject(0) { |sum,stat| sum+stat }
+    donor = pbFindDonorSpecies(userTypes,userBST)
+    return if !donor
+    move = pbPickDonorMove(donor,pokemon.level)
+    return if !move || move==0
+    Kernel.pbMessage(_INTL("¡Un eco de {1} resuena dentro de {2}!",PBSpecies.getName(donor),pokemon.name))
+    pbLearnMove(pokemon,move)
+  end
+end
+
+#===============================================================================
+# Hook: fires pbOnRevive whenever a bag item actually brings a Pokemon back
+# from 0 HP, whether used from the field or from the battle bag. Detected
+# generically (fainted before, HP>0 after a successful use) instead of
+# hardcoding Revive/Max Revive/Revival Herb's item IDs, since every other
+# healing item already refuses to do anything on a fainted Pokemon.
+#===============================================================================
+module ItemHandlers
+  class << self
+    alias medium_triggerUseOnPokemon triggerUseOnPokemon
+    def triggerUseOnPokemon(item,pokemon,scene)
+      wasFainted = pokemon && pokemon.hp==0
+      ret = medium_triggerUseOnPokemon(item,pokemon,scene)
+      MediumEffects.pbOnRevive(pokemon) if ret && wasFainted && pokemon.hp>0
+      return ret
+    end
+
+    alias medium_triggerBattleUseOnPokemon triggerBattleUseOnPokemon
+    def triggerBattleUseOnPokemon(item,pokemon,battler,scene)
+      wasFainted = pokemon && pokemon.hp==0
+      ret = medium_triggerBattleUseOnPokemon(item,pokemon,battler,scene)
+      MediumEffects.pbOnRevive(pokemon) if ret && wasFainted && pokemon.hp>0
+      return ret
+    end
+  end
+end
+
+#===============================================================================
+# Drawback: at the Pokemon Center (or anywhere else pbHealAll gets called),
+# only the starter Pokemon can be revived -- any other fainted party member
+# stays fainted. Non-fainted Pokemon are still healed normally regardless of
+# whether they're the starter.
+#
+# pbHealAll heals Pokemon directly (PokeBattle_Pokemon#heal) rather than
+# going through ItemHandlers, so it never reaches the revival hook above --
+# the starter reviving this way never gets Medium's IV boost or spirit
+# move, exactly as intended.
+#===============================================================================
+alias medium_pbHealAll pbHealAll
+def pbHealAll
+  return if !$Trainer
+  if defined?(MediumEffects) && MediumEffects.active?
+    $Trainer.party.each do |p|
+      next if !p
+      next if p.hp==0 && !p.starter?
+      p.heal
+    end
+  else
+    medium_pbHealAll
   end
 end
