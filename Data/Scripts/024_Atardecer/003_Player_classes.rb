@@ -912,15 +912,6 @@ end
 # classes and aliases methods, same approach used by every other job.
 #===============================================================================
 
-module PlayerClasses
-  SUPERMODELO = :SUPERMODELO
-end
-
-PlayerClasses::DATA[PlayerClasses::SUPERMODELO] = {
-  :name        => _INTL("Supermodelo"),
-  :description => _INTL("Gana Puntos de Estilo luciéndose en combate (OHKOs, golpes críticos, ataques superefectivos...) y piérdelos por errores. Sus efectos varían según el marcador, pero sus ataques normales pegan flojo.")
-}
-
 module SupermodelStyle
   WEATHER_MOVES = {
     PBWeather::SUNNYDAY  => [:SOLARBEAM,:SOLARBLADE,:MORNINGSUN,:SYNTHESIS,:WEATHERBALL],
@@ -1411,48 +1402,113 @@ module MediumEffects
     pokemon.iv[stat] = [pokemon.iv[stat]+2,31].min
     pokemon.calcStats
   end
-
+  
   #-----------------------------------------------------------------------------
-  # Species dex-data lookups for the donor search below. Uses a throwaway
-  # PokeBattle_Pokemon (withMoves=false, so it skips reading its own starting
-  # moveset) rather than duplicating dexdata.dat's byte layout here -- a few
-  # species (Rotom, Arceus, Genesect...) resolve their base stats/types/moves
-  # through form handlers that expect a normally-initialized Pokemon (item,
-  # ability, etc. all set), so a real (if minimal) instantiation is used
-  # instead of PokeBattle_Pokemon.allocate to stay safe across the whole dex.
-  # This runs the full species list only in the rare "spirit move" branch,
-  # not on every ordinary revival.
+  # Species dex-data lookups for the donor search below, read directly from
+  # dexdata.dat's raw bytes instead of instantiating a PokeBattle_Pokemon
+  # per species -- type1/type2 at offset 8-9, base stats at offset 10-15,
+  # egg groups at offset 31-32 (same offsets this project already uses
+  # directly in PField_DayCare.rb for egg groups).
+  #
+  # This intentionally ignores per-species form overrides (Rotom, Arceus,
+  # Genesect, Castform, etc., aliased onto type1/type2/baseStats in
+  # 018_Pokemon/002_Pokemon_MultipleForms.rb) -- every donor candidate is
+  # treated as its dex-default form. That's a deliberate accuracy trade for
+  # speed: no Pokemon object is created at all for this scan anymore, so
+  # the whole dex (types + base stats + egg groups, one shared dexdata
+  # handle) resolves in a single fast pass, fast enough to just run inline
+  # the first time it's needed -- no more need to pre-warm it at boot.
   #-----------------------------------------------------------------------------
   def pbDummyFor(species)
     return PokeBattle_Pokemon.new(species,1,$Trainer,false)
   end
 
+  def pbSpeciesInfoCache
+    @speciesInfoCache = {} if !@speciesInfoCache
+    return @speciesInfoCache
+  end
+
+  # Returns [type1,type2,baseStatTotal,eggGroup1,eggGroup2] for a species,
+  # read directly from dexdata.dat. dexdata, if given, is a StringInput
+  # already open on dexdata.dat, reused instead of opening/closing a new
+  # one per species -- see pbPrewarmSpeciesCache below, which passes one
+  # shared handle in for the whole dex at once.
+  def pbBuildSpeciesInfo(species,dexdata=nil)
+    readFields = proc { |dd|
+      pbDexDataOffset(dd,species,8)
+      t1 = dd.fgetb
+      t2 = dd.fgetb
+      bst = 0
+      6.times { bst += dd.fgetb }
+      pbDexDataOffset(dd,species,31)
+      egg1 = dd.fgetb
+      egg2 = dd.fgetb
+      [t1,t2,bst,egg1,egg2]
+    }
+    return readFields.call(dexdata) if dexdata
+    result = nil
+    pbOpenDexData { |dd| result = readFields.call(dd) }
+    return result
+  end
+
+  def pbSpeciesInfo(species)
+    cache = pbSpeciesInfoCache
+    cache[species] = pbBuildSpeciesInfo(species) if !cache[species]
+    return cache[species]
+  end
+
   def pbSpeciesTypes(species)
-    dummy = pbDummyFor(species)
-    return [dummy.type1,dummy.type2]
+    info = pbSpeciesInfo(species)
+    return [info[0],info[1]]
   end
 
   def pbSpeciesBST(species)
-    return pbDummyFor(species).baseStats.inject(0) { |sum,stat| sum+stat }
+    return pbSpeciesInfo(species)[2]
   end
 
+  def pbSpeciesUndiscovered?(species)
+    info = pbSpeciesInfo(species)
+    return isConst?(info[3],PBEggGroups,:Undiscovered) || isConst?(info[4],PBEggGroups,:Undiscovered)
+  end
+
+  # Still uses a real Pokemon instantiation -- but only once, for whichever
+  # single donor species pbFindDonorSpecies ends up picking, not for the
+  # whole dex.
   def pbSpeciesMoveList(species)
     return pbDummyFor(species).getMoveList
   end
 
+  # Builds the entire species-info cache in one pass, sharing a single open
+  # dexdata handle for the whole dex. Safe to call more than once (species
+  # already cached are skipped).
+  def pbPrewarmSpeciesCache
+    cache = pbSpeciesInfoCache
+    pbOpenDexData do |dexdata|
+      (1..PBSpecies.maxValue).each do |sp|
+        next if cache[sp]
+        cache[sp] = pbBuildSpeciesInfo(sp,dexdata)
+      end
+    end
+  end
+
   #-----------------------------------------------------------------------------
-  # Finds a donor species with none of the user's types, preferring one with
-  # a similar (+/-10) BST, chosen at random among ties. Falls back to the
-  # closest BST below that range, then the closest BST above it -- for
-  # those two fallback passes a single closest match is used (ties broken by
-  # lowest species ID) rather than a random pick among them.
+  # Finds a donor species with none of the user's types, isn't in the
+  # Undiscovered egg group (legendaries/mythicals -- a borrowed move from
+  # one of those didn't feel like it should be up for grabs), and prefers
+  # one with a similar (+/-10) BST, chosen at random among ties. Falls back
+  # to the closest BST below that range, then the closest BST above it --
+  # for those two fallback passes a single closest match is used (ties
+  # broken by lowest species ID) rather than a random pick among them.
   #-----------------------------------------------------------------------------
   def pbFindDonorSpecies(userTypes,userBST)
+    pbPrewarmSpeciesCache
+    cache = pbSpeciesInfoCache
     eligible = []
     (1..PBSpecies.maxValue).each do |sp|
-      t1,t2 = pbSpeciesTypes(sp)
+      t1,t2,bst,egg1,egg2 = cache[sp]
+      next if isConst?(egg1,PBEggGroups,:Undiscovered) || isConst?(egg2,PBEggGroups,:Undiscovered)
       next if userTypes.include?(t1) || userTypes.include?(t2)
-      eligible.push([sp,pbSpeciesBST(sp)])
+      eligible.push([sp,bst])
     end
     return nil if eligible.empty?
 
